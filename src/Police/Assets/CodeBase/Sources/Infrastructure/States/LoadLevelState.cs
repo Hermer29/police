@@ -11,7 +11,7 @@ namespace Infrastructure.States
 
         private bool _levelLoaded;
         
-        private const string SceneName = "Town";
+        private const string SceneName = "LosAngelesCity";
 
         public LoadLevelState(ICoroutineRunner coroutineRunner)
         {
