@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Bootstrap.unity
     guid: 977f6df459d2a094d8540848d8cf30e4
   - enabled: 1
-    path: Assets/Scenes/Town.unity
+    path: Assets/Scenes/LosAngelesCity.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1521c3bb5f508464ea6ae8ee649925b2, type: 2}
