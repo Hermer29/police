@@ -1,6 +1,6 @@
-﻿namespace Infrastructure.DependencyInjection
+﻿namespace Infrastructure.AssetManagement
 {
-    public static class BootstrapConstants
+    public static class AssetsConstants
     {
         public const string LoadingScreenPath = "Prefabs/LoadingScreen";
     }

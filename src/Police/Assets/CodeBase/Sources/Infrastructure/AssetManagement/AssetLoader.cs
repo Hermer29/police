@@ -1,6 +1,9 @@
-﻿namespace Infrastructure.AssetLoading
+﻿using UnityEngine;
+using static UnityEngine.Object;
+
+namespace Infrastructure.AssetManagement
 {
-    public class AssetLoader
+    public class AssetLoader : IAssetLoader
     {
         
     }

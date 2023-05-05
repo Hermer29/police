@@ -11,16 +11,14 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 
-
-
 const string ProjectName = "Police";
 const string ArtifactsFolderPath = "./artifacts";
-
 
 var opened = System.IO.File.Open(TelegramSessionPath, FileMode.OpenOrCreate);
 var tgClient = new WTelegram.Client(TelegramConfig, opened);
 var account = await tgClient.LoginUserIfNeeded();
 var dialogs = await tgClient.Channels_GetAdminedPublicChannels();
+var lastCommit = GitLog(new DirectoryPath("."), 1).First();
 
 var target = Argument("target", SendBuildNotificationEndingTask);
 
@@ -31,6 +29,10 @@ const string SendBuildNotificationStartingTask = "Send-Build-Notification-Start"
 Task(SendBuildNotificationStartingTask)
     .Does(() => 
 {
+    if(lastCommit.Message.Contains("nobuild"))
+    {
+        throw new OperationCanceledException("Build canceled");
+    }
     WriteTelegramMessage(CreateStartingTelegramMessage());
 });
 
@@ -42,7 +44,6 @@ async void WriteTelegramMessage(string message)
 
 string CreateStartingTelegramMessage()
 {
-    var lastCommit = GitLog(new DirectoryPath("."), 1).First();
     var message = $"❗❗❗Начат билд по проекту {ProjectName}! " + 
         $"Произошедшие изменения: {lastCommit.Message}\n";
     return message;

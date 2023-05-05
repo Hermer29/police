@@ -1,7 +1,9 @@
-﻿namespace Infrastructure
+﻿using UnityEngine;
+
+namespace Infrastructure
 {
-    public class BootstrapRunner
+    public class BootstrapRunner : MonoBehaviour
     {
-        
+        [SerializeField] private Bootstrapper _bootstrapperPrefab;
     }
 }

@@ -2,6 +2,5 @@
 {
     public interface IGameFactory
     {
-        LoadingScreen CreateLoadingScreen();
     }
 }
