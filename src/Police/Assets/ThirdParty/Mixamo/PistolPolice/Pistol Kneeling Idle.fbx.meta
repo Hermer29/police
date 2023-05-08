@@ -3,7 +3,37 @@ guid: 9cd02eea798980048bf0a4af1ad7c246
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert12
+    second: {fileID: 2100000, guid: 63c9e31bc2a1f52499b3700cd3549c42, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__cloth.001
+    second: {fileID: 2100000, guid: ad9f76a31c6966c47b6a92b5ea0ec4fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__glass
+    second: {fileID: 2100000, guid: 5ea591b977dcec24ca8c108d7f61e2a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__gold.001
+    second: {fileID: 2100000, guid: 574be3cba60ee404285405446879e3da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__plastic.001
+    second: {fileID: 2100000, guid: db6533147eb331a4fa958964c4e72cb3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__rim
+    second: {fileID: 2100000, guid: 8db48ad9a33b7934a9c1ea21da8112ab, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -118,7 +148,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: mixamorig:Hips
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
@@ -126,7 +156,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0

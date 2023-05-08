@@ -5,9 +5,12 @@ namespace PeopleDraw.Components
     public class DrawingSurface : MonoBehaviour
     {
         [SerializeField] private BoxCollider _collider;
+        [SerializeField] private bool _drawGizmo;
         
         private void OnDrawGizmos()
         {
+            if (_drawGizmo == false)
+                return;
             if (_collider == null)
                 return;
             

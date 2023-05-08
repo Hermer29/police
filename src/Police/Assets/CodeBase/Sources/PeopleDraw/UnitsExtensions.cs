@@ -11,11 +11,13 @@ namespace PeopleDraw
             
         public static bool OverlapsOtherUnit(this PlacingBlock unplacableUnit)
         {
+            unplacableUnit.SpawnBlock.enabled = false;
             Vector3 scale = Multiply(unplacableUnit.SpawnBlock.size, unplacableUnit.transform.localScale);
             Vector3 spawnBlockCenter = unplacableUnit.transform.position + unplacableUnit.SpawnBlock.center;
-            var results = Physics.OverlapBox(spawnBlockCenter, scale / 2, Quaternion.identity, BlockingUnitsLayer);
-            
-            return results.Length != 0;
+            var results = Physics.OverlapBox(spawnBlockCenter, scale, Quaternion.identity);
+            unplacableUnit.SpawnBlock.enabled = true;
+            return results.Where(x => x.TryGetComponent<PlacingBlock>(out _))
+                .Select(x => x.enabled).Count() != 0;
         }
 
         private static Vector3 Multiply(Vector3 a, Vector3 b)

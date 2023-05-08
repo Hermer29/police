@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ship
   - asteroid
+  - Policeman
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -18,10 +20,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Zombie
+  - Policemen
   - BlockingPlacement
-  - 
+  - Aggro
   - 
   - 
   - 

@@ -25,12 +25,14 @@ namespace PeopleDraw
 
         private void InputServiceOnDrawnAtPoint(RaycastHit drawPoint)
         {
+            if (drawPoint.collider == null)
+                return;
             if (_unitSelector.Current == null)
                 return;
             
             PoolUnit unit = CreateUnit(drawPoint);
             var placingBlock = unit.GetComponentInChildren<PlacingBlock>();
-            if (placingBlock.OverlapsOtherUnit())
+            if (placingBlock != null && placingBlock.OverlapsOtherUnit())
             {
                 unit.ReturnToPool();
             }
