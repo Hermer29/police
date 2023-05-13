@@ -1,10 +1,11 @@
 ﻿using Infrastructure.AssetManagement;
 using Infrastructure.Loading;
+using Services.PrefsService;
 using Zenject;
 
 namespace Infrastructure.DependencyInjection
 {
-    public class BootstrapInstaller : MonoInstaller
+    public class BootstrapInstaller : MonoInstaller, ICoroutineRunner
     {
         public override void InstallBindings()
         {
@@ -12,6 +13,14 @@ namespace Infrastructure.DependencyInjection
             BindFactory();
             CreateLoadingScreen();
             CreateLoadingManager();
+            
+            Container.Bind<ICoroutineRunner>()
+                .FromInstance(this)
+                .AsSingle();
+
+            Container.Bind<IPrefsService>()
+                .To<PlayerPrefsService>()
+                .AsSingle();
         }
 
         private void CreateLoadingManager()

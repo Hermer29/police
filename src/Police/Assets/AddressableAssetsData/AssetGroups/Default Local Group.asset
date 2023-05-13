@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 746ffbcf1f4d05f4fb15b9fd67a3b66f
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 849addc08fb78d74aab7774d36a97d37
+    m_Address: MeleeZombie
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:
