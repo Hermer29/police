@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LosAngelesCity.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Casablanca.unity
+    guid: a6562f5caa94d37498f6ac0b235af123
+  - enabled: 1
+    path: Assets/Scenes/NewYorkCity.unity
+    guid: 60a3d443be302a14c84d02fadd8dd363
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1521c3bb5f508464ea6ae8ee649925b2, type: 2}

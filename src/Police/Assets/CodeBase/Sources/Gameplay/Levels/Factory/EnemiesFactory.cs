@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ActiveCharacters.Shared.Components;
 using Gameplay.Levels.AssetManagement;
 using Gameplay.Levels.UI;
+using Helpers;
 using LevelsMachine;
 using PeopleDraw.Components;
 using UnityEngine;
@@ -15,20 +16,22 @@ namespace Gameplay.Levels.Factory
     {
         private readonly CharactersAssetLoader _loader;
         private readonly ILevelMediator _mediator;
+        private readonly ParentsForGeneratedObjects _parents;
 
         private List<Attackable> _enemies = new();
 
-        public EnemiesFactory(CharactersAssetLoader loader, ILevelMediator mediator)
+        public EnemiesFactory(CharactersAssetLoader loader, ILevelMediator mediator, ParentsForGeneratedObjects parents)
         {
             _loader = loader;
             _mediator = mediator;
+            _parents = parents;
         }
 
         public int EnemiesDeadAmount => _enemies.Count(x => x.Died);
 
-        public async Task<CharactersNavigationLinks> InstantiateEnemy(AssetReference prefab, Vector3 position)
+        public async Task<CharactersNavigationLinks> FactorizeEnemy(AssetReference prefab, Vector3 position)
         {
-            GameObject hostile = await _loader.InstantiateHostile(prefab, position, Quaternion.identity);
+            GameObject hostile = await _loader.InstantiateHostile(prefab, position, Quaternion.identity, _parents.Zombie);
             var links = hostile.GetComponent<CharactersNavigationLinks>();
             _enemies.Add(links.Attackable);
             links.Attackable.UnitDied += AttackableOnUnitDied;

@@ -15,7 +15,9 @@ namespace Gameplay.PeopleDraw.Factory
         private void Start()
         {
             _pool = new ObjectPool<Bullet>(
-                createFunc: CreateFunc);
+                createFunc: CreateFunc, 
+                actionOnGet: bullet => bullet.gameObject.SetActive(true),
+                actionOnRelease:  bullet => bullet.gameObject.SetActive(false));
         }
 
         public Bullet CreateBullet(Vector3 muzzlePosition)

@@ -32,10 +32,7 @@ namespace Gameplay.Levels
             _levelMediator = levelMediator;
         }
 
-        public void Start()
-        {
-            _spawn = _coroutineRunner.StartCoroutine(Spawn());
-        }
+        public void Start() => _spawn = _coroutineRunner.StartCoroutine(Spawn());
 
         private IEnumerator Spawn()
         {
@@ -48,10 +45,7 @@ namespace Gameplay.Levels
             }
         }
 
-        private bool HaveMoreWavesToSpawn()
-        {
-            return _waveIndex < _level.Waves.Length;
-        }
+        private bool HaveMoreWavesToSpawn() => _waveIndex < _level.Waves.Length;
 
         private IEnumerator SpawnWaveAndWaitForTime(WaveDefinition wave)
         {
@@ -64,10 +58,8 @@ namespace Gameplay.Levels
             EnemiesSpawnPoint spawnPoint = wave.SpawnPoint;
             var enemyTypes = wave.Enemies;
 
-            foreach (EnemyEntry enemyEntry in enemyTypes)
-            {
+            foreach (EnemyEntry enemyEntry in enemyTypes) 
                 InstantiateSpecifiedEnemyQuantity(enemyEntry, spawnPoint);
-            }
             _allEnemiesSpawned = LastWave();
         }
 
@@ -81,24 +73,13 @@ namespace Gameplay.Levels
 
         private void InstantiateEnemy(AssetReference enemyType, EnemiesSpawnPoint spawnPoint)
         {
-            _factory.InstantiateEnemy(
+            _factory.FactorizeEnemy(
                 prefab: enemyType,
                 position: spawnPoint.transform.position);
         }
 
-        public bool LevelAllEnemiesSpawned()
-        {
-            return _allEnemiesSpawned;
-        }
+        private bool LastWave() => _waveIndex == _level.Waves.Length - 1;
 
-        private bool LastWave()
-        {
-            return _waveIndex == _level.Waves.Length - 1;
-        }
-
-        public void Stop()
-        {
-            _coroutineRunner.StopCoroutine(_spawn);
-        }
+        public void Stop() => _coroutineRunner.StopCoroutine(_spawn);
     }
 }

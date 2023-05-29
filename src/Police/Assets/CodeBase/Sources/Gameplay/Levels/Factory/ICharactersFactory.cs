@@ -7,7 +7,7 @@ namespace LevelsMachine
 {
     public interface ICharactersFactory
     {
-        Task<CharactersNavigationLinks> InstantiateEnemy(AssetReference prefab, Vector3 position);
+        Task<CharactersNavigationLinks> FactorizeEnemy(AssetReference prefab, Vector3 position);
         bool InstantiatedEnemiesAlive();
         void FlushEnemies();
     }

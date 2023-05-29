@@ -14,10 +14,8 @@ namespace Infrastructure.Loading
         private ILoadingProcessor[] _currentProcessors;
 
         [Inject]
-        public void Construct(LoadingScreen loadingScreen)
-        {
-            _loadingScreen = loadingScreen;
-        }
+        public void Construct(LoadingScreen loadingScreen) 
+            => _loadingScreen = loadingScreen;
 
         public void RequestLoadingImmediately(params ILoadingProcessor[] processors)
         {
@@ -61,6 +59,7 @@ namespace Infrastructure.Loading
                 }
                 yield return null;
             }
+            Debug.Log("Requested loading completed");
             _loadingScreen.FadeOut();
             _currentProcessors = null;
         }

@@ -59,7 +59,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         {
             transform.LookAt(_target.Root);
             Bullet bullet = _bulletFactory.CreateBullet(_muzzle.position);
-            bullet.ShotTowards(_target.Root, OnStartAttack);
+            bullet.ShotTowards(_target, OnStartAttack);
             OnEndAttack();
         }
 

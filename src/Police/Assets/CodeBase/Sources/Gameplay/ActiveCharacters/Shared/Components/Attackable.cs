@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using Animation = AnimationUtility.Animation;
 
 namespace ActiveCharacters.Shared.Components
 {
     public class Attackable : MonoBehaviour
     {
         [field: SerializeField] public Transform Root { get; private set; }
+        [SerializeField] private Animation _animation;
 
         public bool Died;
         public int MaxHp = 1;
@@ -21,6 +23,7 @@ namespace ActiveCharacters.Shared.Components
 
         public void ApplyDamage()
         {
+            _animation?.Play();
             _hp--;
             if (_hp <= 0)
             {

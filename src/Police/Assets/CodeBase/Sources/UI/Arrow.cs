@@ -36,7 +36,7 @@ public class Arrow : MonoBehaviour
     private IEnumerator WaitALittle(Vector3 point)
     {
         ShowTowards(Camera.main.transform.position.SetZ(0), 
-            point);
+            point.SetZ(0));
         SlerpTowardsTarget(Time.deltaTime);
         yield return new WaitForSeconds(1);
         Hide();

@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: MeleeZombie
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: c229b6594cf65ed4794a98570f15896d
+    m_Address: RangedT1_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1214731466227240431}
   - component: {fileID: 4116682809048948270}
   - component: {fileID: 7672022767028576539}
+  - component: {fileID: 1680729802598082187}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -84,6 +85,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1680729802598082187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536903633656134637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb082e4fee10427abc7c004acb81043a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _strength: 0.5
+  _duration: 1
 --- !u!1 &755436649053667981
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Root>k__BackingField: {fileID: 5830057440832298658}
+  _animation: {fileID: 1680729802598082187}
   Died: 0
   MaxHp: 8
 --- !u!54 &825693689169336282
@@ -235,7 +251,7 @@ GameObject:
   - component: {fileID: 7203532417292101714}
   m_Layer: 0
   m_Name: Fence
-  m_TagString: Untagged
+  m_TagString: Policeman
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

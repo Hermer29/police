@@ -1,4 +1,5 @@
 ﻿using System;
+using ActiveCharacters.Shared.Components;
 using Logic;
 using UnityEngine;
 
@@ -7,10 +8,11 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
     public class Bullet : MonoBehaviour
     {
         private PoolHandle _poolHandle;
-        
+
+        [SerializeField] private TrailRenderer _trails;
         [SerializeField] private float _speed;
 
-        private Transform _target;
+        private Attackable _target;
         private Action _onHit;
 
         public void Construct(PoolHandle handle)
@@ -18,23 +20,30 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             _poolHandle = handle;
         }
         
-        public void ShotTowards(Transform target, Action onHit)
+        public void ShotTowards(Attackable target, Action onHit)
         {
             _onHit = onHit;
             _target = target;
+            FlushTrail();
         }
 
         private void Update()
         {
             if (_target == null)
                 return;
+            
+            if(_target.Died)
+            {
+                OnHit();
+                return;
+            }
 
             transform.position = Vector3.MoveTowards(
                 current: transform.position, 
-                target: _target.position, 
+                target: _target.Root.position, 
                 maxDistanceDelta: _speed * Time.deltaTime);
 
-            if (transform.position == _target.position)
+            if (transform.position == _target.Root.position)
             {
                 OnHit();
             }
@@ -46,6 +55,11 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             _target = null;
             _poolHandle.Free();
             _onHit = null;
+        }
+
+        private void FlushTrail()
+        {
+            _trails.Clear();
         }
     }
 }

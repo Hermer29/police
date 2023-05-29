@@ -9,23 +9,31 @@ namespace Gameplay.Levels
         public CinemachineVirtualCamera[] LevelCameras;
 
         private int CurrentIndex { get; set; }
-        private CinemachineVirtualCamera NextCamera => LevelCameras[CurrentIndex + 1];
-        private CinemachineVirtualCamera CurrentCamera => LevelCameras[CurrentIndex];
 
         // ReSharper disable once UnusedMember.Global
         public void UseNext()
         {
+            if (NoMoreCameras())
+            {
+                Debug.Log("No more level cameras defined");
+                return;
+            }
             Initialize(CurrentIndex + 1);
+        }
+
+        private bool NoMoreCameras()
+        {
+            return LevelCameras.Length - 1 <= CurrentIndex;
         }
 
         private void Start()
         {
-            Initialize(currentCameraIndex: 0); //TODO: Call externally
+            Initialize(cameraIndex: 0);
         }
 
-        private void Initialize(int currentCameraIndex)
+        private void Initialize(int cameraIndex)
         {
-            CurrentIndex = currentCameraIndex;
+            CurrentIndex = cameraIndex;
             UseCamera(CurrentIndex);
         }
 
@@ -37,6 +45,11 @@ namespace Gameplay.Levels
             {
                 virtualCamera.Priority = 10;
             }
+        }
+
+        public void ShowCameraForLevel(int getLocalLevel)
+        {
+            Initialize(--getLocalLevel);
         }
     }
 }

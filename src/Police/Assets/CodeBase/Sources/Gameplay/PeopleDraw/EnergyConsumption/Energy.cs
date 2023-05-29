@@ -1,46 +1,39 @@
-﻿using Gameplay.Levels.UI;
+﻿using PeopleDraw.EnergyConsumption;
 
-namespace PeopleDraw.EnergyConsumption
+namespace Gameplay.PeopleDraw.EnergyConsumption
 {
     public class Energy
     {
-        private readonly ILevelMediator _mediator;
+        private readonly EnergyUi _energyUi;
 
         private int _currentEnergyValue = 0;
         private int _maxEnergyValue = 0;
-        
-        public Energy(ILevelMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
+        public Energy(EnergyUi energyUi) => _energyUi = energyUi;
+        
         public int Amount => _currentEnergyValue;
 
         public void DefineMaxEnergyAndFill(int value)
         {
             _currentEnergyValue = value;
             _maxEnergyValue = value;
-            _mediator.DefineMaxEnergyValue(value);
+            _energyUi.DefineMaxValue(value);
         }
 
         public void SpendEnergy(int amount)
         {
             _currentEnergyValue -= amount;
-            if (_currentEnergyValue < 0)
-            {
+            if (_currentEnergyValue < 0) 
                 _currentEnergyValue = 0;
-            }
-            _mediator.UpdateEnergyValue(_currentEnergyValue);
+            _energyUi.SetEnergyValue(_currentEnergyValue);
         }
 
         public void RestoreEnergy(int amount)
         {
             _currentEnergyValue += amount;
-            if (_currentEnergyValue > _maxEnergyValue)
-            {
+            if (_currentEnergyValue > _maxEnergyValue) 
                 _currentEnergyValue = _maxEnergyValue;
-            }
-            _mediator.UpdateEnergyValue(_currentEnergyValue);
+            _energyUi.SetEnergyValue(_currentEnergyValue);
         }
     }
 }

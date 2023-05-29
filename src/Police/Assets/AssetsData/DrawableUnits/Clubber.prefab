@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reader: {fileID: 7051962790841296480}
-  _movingToTargetAttack: {fileID: 988699943006883203}
+  _detectionReaction: {fileID: 988699943006883203}
   _rangeChecker: {fileID: 7992813769793752125}
 --- !u!114 &4709640152320038880
 MonoBehaviour:
@@ -372,6 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Root>k__BackingField: {fileID: 1122293289621114920}
+  _animation: {fileID: 0}
   Died: 0
   MaxHp: 3
 --- !u!1 &8524160947589305485

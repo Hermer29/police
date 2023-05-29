@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Gameplay.ActiveCharacters.Shared.Components;
+using Helpers;
 using PeopleDraw.Components;
 using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace Gameplay.PeopleDraw.Factory
 {
     public class AlliedUnitsFactory : IAlliedUnitsFactory
     {
-        private Lazy<Dictionary<int, ObjectPool<PoolUnit>>> _poolForTypes = new(
-            valueFactory: () => new Dictionary<int, ObjectPool<PoolUnit>>());
+        private readonly IInstantiator _instantiator;
+        private readonly ParentsForGeneratedObjects _parents;
 
         private List<WinAnimator> _winAnimators = new ();
+        private Lazy<Dictionary<int, ObjectPool<PoolUnit>>> _poolForTypes = new(
+            valueFactory: () => new Dictionary<int, ObjectPool<PoolUnit>>());
         private List<PoolUnit> _policeMans = new ();
-        private readonly IInstantiator _instantiator;
 
-        public AlliedUnitsFactory(IInstantiator instantiator)
+        public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents)
         {
             _instantiator = instantiator;
+            _parents = parents;
         }
         
-        public PoolUnit InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial)
+        public async Task<PoolUnit> InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial)
         {
             if (_poolForTypes.Value.ContainsKey(selectedSerial) == false)
             {
@@ -36,7 +39,7 @@ namespace Gameplay.PeopleDraw.Factory
             return unplacableUnit;
         }
 
-        public ObjectPool<PoolUnit> CreateUnitsPool(PoolUnit prefab)
+        private ObjectPool<PoolUnit> CreateUnitsPool(PoolUnit prefab)
         {
             ObjectPool<PoolUnit> pool = null;
             pool = new ObjectPool<PoolUnit>(
@@ -50,10 +53,8 @@ namespace Gameplay.PeopleDraw.Factory
             return pool;
         }
 
-        public void AnimatorsPlayVictory()
-        {
+        public void AnimatorsPlayVictory() => 
             _winAnimators.ForEach(x => x.PlayVictory());
-        }
 
         public void ReturnAllToPool()
         {
@@ -62,10 +63,14 @@ namespace Gameplay.PeopleDraw.Factory
                 policeMan.ReturnToPool();
             }
         }
-        
+
         private PoolUnit FactorizeUnit(PoolUnit prefab, ObjectPool<PoolUnit> pool)
         {
-            PoolUnit unit = _instantiator.InstantiatePrefabForComponent<PoolUnit>(prefab);
+            PoolUnit unit = _instantiator.InstantiatePrefabForComponent<PoolUnit>(
+                prefab: prefab, 
+                position: Vector3.zero, 
+                rotation: Quaternion.identity, 
+                parentTransform: _parents.Policemen);
             unit.Construct(pool);
             _policeMans.Add(unit);
             if (unit.TryGetComponent(out WinAnimator winAnimator))

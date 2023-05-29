@@ -3,98 +3,84 @@ using System.Collections;
 using GameBalance;
 using Gameplay.Levels.Factory;
 using Gameplay.Levels.UI;
-using Gameplay.Levels.UI.Defeated;
 using Infrastructure;
-using PeopleDraw.EnergyConsumption;
-using UnityEngine;
-using Zenject;
 
 namespace Gameplay.Levels
 {
-    public sealed class LevelEngine : IInitializable
+    public sealed class LevelEngine
     {
         private readonly CityDefinition _cityDefinition;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly EnemiesFactory _factory;
         private readonly ILevelMediator _mediator;
-        private readonly Energy _energy;
-        private readonly DefeatedWindow _defeatedWindow;
+        private EnemiesFactory _factory;
 
         private bool _continuing;
+        private bool _lost;
+        private bool _won;
 
-        public LevelEngine(CityDefinition cityDefinition, ICoroutineRunner coroutineRunner, EnemiesFactory factory,
-            ILevelMediator mediator, Energy energy, DefeatedWindow defeatedWindow)
+        public LevelEngine(CityDefinition cityDefinition, EnemiesFactory factory,
+            ILevelMediator mediator)
         {
-            _defeatedWindow = defeatedWindow;
             _cityDefinition = cityDefinition;
-            _coroutineRunner = coroutineRunner;
+            _coroutineRunner = AllServices.Get<ICoroutineRunner>();
             _factory = factory;
             _mediator = mediator;
-            _energy = energy;
         }
 
-        public void Initialize()
-        {
-            Start();
-        }
+        public void ExecuteLevel(int localLevel) 
+            => _coroutineRunner.StartCoroutine(CityCoroutine(localLevel));
 
-        public void ContinuePlaying()
-        {
-            _defeatedWindow.ContinuePlaying -= ContinuePlaying;
-            _continuing = true;
-        }
+        public bool IsLost() => _lost;
+        public bool IsWon() => _won;
 
-        private void Start()
+        private IEnumerator CityCoroutine(int localLevel)
         {
-            _coroutineRunner.StartCoroutine(CityCoroutine());
-        }
-
-        private IEnumerator CityCoroutine()
-        {
-            var index = 0;
-            while (index < _cityDefinition.Levels.Length)
+            _lost = false;
+            _won = false;
+            
+            bool lost = false;
+            var asIndex = localLevel - 1;
+            
+            yield return LevelCoroutine(_cityDefinition.Levels[asIndex], () => lost = true);
+            if (lost)
             {
-                bool lost = false;
-                yield return LevelCoroutine(index, () => lost = true);
-                if (lost)
-                {
-                    _defeatedWindow.ContinuePlaying += ContinuePlaying;
-                    yield return new WaitWhile(() => _continuing == false);
-                    _continuing = false;
-                    continue;
-                }
-                index++;
+                _lost = true;
+                yield break;
             }
+            _won = true;
         }
 
-        private IEnumerator LevelCoroutine(int levelIndex, Action onLoose)
+        private IEnumerator LevelCoroutine(LevelEntry level, Action onLoose)
         {
             bool playerLost = false;
-            LevelEntry level = _cityDefinition.Levels[levelIndex];
-            level.LooseTrigger.ZombieInTrigger += () =>
-            {
-                playerLost = true;
-            };
-            _energy.DefineMaxEnergyAndFill(level.EnergyAmount);
-            LevelEnemiesSpawner spawner = CreateEnemiesSpawner(level);
-            spawner.Start();
-            
+            InitializeLevel(
+                level, 
+                out LevelEnemiesSpawner spawner, 
+                onLost: () => playerLost = true);
+
             while (LevelCompleted(level) == false && playerLost == false)
-            {
                 yield return null;
-            }
 
             if (playerLost)
             {
-                _defeatedWindow.Show();
+                _lost = true;
                 onLoose.Invoke();
                 spawner.Stop();
-                _factory.FlushEnemies();
-                yield break;
             }
-            
-            _mediator.StartNextLevelTimeline();
-            _factory.FlushEnemies();
+        }
+
+        private void InitializeLevel(LevelEntry level, out LevelEnemiesSpawner spawner, Action onLost)
+        {
+            _mediator.DefineMaxEnergyAndFill(level.EnergyAmount);
+            spawner = CreateEnemiesSpawner(level);
+            spawner.Start();
+            _coroutineRunner.StartCoroutine(WaitForLoose(level.LooseTrigger, onLost));
+        }
+
+        private IEnumerator WaitForLoose(LooseTrigger looseTrigger, Action onLose)
+        {
+            yield return looseTrigger.WaitForTrigger();
+            onLose.Invoke();
         }
 
         private LevelEnemiesSpawner CreateEnemiesSpawner(LevelEntry level)
@@ -106,9 +92,6 @@ namespace Gameplay.Levels
                 levelMediator: _mediator);
         }
 
-        private bool LevelCompleted(LevelEntry rivalData)
-        {
-            return _factory.EnemiesDeadAmount == rivalData.EnemiesAmount();
-        }
+        private bool LevelCompleted(LevelEntry rivalData) => _factory.EnemiesDeadAmount == rivalData.EnemiesAmount();
     }
 }

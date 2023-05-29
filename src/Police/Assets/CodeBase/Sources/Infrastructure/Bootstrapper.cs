@@ -13,29 +13,30 @@ namespace Infrastructure
         [Inject]
         public void Construct(DiContainer container)
         {
+            DontDestroyOnLoad(gameObject);
             _diContainer = container;
         }
             
-        protected override void Install()
-        {
-            BindStates();
-        }
+        protected override void Install() => BindStates();
 
         private void BindStates()
         {
-            Container.Add(new BootstrapState(
-                    container: _diContainer))
-                .AsFirstState();
-
-            var loadLevelState = new LoadLevelState(
-                coroutineRunner: this);
+            AllServices.Bind<ICoroutineRunner>(this);
+            
+            Container.Add<ICoroutineRunner>(this);
+            Container.Add(_diContainer);
+            
+            Container.Add(new BootstrapState(_diContainer)).AsFirstState();
+            Container.Add<GameplayState>(new GameplayState());
+            Container.Add<CreateServicesState>(new CreateServicesState());
+            Container.Add<MenuState>(new MenuState(this));
+            
+            var loadLevelState = new LoadLevelState(coroutineRunner: this, _diContainer);
+            var loadResourcesState = new LoadGameResources(this);
+            RequestLoading(loadLevelState, loadResourcesState);
             
             Container.Add(loadLevelState);
-
-            Container.Add(new GameplayState(
-                 container: _diContainer));
-            
-            RequestLoading(loadLevelState);
+            Container.Add(loadResourcesState);
         }
 
         private void RequestLoading(params ILoadingProcessor[] loadingProcessors)

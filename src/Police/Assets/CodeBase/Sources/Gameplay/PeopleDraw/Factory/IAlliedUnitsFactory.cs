@@ -1,13 +1,13 @@
-﻿using PeopleDraw.Components;
+﻿using System.Threading.Tasks;
+using PeopleDraw.Components;
 using UnityEngine;
-using UnityEngine.Pool;
+using Upgrading.UnitTypes;
 
 namespace Gameplay.PeopleDraw.Factory
 {
     public interface IAlliedUnitsFactory
     {
-        PoolUnit InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial);
-        ObjectPool<PoolUnit> CreateUnitsPool(PoolUnit prefab);
+        Task<PoolUnit> InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial);
         void AnimatorsPlayVictory();
         void ReturnAllToPool();
     }

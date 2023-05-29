@@ -21,16 +21,11 @@ namespace PeopleDraw.EnergyConsumption
         public void SetEnergyValue(int amount)
         {
             DrawEnergyCounter(amount);
+            DrawSliderForAmount(amount);
         }
 
-        private void DrawSliderForAmount(int amount)
-        {
-            _energySlider.value = (float) amount / _maxValue;
-        }
+        private void DrawSliderForAmount(int amount) => _energySlider.value = (float) amount / _maxValue;
 
-        private void DrawEnergyCounter(int amount)
-        {
-            _energyCounter.text = $"{amount}/{_maxValue}";
-        }
+        private void DrawEnergyCounter(int amount) => _energyCounter.text = $"{amount}/{_maxValue}";
     }
 }

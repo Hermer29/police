@@ -17,7 +17,7 @@ namespace Enemies.Components
             Vector3 position = _agent.transform.position;
             return new Vector3
             {
-                x = position.x,
+                x = -8,
                 y = position.y,
                 z = 1000
             };

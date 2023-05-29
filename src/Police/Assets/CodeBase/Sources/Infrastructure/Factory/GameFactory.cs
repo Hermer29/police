@@ -1,18 +1,24 @@
-﻿using Infrastructure.AssetManagement;
+﻿using Gameplay.Levels.UI.CrossLevelUi;
+using Infrastructure.AssetManagement;
+using Tutorial;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private readonly DiContainer _container;
-        private readonly AssetLoader _assets;
+        private readonly IAssetLoader _assets;
 
-        public GameFactory(DiContainer container, AssetLoader assets)
-        {
-            _container = container;
-            _assets = assets;
-        }
-        
+        public GameFactory(IAssetLoader assets) => _assets = assets;
+
+        public CrossLevelUi CreateCrossLevelUI() => 
+            AllServices.Get<DiContainer>()
+                .InstantiatePrefabForComponent<CrossLevelUi>(
+                    _assets.LoadCrossLevelUI());
+
+        public TutorialEngine CreateTutorial() => 
+            AllServices.Get<DiContainer>()
+                .InstantiatePrefabForComponent<TutorialEngine>(
+                    _assets.LoadTutorial());
     }
 }

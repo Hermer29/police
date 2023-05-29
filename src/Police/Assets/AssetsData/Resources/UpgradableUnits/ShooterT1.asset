@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431768c085ef4ae5902ac600373a2836, type: 3}
+  m_Name: ShooterT1
+  m_EditorClassIdentifier: 
+  <Guid>k__BackingField: 6ab29cf5-83cf-49e7-8093-10ae8cd77b84
+  <OwnedByDefault>k__BackingField: 1
+  <Tier>k__BackingField: 1
+  <Type>k__BackingField: 1
+  <Purchasable>k__BackingField: 0
+  LevelPartsUnitAppearances:
+  - Asset:
+      m_AssetGUID: c229b6594cf65ed4794a98570f15896d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  _levelPartsQuantity: 4
+  CurrentAppearance:
+    value:
+      Asset:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      Illustration: {fileID: 0}

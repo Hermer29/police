@@ -25,10 +25,7 @@ namespace Infrastructure.States
             _isEnded = true;
         }
 
-        [Transition(typeof(LoadLevelState))]
-        public bool IsEnded()
-        {
-            return _isEnded;
-        }
+        [Transition(typeof(CreateServicesState))]
+        public bool IsEnded() => _isEnded;
     }
 }

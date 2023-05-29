@@ -28,17 +28,6 @@ namespace ActiveCharacters.Shared.Components
         private void Start()
         {
             _reader.TriggerEntered += TriggerEntered;
-            _reader.TriggerExit += TriggerExit;
-        }
-
-        private void TriggerExit(Collider other)
-        {
-            if (other.gameObject.activeInHierarchy == false)
-                return;
-            if (_closest != other)
-                return;
-
-            ClosestObjectLeftTheZone?.Invoke(_closest);
         }
 
         private void TriggerEntered(Collider other)
