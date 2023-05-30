@@ -24,7 +24,8 @@ namespace Gameplay.PeopleDraw.Factory
             _unitsSpawnFxPool = new Lazy<ObjectPool<ParticlesHolder>>(valueFactory: () =>
                 new ObjectPool<ParticlesHolder>(
                     createFunc: FactorizeFx,
-                    actionOnGet: fx => fx.Play())
+                    actionOnGet: fx => fx.Play(),
+                    actionOnRelease: fx => fx.Stop())
             );
         }
 

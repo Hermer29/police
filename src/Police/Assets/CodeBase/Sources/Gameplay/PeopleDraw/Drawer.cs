@@ -33,14 +33,24 @@ namespace PeopleDraw
             if (CantDrawUnit(drawPoint))
                 return;
 
+
             PoolUnit unit = await CreateUnit(drawPoint);
             if (Blocked(unit))
             {
                 unit.ReturnToPool();
                 return;
             }
+            
+            Rotate(drawPoint, previous, unit);
             ShowSpawnFx(drawPoint);
             SpendEnergy();
+        }
+
+        private static void Rotate(RaycastHit drawPoint, RaycastHit previous, PoolUnit unit)
+        {
+            Vector3 lookDirection = drawPoint.point - previous.point;
+            const float minimalDistance = .1f;
+            unit.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, -90, 0);
         }
 
         private bool CantDrawUnit(RaycastHit drawPoint)

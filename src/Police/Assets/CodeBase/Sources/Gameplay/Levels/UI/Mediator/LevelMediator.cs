@@ -1,10 +1,10 @@
 ﻿using ActiveCharacters.Shared.Components;
-using Gameplay.Levels.UI.Defeated;
 using Gameplay.PeopleDraw.EnergyConsumption;
 using Gameplay.PeopleDraw.Factory;
 using PeopleDraw.EnergyConsumption;
 using PeopleDraw.Selection;
 using Selection;
+using UI;
 using UnityEngine;
 using UnityEngine.Playables;
 using Upgrading.UnitTypes;
@@ -15,14 +15,13 @@ namespace Gameplay.Levels.UI
     public class LevelMediator : MonoBehaviour, ILevelMediator
     {
         [SerializeField] PlayableDirector _nextLevelDirector;
-        [SerializeField] Arrow _arrow;
         
+        [Inject(Id = "NextWaveArrow")] Arrow _arrow;
         [Inject] IAlliedUnitsFactory _unitsFactory;
         [Inject] SelectedUnits _selectedUnits;
         [Inject] EnergyUi _energyUi;
         [Inject] SelectorUi _selectorUi;
         [Inject] EnergyKillRestoration _killRestoration;
-        [Inject] EndGameWindow _endGameWindow;
         [Inject] Energy _energy;
 
         public void ShowExclamationMark(Vector3 spawnPointPosition) => _arrow.ShowArrowTowardsTarget(spawnPointPosition);

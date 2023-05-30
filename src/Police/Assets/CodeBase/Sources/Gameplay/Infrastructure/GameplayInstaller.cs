@@ -15,6 +15,7 @@ using Selection;
 using Services;
 using Services.Audio;
 using Services.UseService;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -32,6 +33,15 @@ namespace Gameplay.Infrastructure
 
         public override void InstallBindings()
         {
+            Container.Bind<GenericWindowsGroup>()
+                .FromComponentInNewPrefabResource("Prefabs/UI/UITypeB")
+                .AsSingle();
+
+            Container.Bind<Arrow>()
+                .WithId("NextWaveArrow")
+                .FromComponentInNewPrefabResource("Prefabs/UI/NextWaveArrow")
+                .AsSingle();
+
             Container.Bind<MoneyUi>()
                 .FromComponentInNewPrefabResource("Prefabs/UI/Stats")
                 .AsSingle();
