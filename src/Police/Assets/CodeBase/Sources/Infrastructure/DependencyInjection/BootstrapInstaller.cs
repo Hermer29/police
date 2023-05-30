@@ -5,6 +5,8 @@ using Infrastructure.Factory;
 using Infrastructure.Loading;
 using Services.MoneyService;
 using Services.PrefsService;
+using Services.PurchasesService;
+using Services.PurchasesService.PurchasesWrapper;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +25,27 @@ namespace Infrastructure.DependencyInjection
             BindCoroutineRunner();
             BindPrefsService();
             BindMoneyService();
+            BindPurchasingServices();
+        }
+
+        private void BindPurchasingServices()
+        {
+            BindPurchasesService();
+            BindProductsService();
+        }
+
+        private void BindPurchasesService()
+        {
+            Container.Bind<IPurchasesService>()
+                .To<FakePurchasesService>()
+                .AsSingle();
+        }
+
+        private void BindProductsService()
+        {
+            Container.Bind<IProductsService>()
+                .To<ProductsService>()
+                .AsSingle();
         }
 
         private void BindLevelsClasses()
