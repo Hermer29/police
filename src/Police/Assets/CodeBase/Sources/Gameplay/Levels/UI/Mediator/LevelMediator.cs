@@ -34,7 +34,6 @@ namespace Gameplay.Levels.UI
         }
 
         public void IncrementEnergyForEnemyDeath(Attackable attackable) => _killRestoration.Restore();
-        public void ShowDefeatedWindow() => _endGameWindow.ShowLost();
         public void DefineMaxEnergyAndFill(int levelEnergyAmount) => _energy.DefineMaxEnergyAndFill(levelEnergyAmount);
         public int EnergyAmount => _energy.Amount;
         public void RestoreEnergy(int restorePerKill) => _energy.RestoreEnergy(restorePerKill);

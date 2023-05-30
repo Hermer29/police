@@ -47,6 +47,7 @@ namespace Upgrading.UI.CrossLevels
             foreach ((CrossLevelUpgradeEntry entry, PartialUpgradableUnit unit) in entriesAndCorrespondingUnits)
             {
                 entry.UpgradeForCoins.onClick.AddListener(() => OnUpgrade(unit));
+                _unitsAndTheirEntries.Add(unit, entry);
                 UpdateInformation(unit, entry);
             }
             _initialized = true;

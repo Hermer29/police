@@ -10,10 +10,11 @@ namespace Monetization
         public void StartRoulette() =>
             _arrow.RotateСontinuously();
 
-        public float StopRoulette() => 
+        public void StopRoulette() => 
             _arrow.StopRotation();
 
-        public int GetIndex(float rotationInRadians) => 
-            _arrow.GetPrizeIndex(rotationInRadians);
+        public float CurrentRotation() => _arrow.CurrentRotation;
+
+        public int GetPrizeIndex() => _arrow.GetPrizeIndex();
     }
 }

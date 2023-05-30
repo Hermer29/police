@@ -16,7 +16,8 @@ namespace Interface
         private bool _isRotating;
         private float _currentRotation;
         private RectTransform _rectTransform;
-        
+        public float CurrentRotation => _currentRotation;
+
         private void OnValidate()
         {
             SetNormalizedRotation(_normalizedRotation);    
@@ -69,9 +70,11 @@ namespace Interface
             return _currentRotation;
         }
 
-        public int GetPrizeIndex(float rotationInRadians)
+        public int GetPrizeIndex()
         {
-            return _sectors.IndexOf(_sectors.GetHitRange(rotationInRadians));
+            var hitRange = _sectors.IndexOf(_sectors.GetHitRange(CurrentRotation));
+            Debug.Log(hitRange);
+            return hitRange;
         }
     }
 }

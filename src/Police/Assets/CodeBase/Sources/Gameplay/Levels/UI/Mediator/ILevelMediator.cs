@@ -14,7 +14,6 @@ namespace Gameplay.Levels.UI
         void DefineMaxEnergyValue(int value);
         void UpdateEnergyValue(int amount);
         void IncrementEnergyForEnemyDeath(Attackable attackable);
-        void ShowDefeatedWindow();
         void DefineMaxEnergyAndFill(int levelEnergyAmount);
         int EnergyAmount { get; }
         void RestoreEnergy(int restorePerKill);

@@ -6,7 +6,6 @@ using Gameplay.Levels.UI;
 using Gameplay.Levels.UI.Defeated;
 using Gameplay.UI;
 using Hermer29.Almasury;
-using Infrastructure.Factory;
 using Services;
 using Tutorial;
 using UnityEngine;
@@ -82,33 +81,39 @@ namespace Infrastructure.States
 
         private void HandleLoss()
         {
-            _endGameWindow.ShowLost();
+            _endGameWindow.ShowLost(_levelService.Level);
+            _endGameWindow.Closed += CloseLost;
             RegisterGamesEnd();
         }
 
         private void HandleWon()
         {
             _levelService.IncrementLevel();
-            _endGameWindow.ShowWon();
+            _endGameWindow.ShowWon(_levelService.Level);
+            _endGameWindow.Closed += CloseWon;
             RegisterGamesEnd();
         }
 
         private void RegisterGamesEnd()
         {
             _inputService.Disable();
-            _endGameWindow.Closed += Close;
             _gameplayUi.Hide();
         }
 
-        private void Close()
-        {
-            _coroutineRunner.StartCoroutine(WaitAndGoToMenuState());
-        }
+        private void CloseWon() => _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenWon());
 
-        private IEnumerator WaitAndGoToMenuState()
+        private void CloseLost() => _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenLost());
+
+        private IEnumerator WaitAndGoToMenuStateWhenWon()
         {
             AllServices.Get<ILevelMediator>().StartNextLevelTimeline();
             yield return new WaitForSeconds(2);
+            _goingToMenu = true;
+        }
+        
+        private IEnumerator WaitAndGoToMenuStateWhenLost()
+        {
+            yield return null;
             _goingToMenu = true;
         }
 
