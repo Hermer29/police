@@ -46,7 +46,7 @@ namespace Upgrading.UI.CrossLevels
                 _entries.Zip(_usingService.UsedUnits.Values, (entry, unit) => (entry, unit));
             foreach ((CrossLevelUpgradeEntry entry, PartialUpgradableUnit unit) in entriesAndCorrespondingUnits)
             {
-                entry.OnUpgradingForMoney += OnUpgrade;
+                entry.UpgradeForCoins.onClick.AddListener(() => OnUpgrade(unit));
                 UpdateInformation(unit, entry);
             }
             _initialized = true;

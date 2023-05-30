@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Gameplay.Levels.UI.CrossLevelUi;
+using Gameplay.UI;
 using Helpers.UI;
 using Hermer29.Almasury;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Infrastructure.States
     public class MenuState : State
     {
         private CrossLevelUi _crossLevelUi;
+        private MoneyUi _moneyUi;
         private readonly ICoroutineRunner _coroutineRunner;
 
         private bool _goingToPlay;
@@ -20,6 +22,7 @@ namespace Infrastructure.States
         {
             var container = AllServices.Get<DiContainer>();
             _crossLevelUi = container.Resolve<CrossLevelUi>();
+            _moneyUi = container.Resolve<MoneyUi>();
         }
         
         protected override void OnEnter()
@@ -27,6 +30,7 @@ namespace Infrastructure.States
             Debug.Log($"{nameof(MenuState)}.{nameof(OnEnter)} called");
             ResolveDependencies();
 
+            _moneyUi.Show();
             _coroutineRunner.StartCoroutine(Work());
         }
 
@@ -41,6 +45,7 @@ namespace Infrastructure.States
         {
             _goingToPlay = false;
             _crossLevelUi.Hide();
+            _moneyUi.Hide();
         }
 
         [Transition(typeof(GameplayState))]

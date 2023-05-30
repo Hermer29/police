@@ -21,15 +21,9 @@ namespace Gameplay.Levels
             Initialize(CurrentIndex + 1);
         }
 
-        private bool NoMoreCameras()
-        {
-            return LevelCameras.Length - 1 <= CurrentIndex;
-        }
+        private bool NoMoreCameras() => LevelCameras.Length - 1 <= CurrentIndex;
 
-        private void Start()
-        {
-            Initialize(cameraIndex: 0);
-        }
+        private void Start() => Initialize(cameraIndex: 0);
 
         private void Initialize(int cameraIndex)
         {

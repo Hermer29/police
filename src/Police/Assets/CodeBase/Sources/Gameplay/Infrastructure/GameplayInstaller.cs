@@ -32,8 +32,13 @@ namespace Gameplay.Infrastructure
 
         public override void InstallBindings()
         {
+            Container.Bind<MoneyUi>()
+                .FromComponentInNewPrefabResource("Prefabs/UI/Stats")
+                .AsSingle();
+            
             Container.BindInstance(cameraAnimation)
                 .AsSingle();
+            
             BindMediator();
             BindCrossLevelUi();
             BindEndGameWindow();
