@@ -2529,7 +2529,7 @@ MonoBehaviour:
     b: 5.9
   - a: 5.9
     b: 6.27
-  _rotationSpeed: 1
+  _rotationSpeed: 6
 --- !u!1 &6461339414943267721
 GameObject:
   m_ObjectHideFlags: 0
