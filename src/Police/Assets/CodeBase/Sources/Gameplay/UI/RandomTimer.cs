@@ -63,11 +63,10 @@ namespace Gameplay.UI
             const int twoDaysAsSeconds = 172_800;
             _startTime = DateTime.Now;
             
-            var randomSeconds = Random.Range(twoDaysAsSeconds, threeDaysAsSeconds);
-            _endTime = TimeSpan.FromSeconds(randomSeconds);
+            _endTime = TimeSpan.FromDays(1);
             
             _prefsService.SetString(StartTimeKey, _startTime.ToBinary().ToString());
-            _prefsService.SetString(EndTimeKey, randomSeconds.ToString());
+            _prefsService.SetString(EndTimeKey, _endTime.TotalSeconds.ToString());
         }
 
         private bool IsRecordNotExists() 
