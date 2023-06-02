@@ -58,7 +58,10 @@ namespace Gameplay.Infrastructure
             Container.Bind<EndGameLogic>()
                 .ToSelf()
                 .AsSingle();
-            
+
+            Container.BindInterfacesAndSelfTo<EnergyKillRestorationView>()
+                .FromComponentInNewPrefabResource("Prefabs/UI/EnergyKillRestorationView")
+                .AsSingle();
 
             BindMediator();
             BindCrossLevelUi();

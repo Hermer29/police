@@ -28,13 +28,12 @@ namespace PeopleDraw
             Debug.Log($"{nameof(Drawer)} constructed");
         }
 
-        private async void InputServiceOnDrawnAtPoint(RaycastHit drawPoint, RaycastHit previous)
+        private void InputServiceOnDrawnAtPoint(RaycastHit drawPoint, RaycastHit previous)
         {
             if (CantDrawUnit(drawPoint))
                 return;
 
-
-            PoolUnit unit = await CreateUnit(drawPoint);
+            PoolUnit unit = CreateUnit(drawPoint);
             if (Blocked(unit))
             {
                 unit.ReturnToPool();
@@ -79,9 +78,9 @@ namespace PeopleDraw
             return placingBlock != null && placingBlock.OverlapsOtherUnit();
         }
 
-        private async Task<PoolUnit> CreateUnit(RaycastHit drawPoint)
+        private PoolUnit CreateUnit(RaycastHit drawPoint)
         {
-            PoolUnit unit = await _factory.InstantiateDrawnUnit(
+            PoolUnit unit = _factory.InstantiateDrawnUnit(
                 prefab: _unitSelectedUnits.Current.Value,
                 position: drawPoint.point,
                 selectedSerial: (int)_unitSelectedUnits.CurrentType.Value);

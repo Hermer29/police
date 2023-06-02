@@ -15,19 +15,21 @@ namespace Gameplay.PeopleDraw.Factory
     {
         private readonly IInstantiator _instantiator;
         private readonly ParentsForGeneratedObjects _parents;
+        private readonly IUnitsFxFactory _unitsFxFactory;
 
         private List<WinAnimator> _winAnimators = new ();
         private Lazy<Dictionary<int, ObjectPool<PoolUnit>>> _poolForTypes = new(
             valueFactory: () => new Dictionary<int, ObjectPool<PoolUnit>>());
         private List<PoolUnit> _policeMans = new ();
 
-        public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents)
+        public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents, IUnitsFxFactory unitsFxFactory)
         {
             _instantiator = instantiator;
             _parents = parents;
+            _unitsFxFactory = unitsFxFactory;
         }
         
-        public async Task<PoolUnit> InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial)
+        public PoolUnit InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial)
         {
             if (_poolForTypes.Value.ContainsKey(selectedSerial) == false)
             {
@@ -49,8 +51,14 @@ namespace Gameplay.PeopleDraw.Factory
                     obj.MarkUsed();
                     obj.gameObject.SetActive(true);
                 },
-                actionOnRelease: obj => obj.gameObject.SetActive(false));
+                actionOnRelease: OnAlliedRelease);
             return pool;
+        }
+
+        private void OnAlliedRelease(PoolUnit obj)
+        {
+            _unitsFxFactory.CreateDyingFx(obj.transform.position);
+            obj.gameObject.SetActive(false);
         }
 
         public void AnimatorsPlayVictory() => 

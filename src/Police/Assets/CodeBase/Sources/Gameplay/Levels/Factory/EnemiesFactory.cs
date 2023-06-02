@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ActiveCharacters.Shared.Components;
 using Gameplay.Levels.AssetManagement;
 using Gameplay.Levels.UI;
+using Gameplay.PeopleDraw.Factory;
 using Helpers;
 using LevelsMachine;
 using PeopleDraw.Components;
@@ -17,14 +18,17 @@ namespace Gameplay.Levels.Factory
         private readonly CharactersAssetLoader _loader;
         private readonly ILevelMediator _mediator;
         private readonly ParentsForGeneratedObjects _parents;
+        private readonly IUnitsFxFactory _unitsFxFactory;
 
         private List<Attackable> _enemies = new();
 
-        public EnemiesFactory(CharactersAssetLoader loader, ILevelMediator mediator, ParentsForGeneratedObjects parents)
+        public EnemiesFactory(CharactersAssetLoader loader, ILevelMediator mediator, ParentsForGeneratedObjects parents, 
+            IUnitsFxFactory unitsFxFactory)
         {
             _loader = loader;
             _mediator = mediator;
             _parents = parents;
+            _unitsFxFactory = unitsFxFactory;
         }
 
         public int EnemiesDeadAmount => _enemies.Count(x => x.Died);
@@ -42,12 +46,11 @@ namespace Gameplay.Levels.Factory
         {
             e.UnitDied -= AttackableOnUnitDied;
             _mediator.IncrementEnergyForEnemyDeath(e);
+            _unitsFxFactory.CreateDyingFx(e.Root.position);
         }
 
-        public bool InstantiatedEnemiesAlive()
-        {
-            return _enemies.All(x => x.Died == false);
-        }
+        public bool InstantiatedEnemiesAlive() 
+            => _enemies.All(x => x.Died == false);
 
         public void FlushEnemies()
         {
