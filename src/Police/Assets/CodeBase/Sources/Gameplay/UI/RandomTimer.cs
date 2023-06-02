@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
-using Codice.Client.Common;
 using Services.PrefsService;
 using TMPro;
 using UnityEngine;
