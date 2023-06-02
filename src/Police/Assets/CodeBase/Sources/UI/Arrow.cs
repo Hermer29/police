@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 namespace UI
@@ -7,7 +8,7 @@ namespace UI
     public class Arrow : MonoBehaviour
     {
         [SerializeField, Range(0, 1)] private float _normalizedOffsetFromCenter = 0.6f;
-        [SerializeField, Min(.1f)] private float _speed = .1f;
+        [SerializeField, Min(.1f)] private float _speed = 9999;
         [SerializeField] private CanvasGroup _fading;
         [SerializeField] private RectTransform _rectTransform;
         [Header("Additional target")]
@@ -29,15 +30,17 @@ namespace UI
         public void ShowTowards(Vector3 playerPosition, Vector3 targetPosition)
         {
             _fading.alpha = 1;
-            Vector2 twoDimDirection = playerPosition.XZ3DDirectionIntoXY2D(targetPosition) * _normalizedOffsetFromCenter;
+            transform.localScale = Vector3.zero;
+            transform.DOScale(Vector3.one, .4f);
+            Vector2 twoDimDirection = -playerPosition.XZ3DDirectionIntoXY2D(targetPosition) * _normalizedOffsetFromCenter;
             _previousDirection = _targetDirection ?? twoDimDirection;
             _targetDirection = twoDimDirection;
         }
     
         private IEnumerator WaitALittle(Vector3 point)
         {
-            ShowTowards(Camera.main.transform.position.SetZ(0), 
-                point.SetZ(0));
+            ShowTowards(Camera.main.transform.position.SetY(0), 
+                point.SetY(0));
             SlerpTowardsTarget(Time.deltaTime);
             yield return new WaitForSeconds(1);
             Hide();

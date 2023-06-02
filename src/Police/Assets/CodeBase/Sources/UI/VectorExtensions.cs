@@ -9,5 +9,11 @@ namespace UI
             source.z = z;
             return source;
         }
+
+        public static Vector3 SetY(this Vector3 source, float y)
+        {
+            source.y = y;
+            return source;
+        }
     }
 }
