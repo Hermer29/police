@@ -32,7 +32,7 @@ namespace Services.AdvertisingService.AdBlocking
             _advertisingService.ShowInterstitial();
         }
 
-        public void ShowRewarded(Action onClosedAndRewarded) 
-            => _advertisingService.ShowRewarded(onClosedAndRewarded);
+        public void ShowRewarded(Action onClosedAndRewarded, Action onError = null) 
+            => _advertisingService.ShowRewarded(onClosedAndRewarded, onError);
     }
 }

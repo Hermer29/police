@@ -10,18 +10,18 @@ namespace Tutorial
         private ICoroutineRunner _coroutineRunner;
         
         [SerializeField] private TutorialStep[] _steps;
+        
+        private Coroutine _running;
 
         [Inject]
-        public void Construct(ICoroutineRunner coroutineRunner)
-        {
-            _coroutineRunner = coroutineRunner;
-        }
-        
+        public void Construct(ICoroutineRunner coroutineRunner) 
+            => _coroutineRunner = coroutineRunner;
+
         public void Show()
         {
             Debug.Log($"{nameof(Tutorial)}.{nameof(Show)} called");
             gameObject.SetActive(true);
-            _coroutineRunner.StartCoroutine(Running());
+            _running = _coroutineRunner.StartCoroutine(Running());
         }
 
         private IEnumerator Running()
@@ -34,6 +34,12 @@ namespace Tutorial
                 _steps[current].OnExit.Invoke();
                 current++;
             }
+        }
+
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+            _coroutineRunner.StopCoroutine(_running);
         }
     }
 }

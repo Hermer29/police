@@ -14,7 +14,6 @@ namespace Gameplay.Levels
         private readonly ILevelMediator _mediator;
         private EnemiesFactory _factory;
 
-        private bool _continuing;
         private bool _lost;
         private bool _won;
 
@@ -27,19 +26,21 @@ namespace Gameplay.Levels
             _mediator = mediator;
         }
 
-        public void ExecuteLevel(int localLevel) 
-            => _coroutineRunner.StartCoroutine(CityCoroutine(localLevel));
+        public void ExecuteLevel(int localLevel) => _coroutineRunner.StartCoroutine(CityCoroutine(localLevel));
 
         public bool IsLost() => _lost;
         public bool IsWon() => _won;
 
-        private IEnumerator CityCoroutine(int localLevel)
+        public void Reactivate()
         {
             _lost = false;
             _won = false;
-            
-            bool lost = false;
-            var asIndex = localLevel - 1;
+        }
+        
+        private IEnumerator CityCoroutine(int localLevel)
+        {
+            var lost = false;
+            int asIndex = localLevel - 1;
             
             yield return LevelCoroutine(_cityDefinition.Levels[asIndex], () => lost = true);
             if (lost)
@@ -53,6 +54,7 @@ namespace Gameplay.Levels
         private IEnumerator LevelCoroutine(LevelEntry level, Action onLoose)
         {
             bool playerLost = false;
+            level.LooseTrigger.Reactivate();
             InitializeLevel(
                 level, 
                 out LevelEnemiesSpawner spawner, 
@@ -63,7 +65,6 @@ namespace Gameplay.Levels
 
             if (playerLost)
             {
-                _lost = true;
                 onLoose.Invoke();
                 spawner.Stop();
             }

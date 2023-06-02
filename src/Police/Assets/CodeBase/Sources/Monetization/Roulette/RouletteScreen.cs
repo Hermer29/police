@@ -10,7 +10,7 @@ namespace Monetization
         public void StartRoulette() =>
             _arrow.RotateСontinuously();
 
-        public void StopRoulette() => 
+        public void Stop() => 
             _arrow.StopRotation();
 
         public float CurrentRotation() => _arrow.CurrentRotation;

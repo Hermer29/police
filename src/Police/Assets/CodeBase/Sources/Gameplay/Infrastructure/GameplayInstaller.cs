@@ -8,6 +8,7 @@ using Gameplay.PeopleDraw.EnergyConsumption;
 using Gameplay.PeopleDraw.Factory;
 using Gameplay.UI;
 using Helpers;
+using Infrastructure.States;
 using Logic.Audio;
 using PeopleDraw.AssetManagement;
 using PeopleDraw.EnergyConsumption;
@@ -53,6 +54,11 @@ namespace Gameplay.Infrastructure
                 .FromComponentInNewPrefabResource("Prefabs/UI/AdBlock")
                 .AsSingle()
                 .NonLazy();
+
+            Container.Bind<EndGameLogic>()
+                .ToSelf()
+                .AsSingle();
+            
 
             BindMediator();
             BindCrossLevelUi();

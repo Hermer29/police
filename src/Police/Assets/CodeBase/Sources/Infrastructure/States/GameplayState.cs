@@ -3,7 +3,6 @@ using Gameplay.Levels;
 using Gameplay.Levels.Factory;
 using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI;
-using Gameplay.Levels.UI.Defeated;
 using Gameplay.UI;
 using Hermer29.Almasury;
 using Services;
@@ -19,13 +18,13 @@ namespace Infrastructure.States
         private IInputService _inputService;
         private LevelEngine _levelEngine;
         private EnemiesFactory _enemiesFactory;
-        private EndGameWindow _endGameWindow;
         private ILevelService _levelService;
         private TutorialEngine _tutorial;
         private IGameFactory _gameFactory;
         private ICoroutineRunner _coroutineRunner;
         private GameplayUI _gameplayUi;
         private AdBlockWindow _adBlockWindow;
+        private EndGameLogic _endGameLogic;
 
         private bool _goingToMenu;
 
@@ -37,11 +36,11 @@ namespace Infrastructure.States
             _inputService = _container.Resolve<IInputService>();
             _levelEngine = _container.Resolve<LevelEngine>();
             _enemiesFactory = _container.Resolve<EnemiesFactory>();
-            _endGameWindow = _container.Resolve<EndGameWindow>();
             _levelService = _container.Resolve<ILevelService>();
             _gameFactory = _container.Resolve<IGameFactory>();
             _gameplayUi = _container.Resolve<GameplayUI>();
             _adBlockWindow = _container.Resolve<AdBlockWindow>();
+            _endGameLogic = _container.Resolve<EndGameLogic>();
         }
 
         protected override void OnEnter()
@@ -52,7 +51,7 @@ namespace Infrastructure.States
             _gameplayUi.Show();
             _inputService.Enable();
 
-            if (_levelService.Level == 1)
+            if (TutorialRequired())
             {
                 _tutorial = _gameFactory.CreateTutorial();
                 _tutorial.Show();
@@ -62,43 +61,51 @@ namespace Infrastructure.States
             _coroutineRunner.StartCoroutine(PollGamesEnd());
         }
 
+        private bool TutorialRequired() => _levelService.Level == 1;
+
         private IEnumerator PollGamesEnd()
         {
+            _levelEngine.Reactivate();
             while (true)
             {
                 if (_levelEngine.IsLost())
                 {
+                    Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected loose");
                     HandleLoss();
                     break;
                 }
 
                 if (_levelEngine.IsWon())
                 {
+                    Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
                     HandleWon();
                     break;
                 }
-
                 yield return null;
             }
         }
 
         private void HandleLoss()
         {
-            _endGameWindow.ShowLost(_levelService.Level);
-            _endGameWindow.Closed += CloseLost;
+            _endGameLogic.NotifyLost(_levelService.Level);
+            _endGameLogic.Closed += CloseLost;
             RegisterGamesEnd();
         }
 
         private void HandleWon()
         {
             _levelService.IncrementLevel();
-            _endGameWindow.ShowWon(_levelService.Level);
-            _endGameWindow.Closed += CloseWon;
+            _endGameLogic.NotifyWon(_levelService.Level);
+            _endGameLogic.Closed += CloseWon;
             RegisterGamesEnd();
         }
 
         private void RegisterGamesEnd()
         {
+            if (TutorialRequired())
+            {
+                _tutorial.Disable();
+            }
             _inputService.Disable();
             _gameplayUi.Hide();
         }

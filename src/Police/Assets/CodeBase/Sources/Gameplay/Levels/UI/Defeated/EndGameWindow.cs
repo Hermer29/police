@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
-using DG.Tweening;
 using Gameplay.Levels.Domain;
-using MathUtility;
 using Monetization;
-using Services.MoneyService;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Upgrading.Services.CostEstimation;
 using Zenject;
 
 namespace Gameplay.Levels.UI.Defeated
 {
     public class EndGameWindow : MonoBehaviour
     {
-        private IMoneyService _moneyService;
-        
+        [SerializeField] private GameObject _filmSprite;
         [SerializeField] private RouletteScreen _roulette;
         [SerializeField] private TMP_Text _rewardedAmount;
         [SerializeField] private TMP_Text _rewardForLevel;
@@ -31,62 +26,28 @@ namespace Gameplay.Levels.UI.Defeated
         [SerializeField] private float[] _modifiers;
 
         private bool _shown;
-        private int _currentLevel;
 
         [field: SerializeField] public Button NoThanks { get; private set; }
         [field: SerializeField] public Button TakeMoreReward { get; private set; }
-        private int RewardForLevel => RewardCalculator.RewardForLevel(_currentLevel);
-        private int RouletteReward => Mathf.RoundToInt(RewardForLevel * _modifiers[_roulette.GetPrizeIndex()]);
-        
-        public event Action Closed;
 
-        [Inject]
-        public void Construct(IMoneyService moneyService)
-        {
-            _moneyService = moneyService;
-        }
-        
-        private void ReplayingLevel()
-        {
-            _moneyService.AddMoney(RewardForLevel);
-            Hide();
-        }
-
-
-        private void Hide()
+        public void Hide()
         {
             _shown = false;
             gameObject.SetActive(false);
-            NoThanks.onClick.RemoveListener(ReplayingLevel);
-            TakeMoreReward.onClick.RemoveListener(StopRouletteForReward);
-            Closed?.Invoke();
         }
 
-        private void StopRouletteForReward()
+        public void StopRoulette()
         {
-            _roulette.StopRoulette();
-            _moneyService.AddMoney(RouletteReward);
-            
-            StartCoroutine(WaitAndGoMenu());
+            _roulette.Stop();
         }
 
-        private void Update()
-        {
-            if (_shown == false)
-                return;
+        public float GetModifier() => _modifiers[_roulette.GetPrizeIndex()];
 
-            ShowRewardedAmount(RouletteReward);
-        }
-
-        private void ShowRewardedAmount(float modifier) => _rewardedAmount.text = Mathf.RoundToInt(modifier).ToString(CultureInfo.CurrentCulture);
+        public void ShowRewardedAmount(float reward) => _rewardedAmount.text = Mathf.RoundToInt(reward).ToString(CultureInfo.CurrentCulture);
 
         private void ShowRewardOnUp(int reward) => _rewardForLevel.text = $"+{reward}";
 
-        private IEnumerator WaitAndGoMenu()
-        {
-            yield return new WaitForSeconds(2f);
-            Hide();
-        }
+        public void StartRoulette() => _roulette.StartRoulette();
 
         public void ShowLost(int currentLevel)
         {
@@ -97,13 +58,10 @@ namespace Gameplay.Levels.UI.Defeated
         private void OpenEndGameWindow(int currentLevel)
         {
             Debug.Log("Opening loose window");
+            _filmSprite.SetActive(true);
             _shown = true;
             gameObject.SetActive(true);
-            _roulette.StartRoulette();
-            _currentLevel = currentLevel;
-            TakeMoreReward.onClick.AddListener(StopRouletteForReward);
-            NoThanks.onClick.AddListener(ReplayingLevel);
-            ShowRewardOnUp(RewardCalculator.RewardForLevel(currentLevel));
+            ShowRewardOnUp(RewardCalculator.WinRewardForLevel(currentLevel));
         }
 
         public void ShowWon(int currentLevel)
@@ -116,12 +74,23 @@ namespace Gameplay.Levels.UI.Defeated
 
         private void ShowAsWon() => SetIsWon(true);
 
+
         private void SetIsWon(bool isWon)
         {
             _wonRibbon.SetActive(isWon);
             _looseRibbon.SetActive(!isWon);
             _wonTint.SetActive(isWon);
             _looseTint.SetActive(!isWon);
+        }
+
+        public void ShowThatRewardForFree() => SetActiveIsRewardIsFree(true);
+
+        public void ShowThatRewardForReward() => SetActiveIsRewardIsFree(false);
+
+        private void SetActiveIsRewardIsFree(bool active)
+        {
+            NoThanks.gameObject.SetActive(!active);
+            _filmSprite.SetActive(!active);
         }
     }
 }

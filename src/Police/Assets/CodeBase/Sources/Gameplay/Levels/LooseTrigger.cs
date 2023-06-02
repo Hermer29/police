@@ -17,6 +17,11 @@ namespace Gameplay.Levels
             _collider.isTrigger = true;
         }
 
+        public void Reactivate()
+        {
+            _triggered = false;
+        }
+
         public IEnumerator WaitForTrigger()
         {
             yield return new WaitUntil(() => _triggered);

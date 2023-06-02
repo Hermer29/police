@@ -5,6 +5,6 @@ namespace Services.AdvertisingService
     public interface IAdvertisingService
     {
         void ShowInterstitial();
-        void ShowRewarded(Action onClosedAndRewarded);
+        void ShowRewarded(Action onClosedAndRewarded, Action onError = null);
     }
 }
