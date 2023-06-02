@@ -25,6 +25,7 @@ namespace Infrastructure.States
         private IGameFactory _gameFactory;
         private ICoroutineRunner _coroutineRunner;
         private GameplayUI _gameplayUi;
+        private AdBlockWindow _adBlockWindow;
 
         private bool _goingToMenu;
 
@@ -40,12 +41,14 @@ namespace Infrastructure.States
             _levelService = _container.Resolve<ILevelService>();
             _gameFactory = _container.Resolve<IGameFactory>();
             _gameplayUi = _container.Resolve<GameplayUI>();
+            _adBlockWindow = _container.Resolve<AdBlockWindow>();
         }
 
         protected override void OnEnter()
         {
             Debug.Log($"{nameof(GameplayState)}.{nameof(OnEnter)} called");
             ResolveDependencies();
+            _adBlockWindow.Reposition();
             _gameplayUi.Show();
             _inputService.Enable();
 
@@ -120,6 +123,7 @@ namespace Infrastructure.States
         protected override void OnExit()
         {
             _goingToMenu = false;
+            _adBlockWindow.Reposition();
             _enemiesFactory.FlushEnemies();
         }
 

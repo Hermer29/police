@@ -25,7 +25,7 @@ namespace Infrastructure.States
             _isEnded = true;
         }
 
-        [Transition(typeof(CreateServicesState))]
+        [Transition(typeof(SdkInitializationState))]
         public bool IsEnded() => _isEnded;
     }
 }

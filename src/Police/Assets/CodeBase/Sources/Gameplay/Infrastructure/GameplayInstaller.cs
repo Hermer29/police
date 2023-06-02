@@ -45,10 +45,15 @@ namespace Gameplay.Infrastructure
             Container.Bind<MoneyUi>()
                 .FromComponentInNewPrefabResource("Prefabs/UI/Stats")
                 .AsSingle();
-            
+
             Container.BindInstance(cameraAnimation)
                 .AsSingle();
             
+            Container.BindInterfacesAndSelfTo<AdBlockWindow>()
+                .FromComponentInNewPrefabResource("Prefabs/UI/AdBlock")
+                .AsSingle()
+                .NonLazy();
+
             BindMediator();
             BindCrossLevelUi();
             BindEndGameWindow();

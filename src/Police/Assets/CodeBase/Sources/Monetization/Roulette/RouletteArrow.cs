@@ -73,7 +73,6 @@ namespace Interface
         public int GetPrizeIndex()
         {
             var hitRange = _sectors.IndexOf(_sectors.GetHitRange(CurrentRotation));
-            Debug.Log(hitRange);
             return hitRange;
         }
     }

@@ -37,6 +37,7 @@ namespace Infrastructure
             
             Container.Add(loadLevelState);
             Container.Add(loadResourcesState);
+            Container.Add<SdkInitializationState>();
         }
 
         private void RequestLoading(params ILoadingProcessor[] loadingProcessors)

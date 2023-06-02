@@ -11,7 +11,8 @@ namespace Services.PurchasesService.PurchasesWrapper
         private Dictionary<Product, string> _products = new()
         {
             { Product.FirePack, "firepack" },
-            { Product.StarterPack, "starterpack" }
+            { Product.StarterPack, "starterpack" },
+            { Product.AdvertisingDisable, "adblock" }
         };
 
         public ProductsService(IPurchasesService purchasesService) => _purchasesService = purchasesService;

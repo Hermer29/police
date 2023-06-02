@@ -59,8 +59,6 @@ namespace Gameplay.UI
 
         private void SetupTimer()
         {
-            const int threeDaysAsSeconds = 259_200;
-            const int twoDaysAsSeconds = 172_800;
             _startTime = DateTime.Now;
             
             _endTime = TimeSpan.FromDays(1);

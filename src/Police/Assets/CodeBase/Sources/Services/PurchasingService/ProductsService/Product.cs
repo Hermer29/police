@@ -3,6 +3,7 @@
     public enum Product
     {
         StarterPack,
-        FirePack
+        FirePack,
+        AdvertisingDisable
     }
 }

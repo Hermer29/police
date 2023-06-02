@@ -3,6 +3,8 @@ using Gameplay.Levels.Services.LevelsTracking;
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Loading;
+using Services.AdvertisingService;
+using Services.AdvertisingService.AdBlocking;
 using Services.MoneyService;
 using Services.PrefsService;
 using Services.PurchasesService;
@@ -26,6 +28,17 @@ namespace Infrastructure.DependencyInjection
             BindPrefsService();
             BindMoneyService();
             BindPurchasingServices();
+            BindAdvertisingServices();
+        }
+
+        private void BindAdvertisingServices() => BindAdvertisingService();
+
+        private void BindAdvertisingService()
+        {
+            Container.Bind(typeof(IAdvertisingService), typeof(BlockingAdsAdvertisingDecorator))
+                .To<BlockingAdsAdvertisingDecorator>()
+                .AsSingle()
+                .WithArguments(new FakeAdvertisingService());
         }
 
         private void BindPurchasingServices()
