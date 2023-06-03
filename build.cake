@@ -100,7 +100,7 @@ string CreateBuildFolderName()
     var now = DateTime.Now;
     var culture = new CultureInfo("ru-RU");
     
-    return $"{now.Day}_{now.Month}_{now.Year}_{ProjectName}_{now.ToString("hh:mm", culture)}";
+    return $"{now.ToString("dd.MM.yyyy", culture)}_{ProjectName}_{now.ToString("hh.mm", culture)}";
 }
 
 #endregion
