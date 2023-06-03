@@ -65,6 +65,7 @@ Task(CleanArtifactsTask)
 #region Build-WebGl
 
 const string BuildWebGlTask = "Build-WebGL";
+string UnityPath = @"C:\Program Files\Unity\Hub\Editor\2021.3.26f1\Editor";
 const string UnityBuildMethod = "Editor.Builder.BuildWebGl";
 const string ProjectFolderPath = $"./src/{ProjectName}";
 
@@ -72,7 +73,7 @@ Task(BuildWebGlTask)
     .IsDependentOn(CleanArtifactsTask)
     .Does(() => 
 {
-    UnityEditor(
+    UnityEditor(UnityPath,
         CreateUnityEditorArguments(),
         new UnityEditorSettings 
         {
