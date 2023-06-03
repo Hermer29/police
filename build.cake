@@ -97,11 +97,10 @@ UnityEditorArguments CreateUnityEditorArguments()
 
 string CreateBuildFolderName()
 {
-    var today = DateTime.Today;
     var now = DateTime.Now;
     var culture = new CultureInfo("ru-RU");
     
-    return $"{now.ToString(culture)}_{ProjectName}_{now.ToString("hh:mm", culture)}";
+    return $"{now.Day}.{now.Month}.{now.Year}_{ProjectName}_{now.ToString("hh:mm", culture)}";
 }
 
 #endregion
