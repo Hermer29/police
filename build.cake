@@ -65,7 +65,7 @@ Task(CleanArtifactsTask)
 #region Build-WebGl
 
 const string BuildWebGlTask = "Build-WebGL";
-string UnityPath = @"C:\Program Files\Unity\Hub\Editor\2021.3.26f1\Editor";
+string UnityPath = @"C:\Program Files\Unity\Hub\Editor\2021.3.26f1\Editor\Unity.exe";
 const string UnityBuildMethod = "Editor.Builder.BuildWebGl";
 const string ProjectFolderPath = $"./src/{ProjectName}";
 
