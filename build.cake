@@ -10,6 +10,7 @@ using FluentFTP;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Globalization;
 
 const string ProjectName = "Police";
 const string ArtifactsFolderPath = "./artifacts";
@@ -96,7 +97,11 @@ UnityEditorArguments CreateUnityEditorArguments()
 
 string CreateBuildFolderName()
 {
-    return $"{DateTime.Today:d}_{ProjectName}_{DateTime.Now.Hour}_{DateTime.Now.Minute}";
+    var today = DateTime.Today;
+    var now = DateTime.Now;
+    var culture = new CultureInfo("ru-RU");
+    
+    return $"{now.ToString(culture)}_{ProjectName}_{now.ToString("hh:mm", culture)}";
 }
 
 #endregion
@@ -104,7 +109,7 @@ string CreateBuildFolderName()
 #region Upload-File
 
 const string UploadFileTask = "Upload-File";
-const string SearchingBuildFolderPattern = @"^.{0,}_" + ProjectName + "_.{0,}$";
+const string SearchingBuildFolderPattern = @"^.{0,}" + ProjectName + ".{0,}$";
 
 Task(UploadFileTask)
     .IsDependentOn(BuildWebGlTask)

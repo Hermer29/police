@@ -13,6 +13,8 @@ namespace Gameplay.Levels.UI.CrossLevelUi
         [SerializeField] private CrossLevelUpgradePresenter _upgrades;
         [SerializeField] private Button _openShop;
         [SerializeField] private Button _openBarracks;
+        [SerializeField] private Button _settingsButton;
+        [SerializeField] private SettingsWindow _settingsWindow;
         [field: SerializeField] public Button PlayButton { get; private set; }
 
         [Inject]
@@ -22,7 +24,11 @@ namespace Gameplay.Levels.UI.CrossLevelUi
             _windowsGroup.Hide();
             _openShop.onClick.AddListener(ShowShop);
             _openBarracks.onClick.AddListener(ShowBarracks);
+            _settingsButton.onClick.AddListener(ShowSettings);
+            _settingsWindow.Hide();
         }
+
+        private void ShowSettings() => _settingsWindow.Show();
 
         private void ShowBarracks()
         {

@@ -20,7 +20,6 @@ namespace Gameplay.Levels
         private readonly ILevelMediator _levelMediator;
         
         private int _waveIndex;
-        private bool _allEnemiesSpawned;
         private Coroutine _spawn;
 
         public LevelEnemiesSpawner(LevelEntry level, ICharactersFactory factory, ICoroutineRunner coroutineRunner,
@@ -39,7 +38,8 @@ namespace Gameplay.Levels
             while (HaveMoreWavesToSpawn())
             {
                 WaveDefinition currentWave = _level.Waves[_waveIndex];
-                _levelMediator.ShowExclamationMark(currentWave.SpawnPoint.transform.position);
+                _levelMediator.ShowExclamationMark(_level.LevelMiddle.position, 
+                    currentWave.SpawnPoint.transform.position);
                 yield return SpawnWaveAndWaitForTime(currentWave);
                 _waveIndex++;
             }
@@ -60,7 +60,6 @@ namespace Gameplay.Levels
 
             foreach (EnemyEntry enemyEntry in enemyTypes) 
                 InstantiateSpecifiedEnemyQuantity(enemyEntry, spawnPoint);
-            _allEnemiesSpawned = LastWave();
         }
 
         private void InstantiateSpecifiedEnemyQuantity(EnemyEntry enemyType, EnemiesSpawnPoint spawnPoint)

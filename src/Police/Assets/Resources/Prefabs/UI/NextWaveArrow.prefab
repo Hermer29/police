@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 556285885397550810}
   - component: {fileID: 2745021946694355795}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ArrowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 8411508850692763488}
   - component: {fileID: 3049938943888088453}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: ExclamationMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 8402980017760246066}
   - component: {fileID: 8402980017760246065}
   - component: {fileID: 1680184051733572327}
+  - component: {fileID: 235975205943418704}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -275,6 +276,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba1dec43707475782508061d8b6b842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &235975205943418704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8402980017760246067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248f415d61da487b9aa68a5e2f06248c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _texts:
+  - {fileID: 3049938943888088453}
+  _images:
+  - {fileID: 2745021946694355795}
+  _colors:
+  - {r: 1, g: 0.29803923, b: 0, a: 1}
+  - {r: 1, g: 0.68235296, b: 0, a: 1}
+  _colorTime: 0.3
 --- !u!1 &8402980018443906903
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +308,7 @@ GameObject:
   - component: {fileID: 8402980018443906900}
   - component: {fileID: 8402980018443906901}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ArrowParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +487,7 @@ GameObject:
   - component: {fileID: 8402980019174404772}
   - component: {fileID: 8402980019174404771}
   m_Layer: 5
-  m_Name: contain
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

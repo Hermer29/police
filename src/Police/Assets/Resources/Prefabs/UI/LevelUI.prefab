@@ -431,6 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnergyUi>k__BackingField: {fileID: 6698477848817475880}
   <SelectorUi>k__BackingField: {fileID: 6698477848917074468}
+  <Replay>k__BackingField: {fileID: 6698477850598763539}
 --- !u!1 &6698477848785819592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,7 +2653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6698477850598763540
 RectTransform:
   m_ObjectHideFlags: 0

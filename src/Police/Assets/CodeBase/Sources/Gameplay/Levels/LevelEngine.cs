@@ -3,7 +3,10 @@ using System.Collections;
 using GameBalance;
 using Gameplay.Levels.Factory;
 using Gameplay.Levels.UI;
+using Gameplay.UI;
+using Helpers;
 using Infrastructure;
+using UnityEngine;
 
 namespace Gameplay.Levels
 {
@@ -12,46 +15,51 @@ namespace Gameplay.Levels
         private readonly CityDefinition _cityDefinition;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ILevelMediator _mediator;
+        private readonly GameplayUI _gameplayUi;
         private EnemiesFactory _factory;
 
         private bool _lost;
         private bool _won;
+        private bool _canceled;
 
         public LevelEngine(CityDefinition cityDefinition, EnemiesFactory factory,
-            ILevelMediator mediator)
+            ILevelMediator mediator, GameplayUI gameplayUi)
         {
             _cityDefinition = cityDefinition;
             _coroutineRunner = AllServices.Get<ICoroutineRunner>();
             _factory = factory;
             _mediator = mediator;
-        }
-
-        public void ExecuteLevel(int localLevel) => _coroutineRunner.StartCoroutine(CityCoroutine(localLevel));
-
-        public bool IsLost() => _lost;
-        public bool IsWon() => _won;
-
-        public void Reactivate()
-        {
-            _lost = false;
-            _won = false;
-        }
-        
-        private IEnumerator CityCoroutine(int localLevel)
-        {
-            var lost = false;
-            int asIndex = localLevel - 1;
+            _gameplayUi = gameplayUi;
             
-            yield return LevelCoroutine(_cityDefinition.Levels[asIndex], () => lost = true);
-            if (lost)
-            {
-                _lost = true;
-                yield break;
-            }
-            _won = true;
+            _gameplayUi.Replay.onClick.AddListener(ReplayRequested);
         }
 
-        private IEnumerator LevelCoroutine(LevelEntry level, Action onLoose)
+        public event Action Lost;
+        public event Action Won;
+        public event Action Canceled;
+
+        private void ReplayRequested()
+        {
+            _canceled = true;
+        }
+
+        public void ExecuteLevel(int localLevel) => CityCoroutine(localLevel);
+
+        private void CityCoroutine(int localLevel)
+        {
+            int asIndex = localLevel - 1;
+            LevelEntry levelObject = _cityDefinition.Levels[asIndex];
+            _coroutineRunner.StartCoroutine(LevelCoroutine(levelObject))
+                .ContinueWith(OnHandlingEnded);
+        }
+
+        private void OnHandlingEnded()
+        {
+            Debug.Log($"{nameof(LevelEngine)}.{nameof(OnHandlingEnded)} Level handling ended");
+            _canceled = false;
+        }
+
+        private IEnumerator LevelCoroutine(LevelEntry level)
         {
             bool playerLost = false;
             level.LooseTrigger.Reactivate();
@@ -61,13 +69,24 @@ namespace Gameplay.Levels
                 onLost: () => playerLost = true);
 
             while (LevelCompleted(level) == false && playerLost == false)
+            {
+                if (_canceled)
+                {
+                    spawner.Stop();
+                    Canceled?.Invoke();
+                    yield break;
+                }
+
                 yield return null;
+            }
 
             if (playerLost)
             {
-                onLoose.Invoke();
                 spawner.Stop();
+                Lost?.Invoke();
+                yield break;
             }
+            Won?.Invoke();
         }
 
         private void InitializeLevel(LevelEntry level, out LevelEnemiesSpawner spawner, Action onLost)

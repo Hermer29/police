@@ -58,35 +58,28 @@ namespace Infrastructure.States
             }
             
             _levelEngine.ExecuteLevel(_levelService.LocalLevel);
-            _coroutineRunner.StartCoroutine(PollGamesEnd());
+            PollGamesEnd();
         }
 
         private bool TutorialRequired() => _levelService.Level == 1;
 
-        private IEnumerator PollGamesEnd()
+        private void PollGamesEnd()
         {
-            _levelEngine.Reactivate();
-            while (true)
-            {
-                if (_levelEngine.IsLost())
-                {
-                    Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected loose");
-                    HandleLoss();
-                    break;
-                }
+            _levelEngine.Lost += HandleLoss;
+            _levelEngine.Won += HandleWon;
+            _levelEngine.Canceled += HandleCancel;
+        }
 
-                if (_levelEngine.IsWon())
-                {
-                    Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
-                    HandleWon();
-                    break;
-                }
-                yield return null;
-            }
+        private void HandleCancel()
+        {
+            Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected cancel");
+            RegisterGamesEnd();
+            _goingToMenu = true;
         }
 
         private void HandleLoss()
         {
+            Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected loose");
             _endGameLogic.NotifyLost(_levelService.Level);
             _endGameLogic.Closed += CloseLost;
             RegisterGamesEnd();
@@ -94,6 +87,7 @@ namespace Infrastructure.States
 
         private void HandleWon()
         {
+            Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
             _levelService.IncrementLevel();
             _endGameLogic.NotifyWon(_levelService.Level);
             _endGameLogic.Closed += CloseWon;
@@ -132,6 +126,9 @@ namespace Infrastructure.States
             _goingToMenu = false;
             _adBlockWindow.Reposition();
             _enemiesFactory.FlushEnemies();
+            _levelEngine.Lost -= HandleLoss;
+            _levelEngine.Won -= HandleWon;
+            _levelEngine.Canceled -= HandleCancel;
         }
 
         [Transition(typeof(MenuState))]

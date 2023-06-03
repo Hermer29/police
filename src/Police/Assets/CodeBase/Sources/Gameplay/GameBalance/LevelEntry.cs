@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.Levels;
+using UnityEngine;
 
 namespace GameBalance
 {
@@ -9,5 +10,6 @@ namespace GameBalance
         public int EnergyAmount = 80;
         public WaveDefinition[] Waves;
         public LooseTrigger LooseTrigger;
+        public Transform LevelMiddle;
     }
 }

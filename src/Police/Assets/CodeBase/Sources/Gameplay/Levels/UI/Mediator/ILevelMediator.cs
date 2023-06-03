@@ -7,7 +7,7 @@ namespace Gameplay.Levels.UI
 {
     public interface ILevelMediator
     {
-        void ShowExclamationMark(Vector3 spawnPointPosition);
+        void ShowExclamationMark(Vector3 from, Vector3 to);
         void StartNextLevelTimeline();
         void MakeUnitSelected(UnitType whichOne);
         void AlliedUnitsToVictory();

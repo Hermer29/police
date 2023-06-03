@@ -24,7 +24,7 @@ namespace Gameplay.Levels.UI
         [Inject] EnergyKillRestoration _killRestoration;
         [Inject] Energy _energy;
 
-        public void ShowExclamationMark(Vector3 spawnPointPosition) => _arrow.ShowArrowTowardsTarget(spawnPointPosition);
+        public void ShowExclamationMark(Vector3 from, Vector3 to) => _arrow.ShowArrowTowardsTarget(from, to);
         public void MakeUnitSelected(UnitType whichOne) => _selectedUnits.Select(whichOne);
         public void UpdateEnergyValue(int amount)
         {

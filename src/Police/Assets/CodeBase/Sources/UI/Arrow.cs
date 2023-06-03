@@ -33,23 +33,33 @@ namespace UI
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, .4f);
             Vector2 twoDimDirection = -playerPosition.XZ3DDirectionIntoXY2D(targetPosition) * _normalizedOffsetFromCenter;
+            var dot = Vector3.Dot(Vector2.left, twoDimDirection);
+            if (dot < 0.2f && dot > -0.2f)
+            {
+                twoDimDirection = Vector2.up;
+            }
+            else if (dot < -0.2f)
+            {
+                twoDimDirection = Vector2.right;
+            }
+            else
+            {
+                twoDimDirection = Vector2.left;
+            }
             _previousDirection = _targetDirection ?? twoDimDirection;
             _targetDirection = twoDimDirection;
         }
     
-        private IEnumerator WaitALittle(Vector3 point)
+        private IEnumerator WaitALittle(Vector3 from, Vector3 to)
         {
-            ShowTowards(Camera.main.transform.position.SetY(0), 
-                point.SetY(0));
+            ShowTowards(from.SetY(0), to.SetY(0));
             SlerpTowardsTarget(Time.deltaTime);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
             Hide();
         }
 
-        public void ShowArrowTowardsTarget(Vector3 targetPoint)
-        {
-            StartCoroutine(WaitALittle(targetPoint));
-        }
+        public void ShowArrowTowardsTarget(Vector3 from, Vector3 to) 
+            => StartCoroutine(WaitALittle(from, to));
 
         private void SlerpTowardsTarget(float deltaTime)
         {
