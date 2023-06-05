@@ -48,7 +48,11 @@ namespace PeopleDraw
         private static void Rotate(RaycastHit drawPoint, RaycastHit previous, PoolUnit unit)
         {
             Vector3 lookDirection = drawPoint.point - previous.point;
-            const float minimalDistance = .1f;
+            if (lookDirection.sqrMagnitude > 40)
+            {
+                unit.transform.rotation = Quaternion.Euler(0, -180, 0);
+                return;
+            }
             unit.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, -90, 0);
         }
 
