@@ -9918,15 +9918,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2142212394726586740, guid: 89efb2a1ade77f445aed26a92dffa8c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.39
+      value: -33.99
       objectReference: {fileID: 0}
     - target: {fileID: 2142212394726586740, guid: 89efb2a1ade77f445aed26a92dffa8c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: -0.89
       objectReference: {fileID: 0}
     - target: {fileID: 2142212394726586740, guid: 89efb2a1ade77f445aed26a92dffa8c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -675.9
+      value: -675.72
       objectReference: {fileID: 0}
     - target: {fileID: 2142212394726586740, guid: 89efb2a1ade77f445aed26a92dffa8c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26599,7 +26599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: 0
 --- !u!4 &1544677357
 Transform:
   m_ObjectHideFlags: 0

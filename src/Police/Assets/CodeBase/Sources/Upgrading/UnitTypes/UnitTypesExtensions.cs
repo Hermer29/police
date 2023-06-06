@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ModestTree;
 
 namespace Upgrading.UnitTypes
 {
@@ -21,13 +22,29 @@ namespace Upgrading.UnitTypes
 
             while (otherUnpurchasableUnits.Count != 0)
             {
-                EvolvedUpgradableUnit next = otherUnpurchasableUnits.First(x => x.PreviousUnit == tail);
+                EvolvedUpgradableUnit next = otherUnpurchasableUnits.First(x => x.PreviousUnit.Guid == tail.Guid);
                 otherUnpurchasableUnits.Remove(next);
                 queue.Add(next);
                 tail = next;
             }
             queue.AddRange(upgradableUnits.Where(x => x.Purchasable));
             return queue;
+        }
+
+        public static PartialUpgradableUnit GetCurrentFromOrdered(this IEnumerable<PartialUpgradableUnit> orderedUnits)
+        {
+            var current = (PartialUpgradableUnit) null;
+            foreach (PartialUpgradableUnit orderedUnit in orderedUnits)
+            {
+                if (orderedUnit.IsFullyUpgraded())
+                {
+                    current = orderedUnit;
+                    continue;
+                }
+
+                return orderedUnit;
+            }
+            return current;
         }
 
         private static IEnumerable<EvolvedUpgradableUnit> NonStartingEvolvingUnits(PartialUpgradableUnit[] units)
@@ -41,6 +58,13 @@ namespace Upgrading.UnitTypes
         {
             return partialUpgradableUnits
                 .First(x => x is not EvolvedUpgradableUnit && x.Purchasable == false);
+        }
+
+        public static PartialUpgradableUnit GetNext(this IEnumerable<PartialUpgradableUnit> orderedUnits, PartialUpgradableUnit previous)
+        {
+            var asArr = orderedUnits as PartialUpgradableUnit[] ?? orderedUnits.ToArray();
+            int targetIndex = asArr.IndexOf(previous);
+            return targetIndex == -1 ? null : asArr[targetIndex];
         }
     }
 }

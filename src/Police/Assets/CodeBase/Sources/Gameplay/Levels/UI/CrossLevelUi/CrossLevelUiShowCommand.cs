@@ -5,9 +5,9 @@ namespace Gameplay.Levels.UI.CrossLevelUi
     public class CrossLevelUiShowCommand
     {
         private readonly CrossLevelUi _crossLevelUi;
-        private readonly LevelService _level;
+        private readonly ILevelService _level;
 
-        public CrossLevelUiShowCommand(CrossLevelUi crossLevelUi, LevelService level)
+        public CrossLevelUiShowCommand(CrossLevelUi crossLevelUi, ILevelService level)
         {
             _crossLevelUi = crossLevelUi;
             _level = level;
@@ -15,13 +15,18 @@ namespace Gameplay.Levels.UI.CrossLevelUi
 
         public void Show()
         {
-            if (_level.Level < 4)
+            _crossLevelUi.Show();
+            _crossLevelUi.SetUpgradeScreenActive(false);
+            _crossLevelUi.SetPlayButtonActive(true);
+            _crossLevelUi.SetShopAndBarracksActive(false);
+            
+            if (_level.Level > 3)
             {
-                
+                _crossLevelUi.SetUpgradeScreenActive(true);
             }
-            else if (_level.Level < 3)
+            else if (_level.Level > 4)
             {
-                
+                _crossLevelUi.SetShopAndBarracksActive(true);
             }
         }
         

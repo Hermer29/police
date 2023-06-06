@@ -15,8 +15,7 @@ namespace Gameplay.Levels
         private readonly CityDefinition _cityDefinition;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ILevelMediator _mediator;
-        private readonly GameplayUI _gameplayUi;
-        private EnemiesFactory _factory;
+        private readonly EnemiesFactory _factory;
 
         private bool _lost;
         private bool _won;
@@ -29,9 +28,8 @@ namespace Gameplay.Levels
             _coroutineRunner = AllServices.Get<ICoroutineRunner>();
             _factory = factory;
             _mediator = mediator;
-            _gameplayUi = gameplayUi;
-            
-            _gameplayUi.Replay.onClick.AddListener(ReplayRequested);
+
+            gameplayUi.Replay.onClick.AddListener(ReplayRequested);
         }
 
         public event Action Lost;

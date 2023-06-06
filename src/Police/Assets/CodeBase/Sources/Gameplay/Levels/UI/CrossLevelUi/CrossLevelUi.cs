@@ -10,7 +10,7 @@ namespace Gameplay.Levels.UI.CrossLevelUi
     public class CrossLevelUi : MonoBehaviour
     {
         private GenericWindowsGroup _windowsGroup;
-        
+
         [SerializeField] private CrossLevelUpgradePresenter _upgrades;
         [SerializeField] private Button _openShop;
         [SerializeField] private Button _openBarracks;
@@ -54,10 +54,7 @@ namespace Gameplay.Levels.UI.CrossLevelUi
             _windowsGroup.Closed -= OnGenericWindowsGroupClosed;
         }
 
-        public void Initialize()
-        {
-            _upgrades.LoadListWithData();
-        }
+        public void Initialize() => _upgrades.LoadListWithData();
 
         public void Show()
         {
@@ -69,6 +66,27 @@ namespace Gameplay.Levels.UI.CrossLevelUi
         {
             gameObject.SetActive(false);
             _upgrades.Hide();
+        }
+
+        public void SetPlayButtonActive(bool state)
+        {
+            PlayButton.gameObject.SetActive(state);
+        }
+
+        public void SetUpgradeScreenActive(bool state)
+        {
+            if (state)
+            {
+                _upgrades.Show();
+                return;
+            }
+            _upgrades.Hide();
+        }
+
+        public void SetShopAndBarracksActive(bool state)
+        {
+            _openShop.gameObject.SetActive(state);
+            _openBarracks.gameObject.SetActive(state);
         }
     }
 }

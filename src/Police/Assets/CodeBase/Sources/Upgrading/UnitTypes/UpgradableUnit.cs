@@ -54,12 +54,6 @@ namespace Upgrading.UnitTypes
             UpgradedLevel.Value = result.upgradeLevel;
         }
 
-        public static bool operator ==(UpgradableUnit a, UpgradableUnit b) 
-            => a.Guid == b.Guid;
-
-        public static bool operator !=(UpgradableUnit a, UpgradableUnit b) 
-            => a.Guid != b.Guid;
-
         protected virtual void OnLevelIncremented() { }
     }
 }

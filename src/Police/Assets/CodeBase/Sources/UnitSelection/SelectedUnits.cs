@@ -24,7 +24,7 @@ namespace PeopleDraw.Selection
         }
 
         public ReactiveProperty<PoolUnit> Current { get; } = new();
-        public ReactiveProperty<UnitType> CurrentType { get; } = new();
+        public ReactiveProperty<UnitType> CurrentType { get; } = new(UnitType.Barrier);
 
         public void Select(UnitType type)
         {

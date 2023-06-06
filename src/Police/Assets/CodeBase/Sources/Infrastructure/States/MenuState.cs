@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI.CrossLevelUi;
 using Gameplay.UI;
 using Helpers.UI;
@@ -12,6 +13,7 @@ namespace Infrastructure.States
     {
         private CrossLevelUi _crossLevelUi;
         private MoneyUi _moneyUi;
+        private ILevelService _levelService;
         private readonly ICoroutineRunner _coroutineRunner;
 
         private bool _goingToPlay;
@@ -23,6 +25,7 @@ namespace Infrastructure.States
             var container = AllServices.Get<DiContainer>();
             _crossLevelUi = container.Resolve<CrossLevelUi>();
             _moneyUi = container.Resolve<MoneyUi>();
+            _levelService = container.Resolve<ILevelService>();
         }
         
         protected override void OnEnter()
@@ -36,7 +39,8 @@ namespace Infrastructure.States
 
         private IEnumerator Work()
         {
-            _crossLevelUi.Show();
+            var showCommands = new CrossLevelUiShowCommand(_crossLevelUi, _levelService);
+            showCommands.Show();
             yield return new WaitForButtonClick(_crossLevelUi.PlayButton);
             _goingToPlay = true;
         }

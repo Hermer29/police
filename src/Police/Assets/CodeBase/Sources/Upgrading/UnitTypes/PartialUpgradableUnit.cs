@@ -29,7 +29,7 @@ namespace Upgrading.UnitTypes
         {
             for (int i = UpgradePartsReachedSerial - 1; i >= 0; i--)
             {
-                var appearanceByLevel = LevelPartsUnitAppearances[i];
+                LevelPartUnits appearanceByLevel = LevelPartsUnitAppearances[i];
                 if (appearanceByLevel == null)
                 {
                     continue;
@@ -41,7 +41,7 @@ namespace Upgrading.UnitTypes
                 $"Array {nameof(LevelPartsUnitAppearances)} must contain at least first element, and it must be not null");
         }
 
-        public bool IsFullyUpgraded() 
+        public bool IsFullyUpgraded()
             => UpgradePartsReachedSerial == _levelPartsQuantity;
 
         protected override void OnLevelIncremented()
