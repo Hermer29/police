@@ -1,4 +1,5 @@
 ﻿using System;
+using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,33 +16,33 @@ namespace Gameplay.UI
         public void ShowBarracks()
         {
             _barracks.Show();
-            gameObject.SetActive(true);
+            GetComponent<GameObjectActivationBaker>().SetActive(true);
             _close.onClick.AddListener(HideBarracks);
         }
 
         private void HideBarracks()
         {
             _barracks.Hide();
-            gameObject.SetActive(false);
+            GetComponent<GameObjectActivationBaker>().SetActive(false);
             _close.onClick.RemoveListener(HideBarracks);
             Closed?.Invoke();
         }
 
         public void ShowShop()
         {
-            _shop.Shop();
-            gameObject.SetActive(true);
+            _shop.Show();
+            GetComponent<GameObjectActivationBaker>().SetActive(true);
             _close.onClick.AddListener(HideShop);
         }
 
         private void HideShop()
         {
             _shop.Hide();
-            gameObject.SetActive(false);
+            GetComponent<GameObjectActivationBaker>().SetActive(false);
             _close.onClick.RemoveListener(HideShop);
             Closed?.Invoke();
         }
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide() => GetComponent<GameObjectActivationBaker>().SetActive(false);
     }
 }

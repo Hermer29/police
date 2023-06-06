@@ -26,8 +26,7 @@ namespace Editor
             {
                 locationPathName = $"../../artifacts/{location}",
                 scenes = EditorBuildSettings.scenes.Select(x => x.path).ToArray(),
-                target = Platform,
-                options = BuildOptions.CleanBuildCache
+                target = Platform
             });
         }
 

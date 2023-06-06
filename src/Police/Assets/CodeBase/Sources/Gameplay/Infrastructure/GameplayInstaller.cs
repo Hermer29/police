@@ -16,7 +16,10 @@ using Selection;
 using Services;
 using Services.Audio;
 using Services.UseService;
+using Shop;
 using UI;
+using UI.AssetLoader;
+using UI.Factory;
 using UnityEngine;
 using Zenject;
 
@@ -34,6 +37,11 @@ namespace Gameplay.Infrastructure
 
         public override void InstallBindings()
         {
+            Container.Bind<SaveService>()
+                .ToSelf()
+                .AsSingle();
+            
+            
             Container.Bind<GenericWindowsGroup>()
                 .FromComponentInNewPrefabResource("Prefabs/UI/UITypeB")
                 .AsSingle();
@@ -115,6 +123,14 @@ namespace Gameplay.Infrastructure
                 .To<AudioService>()
                 .AsSingle();
 
+            Container.Bind<UiElementsFactory>()
+                .ToSelf()
+                .AsSingle();
+
+            Container.Bind<UiAssetLoader>()
+                .ToSelf()
+                .AsSingle();
+            
             BindEnemyFactory();
         }
 

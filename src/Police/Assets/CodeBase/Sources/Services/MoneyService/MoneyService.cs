@@ -43,7 +43,7 @@ namespace Services.MoneyService
             var notEnoughCoins = MoneyAmount < amount;
             Debug.Log($"{nameof(MoneyService)}.{nameof(TrySpendMoney)} called. " +
                       $"{(notEnoughCoins ? "Insufficient funds" : "Success")}. " +
-                      $"Prev: {MoneyAmount}, Now: {MoneyAmount - amount}");
+                      $"Prev: {MoneyAmount}, Now: {MoneyAmount - amount}, Delta: {-amount}");
             if(notEnoughCoins)
                 return false;
 

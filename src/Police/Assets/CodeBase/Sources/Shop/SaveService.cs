@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Infrastructure;
 using Services.PrefsService;
+using SpecialPlatforms;
 using UnityEngine;
 
-namespace SpecialPlatforms
+namespace Shop
 {
     public class SaveService
     {
@@ -12,7 +13,7 @@ namespace SpecialPlatforms
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IPrefsService _prefsService;
 
-        private readonly List<ISavableData> _data = new List<ISavableData>();
+        private readonly List<ISavableData> _data = new();
         
         public SaveService(ICoroutineRunner coroutineRunner, IPrefsService prefsService)
         {

@@ -1,4 +1,5 @@
-﻿using Services.MoneyService;
+﻿using Interface;
+using Services.MoneyService;
 using Services.PrefsService;
 using Services.PurchasesService.PurchasesWrapper;
 using UnityEngine;
@@ -65,8 +66,8 @@ namespace Gameplay.UI
         private static string ConstructBoughtKey(Product product) 
             => $"{product}_IsBought";
 
-        public void Shop() => gameObject.SetActive(true);
+        public void Show() => GetComponent<GameObjectActivationBaker>().SetActive(true);
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide() => GetComponent<GameObjectActivationBaker>().SetActive(false);
     }
 }

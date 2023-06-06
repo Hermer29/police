@@ -45,10 +45,7 @@ namespace Upgrading.UnitTypes
             return JsonConvert.SerializeObject(data);
         }
 
-        string ISavableData.Key()
-        {
-            return Guid;
-        }
+        string ISavableData.Key() => Guid;
 
         void ISavableData.Populate(string data)
         {

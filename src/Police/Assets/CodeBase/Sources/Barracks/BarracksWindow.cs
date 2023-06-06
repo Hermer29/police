@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UI.Factory;
 using UnityEngine;
@@ -14,10 +12,8 @@ namespace Barracks
     {
         private UnitsRepository _unitsRepository;
         private UiElementsFactory _uiElementsFactory;
-        
-        [SerializeField] private RectTransform _parentForBarriers;
-        [SerializeField] private RectTransform _parentForMelee;
-        [SerializeField] private RectTransform _parentForRanged;
+
+        [SerializeField] private BarracksUnitGroup[] _groups;
 
         private bool _initialized;
         private IEnumerable<PartialUpgradableUnit> _units;
@@ -27,6 +23,8 @@ namespace Barracks
         {
             _unitsRepository = unitsRepository;
             _uiElementsFactory = uiElementsFactory;
+            foreach (BarracksUnitGroup barracksUnitGroup in _groups) 
+                barracksUnitGroup.Construct(_uiElementsFactory);
         }
         
         public void Show()
@@ -47,36 +45,11 @@ namespace Barracks
         {
             _units = _unitsRepository.GetAll();
             var partialUpgradableUnits = _units as PartialUpgradableUnit[] ?? _units.ToArray();
-            BuildUiGroupUnitsByType(partialUpgradableUnits, UnitType.Barrier);
-            BuildUiGroupUnitsByType(partialUpgradableUnits, UnitType.Melee);
-            BuildUiGroupUnitsByType(partialUpgradableUnits, UnitType.Ranged);
-        }
-
-        private void BuildUiGroupUnitsByType(IEnumerable<PartialUpgradableUnit> units, UnitType type)
-        {
-            var group = units
-                .Where(x => x.Type == type)
-                .OrderByLogic();
-            
-            foreach (PartialUpgradableUnit unit in group)
+            foreach (BarracksUnitGroup barracksUnitGroup in _groups)
             {
-                CreateUnitEntry(unit);
+                barracksUnitGroup.BuildUiGroupUnitsByType(partialUpgradableUnits.Where(
+                    x => x.Type == barracksUnitGroup.UnitType));
             }
         }
-
-        private void CreateUnitEntry(PartialUpgradableUnit unit)
-        {
-            RectTransform parent = unit.Type switch
-            {
-                UnitType.Barrier => _parentForBarriers,
-                UnitType.Melee => _parentForMelee,
-                UnitType.Ranged => _parentForRanged,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            CreateUnitUiElement(unit, parent);
-        }
-
-        private void CreateUnitUiElement(PartialUpgradableUnit unit, Transform parent) 
-            => _uiElementsFactory.CreateBarracksElement(parent).Construct(unit);
     }
 }

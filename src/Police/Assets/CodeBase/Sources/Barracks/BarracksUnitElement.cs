@@ -26,14 +26,8 @@ namespace Barracks
 
         public event Action<PartialUpgradableUnit> OpenWindowRequested;
 
-        private void OnOpeningWindow()
-        {
-            OpenWindowRequested?.Invoke(_unit);
-        }
+        private void OnOpeningWindow() => OpenWindowRequested?.Invoke(_unit);
 
-        private void OnLevelUpdated(int level)
-        {
-            _block.ShowLevel(level);
-        }
+        private void OnLevelUpdated(int level) => _block.ShowLevel(level);
     }
 }

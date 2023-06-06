@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Services.MoneyService;
 using Services.UseService;
 using UnityEngine;
 using Upgrading.Factory;
@@ -18,14 +19,16 @@ namespace Upgrading.UI.CrossLevels
         private IUpgradableUnitsFactory _factory;
         private IUpgradeCostService _costService;
         private UnitsUsingService _usingService;
+        private IMoneyService _moneyService;
 
         private bool _initialized;
         private readonly Dictionary<UpgradableUnit, CrossLevelUpgradeEntry> _unitsAndTheirEntries = new();
 
         [Inject]
         public void Construct(UnitsRepository repository, UnitsUpgrades upgrades, IUpgradableUnitsFactory factory,
-            IUpgradeCostService costService, UnitsUsingService usingService)
+            IUpgradeCostService costService, UnitsUsingService usingService, IMoneyService moneyService)
         {
+            _moneyService = moneyService;
             _usingService = usingService;
             _costService = costService;
             _factory = factory;
@@ -48,22 +51,28 @@ namespace Upgrading.UI.CrossLevels
             {
                 entry.UpgradeForCoins.onClick.AddListener(() => OnUpgrade(unit));
                 _unitsAndTheirEntries.Add(unit, entry);
-                UpdateInformation(unit, entry);
+                var cost = CalculateCost(unit);
+                UpdateInformation(unit, entry, cost);
             }
             _initialized = true;
         }
 
-        private void UpdateInformation(UpgradableUnit unit, CrossLevelUpgradeEntry ui)
+        private void UpdateInformation(UpgradableUnit unit, CrossLevelUpgradeEntry ui, int upgradeCost)
         {
-            int upgradeCost = _costService.Calculate(unit);
             ui.ShowUpgradeCost(upgradeCost);
             ui.ShowUpgradeLevel(unit.UpgradedLevel.Value);
         }
 
         private void OnUpgrade(UpgradableUnit relatedUnit)
         {
-            UpdateInformation(relatedUnit, _unitsAndTheirEntries[relatedUnit]);
-            _upgrades.Upgrade(relatedUnit);
+            int upgradeCost = CalculateCost(relatedUnit);
+            if (_moneyService.TrySpendMoney(upgradeCost))
+            {
+                _upgrades.Upgrade(relatedUnit);
+                UpdateInformation(relatedUnit, _unitsAndTheirEntries[relatedUnit], upgradeCost);
+            }
         }
+
+        private int CalculateCost(UpgradableUnit relatedUnit) => _costService.Calculate(relatedUnit);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Gameplay.UI;
+﻿using Barracks;
+using Gameplay.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Upgrading.UI.CrossLevels;
@@ -15,17 +16,16 @@ namespace Gameplay.Levels.UI.CrossLevelUi
         [SerializeField] private Button _openBarracks;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private SettingsWindow _settingsWindow;
+       
         [field: SerializeField] public Button PlayButton { get; private set; }
 
         [Inject]
         public void Construct(GenericWindowsGroup windowsGroup)
         {
             _windowsGroup = windowsGroup;
-            _windowsGroup.Hide();
             _openShop.onClick.AddListener(ShowShop);
             _openBarracks.onClick.AddListener(ShowBarracks);
             _settingsButton.onClick.AddListener(ShowSettings);
-            _settingsWindow.Hide();
         }
 
         private void ShowSettings() => _settingsWindow.Show();

@@ -5,14 +5,7 @@ namespace UI.AssetLoader
 {
     public class UiAssetLoader
     {
-        public UiAssetLoader()
-        {
-            
-        }
-        
         public BarracksUnitElement LoadBarracksElement()
-        {
-            return Resources.Load<BarracksUnitElement>("Prefabs/UI/BarracksUnitElement");
-        }
+            => Resources.Load<BarracksUnitElement>("Prefabs/UI/BarracksUnitEntry");
     }
 }

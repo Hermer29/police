@@ -1,11 +1,23 @@
-﻿using UnityEngine;
+﻿using Barracks;
+using Interface;
+using UnityEngine;
 
 namespace Gameplay.UI
 {
     internal class BarracksSubwindow : MonoBehaviour
     {
-        public void Show() => gameObject.SetActive(true);
+        [SerializeField] private BarracksWindow _window;
+        
+        public void Show()
+        {
+            _window.Show();
+            GetComponent<GameObjectActivationBaker>().SetActive(true);
+        }
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide()
+        {
+            _window.Hide();
+            GetComponent<GameObjectActivationBaker>().SetActive(false);
+        }
     }
 }
