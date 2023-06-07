@@ -10,6 +10,5 @@ namespace GameBalance
         public int EnergyAmount = 80;
         public WaveDefinition[] Waves;
         public LooseTrigger LooseTrigger;
-        public Transform LevelMiddle;
     }
 }

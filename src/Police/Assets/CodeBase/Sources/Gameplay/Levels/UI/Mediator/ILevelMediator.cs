@@ -1,7 +1,6 @@
 ﻿using ActiveCharacters.Shared.Components;
 using PeopleDraw.EnergyConsumption;
 using UnityEngine;
-using Upgrading.UnitTypes;
 
 namespace Gameplay.Levels.UI
 {
@@ -9,7 +8,6 @@ namespace Gameplay.Levels.UI
     {
         void ShowExclamationMark(Vector3 from, Vector3 to);
         void StartNextLevelTimeline();
-        void MakeUnitSelected(UnitType whichOne);
         void AlliedUnitsToVictory();
         void DefineMaxEnergyValue(int value);
         void UpdateEnergyValue(int amount);

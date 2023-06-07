@@ -62,21 +62,21 @@ namespace Gameplay.Levels.UI.CrossLevelUi
 
         private void OnGenericWindowsGroupClosed()
         {
-            Show(_levelService.LocalLevel);
+            Show();
             _windowsGroup.Closed -= OnGenericWindowsGroupClosed;
         }
 
         public void Initialize() => _upgrades.LoadListWithData();
 
-        public void Show(int level)
+        public void Show()
         {
             gameObject.SetActive(true);
             _upgrades.Show();
-            _levelDisplay.ShowLocalLevel(level);
+            _levelDisplay.ShowLocalLevel(_levelService.LocalLevel);
             
-            UpdateLocalization(level);
-            _currentTown.sprite = _townVisualMapping.GetCurrentTownSprite(level);
-            DrawNextTown(level);
+            UpdateLocalization(_levelService.Level);
+            _currentTown.sprite = _townVisualMapping.GetCurrentTownSprite(_levelService.Level);
+            DrawNextTown(_levelService.Level);
         }
 
         private void DrawNextTown(int level)

@@ -1,4 +1,5 @@
-﻿using PeopleDraw.EnergyConsumption;
+﻿using System;
+using PeopleDraw.EnergyConsumption;
 
 namespace Gameplay.PeopleDraw.EnergyConsumption
 {
@@ -12,12 +13,14 @@ namespace Gameplay.PeopleDraw.EnergyConsumption
         public Energy(EnergyUi energyUi) => _energyUi = energyUi;
         
         public int Amount => _currentEnergyValue;
+        public event Action Updated;
 
         public void DefineMaxEnergyAndFill(int value)
         {
             _currentEnergyValue = value;
             _maxEnergyValue = value;
             _energyUi.DefineMaxValue(value);
+            Updated?.Invoke();
         }
 
         public void SpendEnergy(int amount)
@@ -26,6 +29,7 @@ namespace Gameplay.PeopleDraw.EnergyConsumption
             if (_currentEnergyValue < 0) 
                 _currentEnergyValue = 0;
             _energyUi.SetEnergyValue(_currentEnergyValue);
+            Updated?.Invoke();
         }
 
         public void RestoreEnergy(int amount)
@@ -34,6 +38,7 @@ namespace Gameplay.PeopleDraw.EnergyConsumption
             if (_currentEnergyValue > _maxEnergyValue) 
                 _currentEnergyValue = _maxEnergyValue;
             _energyUi.SetEnergyValue(_currentEnergyValue);
+            Updated?.Invoke();
         }
     }
 }

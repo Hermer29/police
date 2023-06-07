@@ -16,22 +16,36 @@ namespace Infrastructure.States
         private bool _levelLoaded;
         private DiContainer _container;
         private ILevelService _level;
+        private readonly LoadingManager _loading;
+        private readonly LoadGameResources _resourcesLoading;
 
-        private const string SceneName = "LosAngelesCity";
+        private bool _justLaunched = true;
 
-        public LoadLevelState(ICoroutineRunner coroutineRunner, DiContainer container)
+        public LoadLevelState(ICoroutineRunner coroutineRunner, DiContainer container, LoadGameResources loadResourcesState)
         {
             _container = container;
             _coroutineRunner = coroutineRunner;
             _level = container.Resolve<ILevelService>();
+            _loading = container.Resolve<LoadingManager>();
+            _resourcesLoading = loadResourcesState;
         }
         
-        public float Progress { private set; get; }
+        public float Progress { set; get; }
 
         protected override void OnEnter() => _coroutineRunner.StartCoroutine(LevelLoading());
 
         private IEnumerator LevelLoading()
         {
+            if (_justLaunched)
+            {
+                _loading.RequestLoadingImmediately(this, _resourcesLoading);
+            }
+            else
+            {
+                _loading.RequestLoading(this, _resourcesLoading);
+            }
+
+            _justLaunched = false;
             AsyncOperation sceneLoading = _level.LoadCurrentLevel();
             
             var sceneChanged = false;
@@ -55,6 +69,11 @@ namespace Infrastructure.States
             
             _level.WarpToCurrentLevel();
             _levelLoaded = true;
+        }
+
+        protected override void OnExit()
+        {
+            _levelLoaded = false;
         }
 
         [Transition(typeof(LoadGameResources))]

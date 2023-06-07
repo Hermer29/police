@@ -3,6 +3,7 @@ using Gameplay.PeopleDraw.Factory;
 using PeopleDraw.Components;
 using PeopleDraw.Selection;
 using Services;
+using UnitSelection;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -61,8 +62,8 @@ namespace PeopleDraw
             return NoIntersection(drawPoint) || UnitNotSelected() || NotEnoughEnergyToSpawnSelected();
         }
 
-        private bool NotEnoughEnergyToSpawnSelected() => 
-            _unitSelectedUnits.HasEnoughEnergyToSpawn() == false;
+        private bool NotEnoughEnergyToSpawnSelected() =>
+            _unitSelectedUnits.HasEnoughEnergyToSpawnSelected() == false;
 
         private bool UnitNotSelected() => 
             _unitSelectedUnits.Current == null;

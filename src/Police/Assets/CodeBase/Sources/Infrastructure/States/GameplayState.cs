@@ -5,9 +5,12 @@ using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI;
 using Gameplay.UI;
 using Hermer29.Almasury;
+using PeopleDraw.Selection;
 using Services;
+using Services.AdvertisingService;
 using Tutorial;
 using UnityEngine;
+using Upgrading.UnitTypes;
 using DiContainer = Zenject.DiContainer;
 
 namespace Infrastructure.States
@@ -25,8 +28,12 @@ namespace Infrastructure.States
         private GameplayUI _gameplayUi;
         private AdBlockWindow _adBlockWindow;
         private EndGameLogic _endGameLogic;
+        private IAdvertisingService _advertising;
 
         private bool _goingToMenu;
+        private bool _warpToNextTown;
+        private bool _justCompletedLastTownLevel;
+        private SelectedUnits _selection;
 
         private void ResolveDependencies()
         {
@@ -41,12 +48,22 @@ namespace Infrastructure.States
             _gameplayUi = _container.Resolve<GameplayUI>();
             _adBlockWindow = _container.Resolve<AdBlockWindow>();
             _endGameLogic = _container.Resolve<EndGameLogic>();
+            _advertising = _container.Resolve<IAdvertisingService>();
+            _selection = _container.Resolve<SelectedUnits>();
         }
 
         protected override void OnEnter()
         {
             Debug.Log($"{nameof(GameplayState)}.{nameof(OnEnter)} called");
             ResolveDependencies();
+            
+            ExecuteAction();
+        }
+
+        private void ExecuteAction()
+        {
+            _selection.SelectUnit(UnitType.Barrier);
+            _advertising.ShowInterstitial();
             _adBlockWindow.Reposition();
             _gameplayUi.Show();
             _inputService.Enable();
@@ -56,6 +73,7 @@ namespace Infrastructure.States
                 _tutorial = _gameFactory.CreateTutorial();
                 _tutorial.Show();
             }
+
             Debug.Log($"Running local level: {_levelService.LocalLevel}");
             _levelEngine.ExecuteLevel(_levelService.LocalLevel);
             PollGamesEnd();
@@ -82,16 +100,29 @@ namespace Infrastructure.States
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected loose");
             _endGameLogic.NotifyLost(_levelService.Level);
             _endGameLogic.Closed += CloseLost;
+            _advertising.ShowInterstitial();
             RegisterGamesEnd();
         }
 
         private void HandleWon()
         {
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
-            _levelService.IncrementLevel();
             _endGameLogic.NotifyWon(_levelService.Level);
             _endGameLogic.Closed += CloseWon;
+            if (_levelService.LocalLevel == 10)
+            {
+                _justCompletedLastTownLevel = true;
+            }
+            _levelService.IncrementLevel();
+            _advertising.ShowInterstitial();
             RegisterGamesEnd();
+        }
+
+        private void HandleWarpToNextTown()
+        {
+            _levelService.IncrementLevel();
+            _warpToNextTown = true;
+            _advertising.ShowInterstitial();
         }
 
         private void RegisterGamesEnd()
@@ -110,9 +141,15 @@ namespace Infrastructure.States
 
         private IEnumerator WaitAndGoToMenuStateWhenWon()
         {
+            if (_justCompletedLastTownLevel)
+            {
+                _warpToNextTown = true;
+                yield break;
+            }
             AllServices.Get<ILevelMediator>().StartNextLevelTimeline();
             yield return new WaitForSeconds(2);
             _goingToMenu = true;
+            
         }
         
         private IEnumerator WaitAndGoToMenuStateWhenLost()
@@ -133,5 +170,8 @@ namespace Infrastructure.States
 
         [Transition(typeof(MenuState))]
         public bool TimeToGoToMenu() => _goingToMenu;
+
+        [Transition(typeof(LoadLevelState))]
+        public bool WarpToNextTownState() => _warpToNextTown;
     }
 }

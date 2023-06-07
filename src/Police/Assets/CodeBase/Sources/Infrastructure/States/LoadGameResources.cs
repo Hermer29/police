@@ -26,7 +26,7 @@ namespace Infrastructure.States
             _coroutineRunner = coroutineRunner;
         }
 
-        public float Progress { get; private set; }
+        public float Progress { get; set; }
 
         private void ResolveSceneDependencies()
         {
@@ -54,6 +54,11 @@ namespace Infrastructure.States
             Debug.Log($"{nameof(LoadGameResources)}.{nameof(LoadResources)} completed");
             Progress = 1;
             _resourcesLoaded = true;
+        }
+
+        protected override void OnExit()
+        {
+            _resourcesLoaded = false;
         }
 
         [Transition(typeof(MenuState))]

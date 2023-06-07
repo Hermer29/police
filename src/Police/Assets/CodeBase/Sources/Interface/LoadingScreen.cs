@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,7 @@ public class LoadingScreen : MonoBehaviour
         _slider.value = Mathf.MoveTowards(_slider.value, _targetSliderT, Time.deltaTime * SliderChangeSpeed);
     }
 
+    [Button]
     public void FadeIn()
     {
         StartCoroutine(ProcessCoroutine(0, (process) =>
@@ -51,6 +53,7 @@ public class LoadingScreen : MonoBehaviour
         process.Invoke(1);
     }
 
+    [Button]
     public void FadeOut()
     {
         StartCoroutine(ProcessCoroutine(1, 

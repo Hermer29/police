@@ -33,23 +33,24 @@ namespace UI
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, .4f);
             Vector2 twoDimDirection = -playerPosition.XZ3DDirectionIntoXY2D(targetPosition) * _normalizedOffsetFromCenter;
-            var dot = Vector3.Dot(Vector2.left, twoDimDirection);
-            if (dot < 0.2f && dot > -0.2f)
-            {
-                twoDimDirection = Vector2.up;
-            }
-            else if (dot < -0.2f)
-            {
-                twoDimDirection = Vector2.right;
-            }
-            else
-            {
-                twoDimDirection = Vector2.left;
-            }
+            twoDimDirection = DetermineArrowRotation(twoDimDirection);
             _previousDirection = _targetDirection ?? twoDimDirection;
             _targetDirection = twoDimDirection;
         }
-    
+
+        private static Vector2 DetermineArrowRotation(Vector2 twoDimDirection)
+        {
+            float dot = Vector3.Dot(Vector2.left, twoDimDirection);
+            const float sensitivity = 0.3f;
+            if (dot is < sensitivity and > -sensitivity)
+            {
+                return Vector2.up;
+            }
+
+            bool leansRight = dot < -0.3f;
+            return leansRight ? Vector2.right : Vector2.left;
+        }
+
         private IEnumerator WaitALittle(Vector3 from, Vector3 to)
         {
             ShowTowards(from.SetY(0), to.SetY(0));

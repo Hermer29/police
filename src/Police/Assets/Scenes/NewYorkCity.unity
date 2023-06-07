@@ -1661,6 +1661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &47531277
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2429,6 +2430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &79057280
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4359,6 +4361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &146404797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5528,7 +5531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Levels:
-  - EnergyAmount: 80
+  - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 940391833}
       Enemies:
@@ -11202,6 +11205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &531912241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27278,6 +27282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1301120265
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34235,6 +34240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1567959352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34778,6 +34784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1617357442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35580,6 +35587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1669077325
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36634,6 +36642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1735180369
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40272,6 +40281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1153288d2ff847ae9c6853ad7e246e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
 --- !u!65 &1949308322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42924,7 +42934,7 @@ MonoBehaviour:
   _mediator: {fileID: 2057099298}
   _bulletFactory: {fileID: 2142733622}
   _parents: {fileID: 1801141408}
-  cameraAnimation: {fileID: 0}
+  cameraAnimation: {fileID: 1573092901}
 --- !u!114 &2142733622
 MonoBehaviour:
   m_ObjectHideFlags: 0

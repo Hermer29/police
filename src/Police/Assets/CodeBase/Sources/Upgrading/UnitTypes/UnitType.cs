@@ -5,8 +5,8 @@ namespace Upgrading.UnitTypes
     [Serializable]
     public enum UnitType
     {
-        Melee,
-        Ranged,
-        Barrier
+        Barrier = 0,
+        Melee = 1,
+        Ranged = 2
     }
 }

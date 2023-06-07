@@ -15,21 +15,13 @@ namespace Gameplay.Levels.UI.CrossLevelUi
 
         public void Show()
         {
-            _crossLevelUi.Show(_level.LocalLevel);
-            _crossLevelUi.SetUpgradeScreenActive(false);
+            var barracksShopActive = _level.Level > 4;
+            var upgradeScreenActive = _level.Level > 3;
+        
+            _crossLevelUi.Show();
+            _crossLevelUi.SetUpgradeScreenActive(upgradeScreenActive);
+            _crossLevelUi.SetShopAndBarracksActive(barracksShopActive);
             _crossLevelUi.SetPlayButtonActive(true);
-            _crossLevelUi.SetShopAndBarracksActive(false);
-            
-            if (_level.Level > 3)
-            {
-                _crossLevelUi.SetUpgradeScreenActive(true);
-            }
-            else if (_level.Level > 4)
-            {
-                _crossLevelUi.SetShopAndBarracksActive(true);
-            }
         }
-        
-        
     }
 }

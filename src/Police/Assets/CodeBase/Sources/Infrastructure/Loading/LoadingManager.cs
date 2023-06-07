@@ -48,6 +48,7 @@ namespace Infrastructure.Loading
         private IEnumerator WatchForProcessors()
         {
             Assert.IsNotNull(_currentProcessors);
+            Debug.Log("Start loading");
             
             while (true)
             {
@@ -61,6 +62,10 @@ namespace Infrastructure.Loading
             }
             Debug.Log("Requested loading completed");
             _loadingScreen.FadeOut();
+            foreach (ILoadingProcessor processor in _currentProcessors)
+            {
+                processor.Progress = 0;
+            }
             _currentProcessors = null;
         }
     }

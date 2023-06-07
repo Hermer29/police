@@ -7,6 +7,7 @@ using GameBalance;
 using Gameplay.Levels.UI;
 using Infrastructure;
 using LevelsMachine;
+using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -38,7 +39,7 @@ namespace Gameplay.Levels
             while (HaveMoreWavesToSpawn())
             {
                 WaveDefinition currentWave = _level.Waves[_waveIndex];
-                _levelMediator.ShowExclamationMark(_level.LevelMiddle.position, 
+                _levelMediator.ShowExclamationMark(Camera.main.transform.position.SetY(0), 
                     currentWave.SpawnPoint.transform.position);
                 yield return SpawnWaveAndWaitForTime(currentWave);
                 _waveIndex++;

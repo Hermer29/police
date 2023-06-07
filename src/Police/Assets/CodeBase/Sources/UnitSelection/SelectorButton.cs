@@ -9,26 +9,43 @@ namespace Selection
     {
         public Button SelectButton;
         public Image BackgroundHolder;
-        [NonSerialized] public UnitType UnitType;
+        public UnitType UnitType;
         
         [Header("Visual")]
         [SerializeField] private Sprite _selected;
         [SerializeField] private Sprite _insufficientEnergy;
         [SerializeField] private Sprite _notSelected;
 
-        public void ShowSelected()
+        private bool _isNotEnoughEnergy = false;
+        
+        private void Update()
         {
-            BackgroundHolder.sprite = _selected;
+            if (_isNotEnoughEnergy)
+            {
+                ShowInsufficientEnergy();
+                if (SelectButton.interactable)
+                {
+                    Deselect();
+                    _isNotEnoughEnergy = false;
+                }
+
+                return;
+            }
+
+            if (SelectButton.interactable == false)
+            {
+                _isNotEnoughEnergy = true;
+                ShowInsufficientEnergy();
+            }
         }
 
-        public void ShowInsufficientEnergy()
-        {
-            BackgroundHolder.sprite = _insufficientEnergy;
-        }
+        public void Select() 
+            => BackgroundHolder.sprite = _selected;
 
-        public void ShowNotSelected()
-        {
-            BackgroundHolder.sprite = _notSelected;
-        }
+        public void ShowInsufficientEnergy() 
+            => BackgroundHolder.sprite = _insufficientEnergy;
+
+        public void Deselect() 
+            => BackgroundHolder.sprite = _notSelected;
     }
 }

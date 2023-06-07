@@ -20,17 +20,11 @@ namespace Gameplay.Levels.UI
         [Inject] IAlliedUnitsFactory _unitsFactory;
         [Inject] SelectedUnits _selectedUnits;
         [Inject] EnergyUi _energyUi;
-        [Inject] SelectorUi _selectorUi;
         [Inject] EnergyKillRestoration _killRestoration;
         [Inject] Energy _energy;
 
         public void ShowExclamationMark(Vector3 from, Vector3 to) => _arrow.ShowArrowTowardsTarget(from, to);
-        public void MakeUnitSelected(UnitType whichOne) => _selectedUnits.Select(whichOne);
-        public void UpdateEnergyValue(int amount)
-        {
-            _selectorUi.UpdateOnEnergyUpdated(amount);
-            _energyUi.SetEnergyValue(amount);
-        }
+        public void UpdateEnergyValue(int amount) => _energyUi.SetEnergyValue(amount);
 
         public void IncrementEnergyForEnemyDeath(Attackable attackable) => _killRestoration.Restore(attackable);
         public void DefineMaxEnergyAndFill(int levelEnergyAmount) => _energy.DefineMaxEnergyAndFill(levelEnergyAmount);

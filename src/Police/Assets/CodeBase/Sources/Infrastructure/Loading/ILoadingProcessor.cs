@@ -2,6 +2,6 @@
 {
     public interface ILoadingProcessor
     {
-        float Progress { get; }
+        float Progress { get; set; }
     }
 }
