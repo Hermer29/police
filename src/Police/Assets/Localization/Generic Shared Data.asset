@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Shop Shared Data
+  m_Name: Generic Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: Shop
+  m_TableCollectionName: Generic
   m_TableCollectionNameGuidString: 4f5f8e759326bcf46863563e06d9ac9e
   m_Entries:
   - m_Id: 12468580352

@@ -18,7 +18,13 @@ MonoBehaviour:
   m_GUID: 20cde491a1e273744abe4dea4605e39a
   m_SerializeEntries:
   - m_GUID: 1e6b421c39016574d9a0dc4cbdbae286
-    m_Address: Shop_ru
+    m_Address: Generic_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 9fd623b1d2ed01f4fa98c2676743e4ee
+    m_Address: Towns_ru
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru

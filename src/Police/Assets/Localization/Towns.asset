@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: Shop
+  m_Name: Towns
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: 4f5f8e759326bcf46863563e06d9ac9e, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: 8be94642b39870a489f6a5401a3d1871, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: e03c4f5704607094dad83147d9fcc933, type: 2}
-  - {fileID: 11400000, guid: 1e6b421c39016574d9a0dc4cbdbae286, type: 2}
+  - {fileID: 11400000, guid: a97439221aca3bc4995855cbf8f4de22, type: 2}
+  - {fileID: 11400000, guid: 9fd623b1d2ed01f4fa98c2676743e4ee, type: 2}
   m_Extensions: []
   m_Group: String Table
   references:

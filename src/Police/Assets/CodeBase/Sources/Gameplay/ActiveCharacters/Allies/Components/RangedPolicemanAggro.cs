@@ -1,15 +1,15 @@
 ﻿using ActiveCharacters.Shared.Components;
-using ActiveCharacters.Shared.Components.Attacking;
+using Gameplay.ActiveCharacters.Shared.Components.Attacking;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace ActiveCharacters.Allies.Components
+namespace Gameplay.ActiveCharacters.Allies.Components
 {
-    public class PolicemenAggro : MonoBehaviour
+    public class RangedPolicemanAggro : MonoBehaviour
     {
         [SerializeField] private NearestTargetListener _reader;
         [FormerlySerializedAs("_movingToTargetAttack")] [SerializeField] private DetectionReaction _detectionReaction;
-        [FormerlySerializedAs("_rangeChecker")] [SerializeField] private CheckAttackRangeByAgentDistance _rangeByAgentDistanceChecker;
+        [FormerlySerializedAs("_rangeChecker")] [SerializeField] private RangedAttack _attack;
         
         private Attackable _target;
         private bool _stopped;
@@ -65,13 +65,13 @@ namespace ActiveCharacters.Allies.Components
         private void DefineTarget(Attackable target)
         {
             _detectionReaction.Follow(target.Root);
-            _rangeByAgentDistanceChecker.CheckFor(target);
+            _attack.EnableAttack(target);
             _target = target;
         }
 
         private void DiscardTarget()
         {
-            _rangeByAgentDistanceChecker.StopChecking();
+            _attack.DisableAttack();
             _detectionReaction.Forget();
             _target = null;
         }

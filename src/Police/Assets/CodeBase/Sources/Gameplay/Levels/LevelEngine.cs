@@ -59,6 +59,8 @@ namespace Gameplay.Levels
 
         private IEnumerator LevelCoroutine(LevelEntry level)
         {
+            Debug.Log($"Bind loose trigger with name: " + level.LooseTrigger.name);
+            AllServices.Bind(level.LooseTrigger);
             bool playerLost = false;
             level.LooseTrigger.Reactivate();
             InitializeLevel(

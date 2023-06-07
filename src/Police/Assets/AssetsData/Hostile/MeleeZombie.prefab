@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 8531660128621829230}
+  _stopIfNoTarget: 0
+  _log: 0
 --- !u!195 &8531660128621829230
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -94,7 +96,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!114 &6122362477712016741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attack: {fileID: 2445752348442463778}
-  _range: 7.81
+  _agent: {fileID: 8531660128621829230}
+  _range: 2.5
 --- !u!114 &7129451462201605962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackable: {fileID: 3875208316382380685}
   _aggro: {fileID: 3043367026536729614}
-  _poolUnit: {fileID: -4256752098792016586}
 --- !u!114 &6200754285402260681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attackable: {fileID: 3875208316382380685}
+  RunToWin: {fileID: 8056935174611611486}
 --- !u!1 &3085083360943430676
 GameObject:
   m_ObjectHideFlags: 0

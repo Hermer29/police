@@ -15,7 +15,7 @@ namespace Gameplay.Levels.UI.CrossLevelUi
 
         public void Show()
         {
-            _crossLevelUi.Show();
+            _crossLevelUi.Show(_level.LocalLevel);
             _crossLevelUi.SetUpgradeScreenActive(false);
             _crossLevelUi.SetPlayButtonActive(true);
             _crossLevelUi.SetShopAndBarracksActive(false);

@@ -11,8 +11,13 @@ namespace Gameplay.Levels
         
         public string GetSceneName(int globalLevel) => GetEntry(globalLevel).SceneName;
         
-        public int GetLocalLevel(int global) => global % 10;
-        
+        public int GetLocalLevel(int global)
+        {
+            if (global % 10 == 0)
+                return 10;
+            return global % 10;
+        }
+
         private SceneEntry GetEntry(int global) => Entries.First(x => x.Levels.Any(x => x == global));
     }
 

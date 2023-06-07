@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Shop_en
+  m_Name: Generic_ru
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: en
+    m_Code: ru
   m_SharedData: {fileID: 11400000, guid: 4f5f8e759326bcf46863563e06d9ac9e, type: 2}
   m_Metadata:
     m_Items:
-    - rid: 4765709616974659753
+    - rid: 4765709616974659755
   m_TableData:
   - m_Id: 12468580352
-    m_Localized: 'Ends in: h{timer.hours} m{timer.minutes} s{timer.seconds}'
+    m_Localized: "\u041A\u043E\u043D\u0447\u0430\u0435\u0442\u0441\u044F \u0447\u0435\u0440\u0435\u0437:
+      \u0447{timer.hours} \u043C{timer.minutes} \u0441{timer.seconds}"
     m_Metadata:
       m_Items:
-      - rid: 4765709616974659753
+      - rid: 4765709616974659755
   - m_Id: 2183287194742784
-    m_Localized: LEVEL {provider.CurrentLevel}
+    m_Localized: "\u0423\u0420\u041E\u0412\u0415\u041D\u042C {provider.CurrentLevel}"
     m_Metadata:
       m_Items:
-      - rid: 4765709616974659753
+      - rid: 4765709616974659755
   references:
     version: 2
     RefIds:
-    - rid: 4765709616974659753
+    - rid: 4765709616974659755
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 00702fe7020000000070af29b0c10700

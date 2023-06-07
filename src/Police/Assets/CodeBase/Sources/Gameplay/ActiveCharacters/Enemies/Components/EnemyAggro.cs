@@ -1,6 +1,7 @@
 ﻿using ActiveCharacters.Shared.Components.Attacking;
 using Enemies.Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ActiveCharacters.Shared.Components
 {
@@ -9,7 +10,7 @@ namespace ActiveCharacters.Shared.Components
         [SerializeField] private NearestTargetListener _nearest;
         [SerializeField] private MoveToTarget _movingToTargetAttack;
         [SerializeField] private RunToWin _runToWin;
-        [SerializeField] private CheckAttackRange _rangeChecker;
+        [FormerlySerializedAs("_rangeChecker")] [SerializeField] private CheckAttackRangeByAgentDistance _rangeByAgentDistanceChecker;
         
         private Attackable _target;
         private bool _stopped;
@@ -86,13 +87,13 @@ namespace ActiveCharacters.Shared.Components
             _target = marker;
             _runToWin.enabled = false;
             _movingToTargetAttack.Follow(marker.Root);
-            _rangeChecker.CheckFor(marker);
+            _rangeByAgentDistanceChecker.CheckFor(marker);
         }
 
         private void DiscardTarget()
         {
             _target = null;
-            _rangeChecker.StopChecking();
+            _rangeByAgentDistanceChecker.StopChecking();
             _movingToTargetAttack.Forget();
         }
     }

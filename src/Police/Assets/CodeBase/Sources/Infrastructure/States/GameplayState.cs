@@ -56,7 +56,7 @@ namespace Infrastructure.States
                 _tutorial = _gameFactory.CreateTutorial();
                 _tutorial.Show();
             }
-            
+            Debug.Log($"Running local level: {_levelService.LocalLevel}");
             _levelEngine.ExecuteLevel(_levelService.LocalLevel);
             PollGamesEnd();
         }
@@ -125,10 +125,10 @@ namespace Infrastructure.States
         {
             _goingToMenu = false;
             _adBlockWindow.Reposition();
-            _enemiesFactory.FlushEnemies();
             _levelEngine.Lost -= HandleLoss;
             _levelEngine.Won -= HandleWon;
             _levelEngine.Canceled -= HandleCancel;
+            _enemiesFactory.FlushEnemies();
         }
 
         [Transition(typeof(MenuState))]

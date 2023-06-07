@@ -6,6 +6,7 @@ using Gameplay.Levels.AssetManagement;
 using Gameplay.Levels.UI;
 using Gameplay.PeopleDraw.Factory;
 using Helpers;
+using Infrastructure;
 using LevelsMachine;
 using PeopleDraw.Components;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Gameplay.Levels.Factory
         private readonly ILevelMediator _mediator;
         private readonly ParentsForGeneratedObjects _parents;
         private readonly IUnitsFxFactory _unitsFxFactory;
+        private readonly LevelEngine _levelEngine;
 
         private List<Attackable> _enemies = new();
 
@@ -39,6 +41,7 @@ namespace Gameplay.Levels.Factory
             var links = hostile.GetComponent<CharactersNavigationLinks>();
             _enemies.Add(links.Attackable);
             links.Attackable.UnitDied += AttackableOnUnitDied;
+            links.RunToWin.Construct(AllServices.Get<LooseTrigger>());
             return links;
         }
 

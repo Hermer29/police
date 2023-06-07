@@ -2,19 +2,20 @@
 using System.Collections;
 using Gameplay.ActiveCharacters.Shared.Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Levels
 {
     [RequireComponent(typeof(BoxCollider))]
     public class LooseTrigger : MonoBehaviour
     {
-        private BoxCollider _collider;
+        [FormerlySerializedAs("_collider")] public BoxCollider Collider;
         private bool _triggered;
 
         private void Start()
         {
-            _collider = GetComponent<BoxCollider>();
-            _collider.isTrigger = true;
+            Collider = GetComponent<BoxCollider>();
+            Collider.isTrigger = true;
         }
 
         public void Reactivate()

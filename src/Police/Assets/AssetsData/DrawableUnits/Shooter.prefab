@@ -10,15 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1122293289621114920}
   - component: {fileID: -4256752098792016586}
-  - component: {fileID: 4967999547547086218}
   - component: {fileID: 8805824217369289359}
-  - component: {fileID: 7992813769793752125}
   - component: {fileID: 6368879939201018456}
   - component: {fileID: 8517340633806615687}
   - component: {fileID: 9053575512172101442}
   - component: {fileID: 2089657222486960945}
   - component: {fileID: 4119947320051112770}
   - component: {fileID: 7449725036175417001}
+  - component: {fileID: 6748102552123719941}
   m_Layer: 12
   m_Name: Shooter
   m_TagString: Policeman
@@ -59,21 +58,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfxOnRelease: {fileID: 2348850600556083580}
---- !u!114 &4967999547547086218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122293289621114924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac10cc0d5bd34054b60986f6d7349ed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _reader: {fileID: 7051962790841296480}
-  _detectionReaction: {fileID: 2089657222486960945}
-  _rangeChecker: {fileID: 7992813769793752125}
 --- !u!114 &8805824217369289359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,20 +71,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5150312212335475361}
---- !u!114 &7992813769793752125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122293289621114924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093b06f8a11449bb8cc079e881fd29c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attack: {fileID: 4119947320051112770}
-  _range: 781
 --- !u!114 &6368879939201018456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackable: {fileID: 8902668783954916982}
-  _aggro: {fileID: 4967999547547086218}
+  _aggro: {fileID: 0}
   _pool: {fileID: -4256752098792016586}
 --- !u!114 &8517340633806615687
 MonoBehaviour:
@@ -129,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attackable: {fileID: 8902668783954916982}
+  RunToWin: {fileID: 0}
 --- !u!114 &9053575512172101442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +153,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5150312212335475361}
+--- !u!114 &6748102552123719941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc605f5dd7b041db9b84e10fc6b516ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reader: {fileID: 7051962790841296480}
+  _detectionReaction: {fileID: 2089657222486960945}
+  _attack: {fileID: 4119947320051112770}
 --- !u!1 &1858363678303849760
 GameObject:
   m_ObjectHideFlags: 0

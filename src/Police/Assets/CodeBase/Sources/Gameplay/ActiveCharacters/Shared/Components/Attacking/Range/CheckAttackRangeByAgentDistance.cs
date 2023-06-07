@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace ActiveCharacters.Shared.Components.Attacking
 {
-    public class CheckAttackRange : MonoBehaviour
+    public class CheckAttackRangeByAgentDistance : MonoBehaviour
     {
         [SerializeField] private Attack _attack;
-        
+        [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private float _range;
         
         private Attackable _target;
@@ -33,10 +34,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
             }
         }
 
-        private bool TargetIsNear()
-        {
-            return (_target.Root.position - transform.position).sqrMagnitude <= _range * _range;
-        }
+        private bool TargetIsNear() => _agent.remainingDistance <= _range * _range;
 
         public void CheckFor(Attackable target)
         {
