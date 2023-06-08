@@ -118,13 +118,6 @@ namespace Infrastructure.States
             RegisterGamesEnd();
         }
 
-        private void HandleWarpToNextTown()
-        {
-            _levelService.IncrementLevel();
-            _warpToNextTown = true;
-            _advertising.ShowInterstitial();
-        }
-
         private void RegisterGamesEnd()
         {
             if (TutorialRequired())
@@ -169,9 +162,11 @@ namespace Infrastructure.States
         }
 
         [Transition(typeof(MenuState))]
-        public bool TimeToGoToMenu() => _goingToMenu;
+        public bool TimeToGoToMenu() 
+            => _goingToMenu;
 
         [Transition(typeof(LoadLevelState))]
-        public bool WarpToNextTownState() => _warpToNextTown;
+        public bool WarpToNextTownState() 
+            => _warpToNextTown;
     }
 }

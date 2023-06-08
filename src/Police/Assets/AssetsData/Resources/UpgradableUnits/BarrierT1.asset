@@ -15,7 +15,7 @@ MonoBehaviour:
   <Guid>k__BackingField: afee9d17-b56a-4674-8d4d-2e8aa1175bac
   <OwnedByDefault>k__BackingField: 1
   <Tier>k__BackingField: 1
-  <Type>k__BackingField: 2
+  <Type>k__BackingField: 0
   <Purchasable>k__BackingField: 0
   LevelPartsUnitAppearances:
   - Asset:
@@ -46,7 +46,7 @@ MonoBehaviour:
   CurrentAppearance:
     value:
       Asset:
-        m_AssetGUID: 
+        m_AssetGUID: e158ab0c05c5813409afff9ff0d182ba
         m_SubObjectName: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Gameplay.PeopleDraw.EnergyConsumption;
-using PeopleDraw.Components;
 using Selection;
-using Services.UseService;
 using UniRx;
 using UnitSelection;
 using UnityEngine;
@@ -16,22 +13,18 @@ namespace PeopleDraw.Selection
     {
         private UnitType _currentType;
         private Energy _energy;
-        private UnitsAssetCache _usingService;
         private SelectorUi _ui;
 
         [Inject]
-        public void Construct(UnitsAssetCache usingService, Energy energy, SelectorUi ui)
+        public void Construct(Energy energy, SelectorUi ui)
         {
             _ui = ui;
-            _usingService = usingService;
             _energy = energy;
 
             Subscribe();
         }
 
-        public ReactiveProperty<PoolUnit> Current { get; } = new();
-
-        public ReactiveProperty<UnitType> CurrentType { get; } = new(UnitType.Barrier);
+        public ReactiveProperty<UnitType> SelectedType { get; } = new(UnitType.Barrier);
 
         private void Subscribe()
         {
@@ -47,8 +40,14 @@ namespace PeopleDraw.Selection
             UpdateButtonsActivation();
         }
 
+        public void SelectUnit(UnitType type)
+        {
+            OnSelect(_ui.SelectorButtons.First(x => x.UnitType == type));
+        }
+
         private void OnSelect(SelectorButton uiSelectorButton)
         {
+            Debug.Log($"Button selected {uiSelectorButton.UnitType}");
             foreach (SelectorButton button in _ui.SelectorButtons)
             {
                 button.Deselect();
@@ -56,25 +55,14 @@ namespace PeopleDraw.Selection
             if (_energy.Amount >= uiSelectorButton.UnitType.Cost())
             {
                 uiSelectorButton.Select();
-                Select(uiSelectorButton.UnitType);
+                SelectedType.Value = uiSelectorButton.UnitType;
             }
             UpdateButtonsActivation();
         }
 
-        public void SelectUnit(UnitType type)
-        {
-            OnSelect(_ui.SelectorButtons.First(x => x.UnitType == type));
-        }
-
-        private void Select(UnitType type)
-        {
-            Current.Value = _usingService.SelectedUnits[type];
-            CurrentType.Value = type;
-        }
-
         public void NotifyUnitDrawn()
         {
-            _energy.SpendEnergy(CurrentType.Value.Cost());
+            _energy.SpendEnergy(SelectedType.Value.Cost());
             UpdateButtonsActivation();
         }
 
@@ -83,6 +71,10 @@ namespace PeopleDraw.Selection
             foreach (SelectorButton button in _ui.SelectorButtons)
             {
                 button.SelectButton.interactable = HasEnoughEnergyToSpawn(button);
+            }
+            if(HasEnoughEnergyToSpawnSelected() == false)
+            {
+                SelectedType.Value = UnitType.None;
             }
         }
 

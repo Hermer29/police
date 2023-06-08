@@ -7,6 +7,7 @@ namespace Upgrading.UnitTypes
     {
         Barrier = 0,
         Melee = 1,
-        Ranged = 2
+        Ranged = 2,
+        None
     }
 }

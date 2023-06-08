@@ -3,9 +3,11 @@ using Gameplay.PeopleDraw.Factory;
 using PeopleDraw.Components;
 using PeopleDraw.Selection;
 using Services;
+using Services.UseService;
 using UnitSelection;
 using UnityEngine;
 using UnityEngine.AI;
+using Upgrading.UnitTypes;
 
 namespace PeopleDraw
 {
@@ -15,19 +17,26 @@ namespace PeopleDraw
         private readonly SelectedUnits _unitSelectedUnits;
         private readonly IAlliedUnitsFactory _factory;
         private readonly IUnitsFxFactory _fxFactory;
+        private readonly UnitsUsingService _usingService;
+        private readonly UnitsAssetCache _unitsAssetCache;
 
         private PoolUnit _currentDrawingUnplacableUnit;
 
-        public Drawer(IInputService inputService, SelectedUnits unitSelectedUnits, IAlliedUnitsFactory factory, IUnitsFxFactory fxFactory)
+        public Drawer(IInputService inputService, SelectedUnits unitSelectedUnits, IAlliedUnitsFactory factory, IUnitsFxFactory fxFactory,
+            UnitsUsingService usingService, UnitsAssetCache unitsAssetCache)
         {
             _inputService = inputService;
             _unitSelectedUnits = unitSelectedUnits;
             _factory = factory;
             _fxFactory = fxFactory;
+            _usingService = usingService;
+            _unitsAssetCache = unitsAssetCache;
 
             _inputService.DrawnAtPoint += InputServiceOnDrawnAtPoint;
             Debug.Log($"{nameof(Drawer)} constructed");
         }
+
+        private PoolUnit CurrentUnit => _unitsAssetCache.SelectedUnits[_unitSelectedUnits.SelectedType.Value];
 
         private void InputServiceOnDrawnAtPoint(RaycastHit drawPoint, RaycastHit previous)
         {
@@ -59,14 +68,13 @@ namespace PeopleDraw
 
         private bool CantDrawUnit(RaycastHit drawPoint)
         {
-            return NoIntersection(drawPoint) || UnitNotSelected() || NotEnoughEnergyToSpawnSelected();
+            return NoIntersection(drawPoint) || NoSelected() ||  NotEnoughEnergyToSpawnSelected();
         }
+
+        private bool NoSelected() => _unitSelectedUnits.SelectedType.Value == UnitType.None;
 
         private bool NotEnoughEnergyToSpawnSelected() =>
             _unitSelectedUnits.HasEnoughEnergyToSpawnSelected() == false;
-
-        private bool UnitNotSelected() => 
-            _unitSelectedUnits.Current == null;
 
         private static bool NoIntersection(RaycastHit drawPoint) => 
             drawPoint.collider == null;
@@ -86,9 +94,9 @@ namespace PeopleDraw
         private PoolUnit CreateUnit(RaycastHit drawPoint)
         {
             PoolUnit unit = _factory.InstantiateDrawnUnit(
-                prefab: _unitSelectedUnits.Current.Value,
+                prefab: CurrentUnit,
                 position: drawPoint.point,
-                selectedSerial: (int)_unitSelectedUnits.CurrentType.Value);
+                selectedSerial: (int)_unitSelectedUnits.SelectedType.Value);
             
             if (unit.TryGetComponent(out NavMeshAgent agent)) 
                 agent.Warp(drawPoint.point);

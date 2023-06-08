@@ -14,7 +14,6 @@ namespace Tutorial.StepEndCondition
         [Inject]
         public void Construct(SelectedUnits selection) => _selection = selection;
 
-        public override bool IsCompleted => _selection.Current.Value != null 
-                                            && _selection.CurrentType.Value == _unit;
+        public override bool IsCompleted => _selection.SelectedType.Value == _unit;
     }
 }

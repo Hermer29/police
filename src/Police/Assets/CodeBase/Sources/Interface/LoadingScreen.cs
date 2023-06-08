@@ -28,7 +28,7 @@ public class LoadingScreen : MonoBehaviour
     [Button]
     public void FadeIn()
     {
-        StartCoroutine(ProcessCoroutine(0, (process) =>
+        StartCoroutine(ProcessCoroutine(.4f, (process) =>
         {
             _canvas.alpha = process;
         }));
