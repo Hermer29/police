@@ -29,6 +29,24 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     - Preload
+  - m_GUID: f75fb4ecadec78a4c8677e576d82600e
+    m_Address: BarrierNames_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 1eac017f5c0f55b45bbc989b7f231f45
+    m_Address: MeleeNames_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 97e6cade1edc7b44e8e2e9267f160a11
+    m_Address: RangedNames_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:

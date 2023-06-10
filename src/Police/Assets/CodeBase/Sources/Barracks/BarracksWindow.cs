@@ -3,6 +3,7 @@ using System.Linq;
 using UI.Factory;
 using UnityEngine;
 using Upgrading;
+using Upgrading.UI.Barracks;
 using Upgrading.UnitTypes;
 using Zenject;
 
@@ -14,7 +15,8 @@ namespace Barracks
         private UiElementsFactory _uiElementsFactory;
 
         [SerializeField] private BarracksUnitGroup[] _groups;
-
+        [SerializeField] private BarracksUpgradeModal _upgradeModal;
+        
         private bool _initialized;
         private IEnumerable<PartialUpgradableUnit> _units;
 
@@ -24,7 +26,7 @@ namespace Barracks
             _unitsRepository = unitsRepository;
             _uiElementsFactory = uiElementsFactory;
             foreach (BarracksUnitGroup barracksUnitGroup in _groups) 
-                barracksUnitGroup.Construct(_uiElementsFactory);
+                barracksUnitGroup.Construct(_uiElementsFactory, this);
         }
         
         public void Show()
@@ -40,6 +42,8 @@ namespace Barracks
 
         public void Hide() 
             => gameObject.SetActive(false);
+
+        public void ShowModal(PartialUpgradableUnit unit) => _upgradeModal.Show(unit);
 
         private void Initialize()
         {

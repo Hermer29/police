@@ -12,7 +12,8 @@ namespace Services.PurchasesService.PurchasesWrapper
         {
             { Product.FirePack, "firepack" },
             { Product.StarterPack, "starterpack" },
-            { Product.AdvertisingDisable, "adblock" }
+            { Product.AdvertisingDisable, "adblock" },
+            { Product.UnitUpgrade, "unitupgrade" }
         };
 
         public ProductsService(IPurchasesService purchasesService) => _purchasesService = purchasesService;

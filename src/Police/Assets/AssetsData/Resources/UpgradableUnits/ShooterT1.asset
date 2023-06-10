@@ -17,6 +17,9 @@ MonoBehaviour:
   <Tier>k__BackingField: 1
   <Type>k__BackingField: 2
   <Purchasable>k__BackingField: 0
+  <LocalizedName>k__BackingField:
+    m_KeyId: 9448681472
+    m_Key: RangedNames
   LevelPartsUnitAppearances:
   - Asset:
       m_AssetGUID: c229b6594cf65ed4794a98570f15896d

@@ -10,7 +10,7 @@ namespace Barracks
     public class BarracksUnitElement : MonoBehaviour
     {
         [SerializeField] private ProgressBlock _block;
-        [SerializeField] private Button _upgradeWindowOpening;
+        [field:SerializeField] public Button UpgradeWindowOpening { get; private set; }
         
         private PartialUpgradableUnit _unit;
 
@@ -21,12 +21,7 @@ namespace Barracks
                 .AddTo(this);
 
             _unit = unit;
-            _upgradeWindowOpening.onClick.AddListener(OnOpeningWindow);
         }
-
-        public event Action<PartialUpgradableUnit> OpenWindowRequested;
-
-        private void OnOpeningWindow() => OpenWindowRequested?.Invoke(_unit);
 
         private void OnLevelUpdated(int level) => _block.ShowLevel(level);
     }

@@ -4,6 +4,7 @@
     {
         StarterPack,
         FirePack,
-        AdvertisingDisable
+        AdvertisingDisable,
+        UnitUpgrade
     }
 }

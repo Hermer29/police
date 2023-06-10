@@ -487,9 +487,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9106464807911577390}
   - component: {fileID: 9106464807911577388}
+  - component: {fileID: 8369272889409792135}
   - component: {fileID: 9106464807911577391}
   - component: {fileID: 798725071}
-  - component: {fileID: 8369272889409792135}
   m_Layer: 0
   m_Name: BarracksUpgradeLine
   m_TagString: Untagged
@@ -527,6 +527,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9106464807911577385}
   m_CullTransparentMesh: 1
+--- !u!114 &8369272889409792135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106464807911577385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d7407286c349b9a27e5a3b32bacfaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StringEvent: {fileID: 6991824941606396851}
+  _parent: {fileID: 110255251}
+  <UnitType>k__BackingField: 0
+  CurrentLevel: 0
 --- !u!114 &9106464807911577391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,22 +599,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &8369272889409792135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9106464807911577385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d7407286c349b9a27e5a3b32bacfaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StringEvent: {fileID: 6991824941606396851}
-  _parent: {fileID: 110255251}
-  <UnitType>k__BackingField: 0
-  CurrentLevel: 0
 --- !u!1 &9106464808759622198
 GameObject:
   m_ObjectHideFlags: 0

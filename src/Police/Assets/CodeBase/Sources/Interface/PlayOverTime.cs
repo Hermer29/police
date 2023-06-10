@@ -12,7 +12,7 @@ namespace Interface
         
         private float StartupTime;
         
-        private void Start()
+        private void OnEnable()
         {
             StartupTime = Random.Range(Range.x, Range.y);
             StartCoroutine(Coroutine());

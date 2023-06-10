@@ -16,12 +16,9 @@ namespace UI.Factory
             _assetLoader = assetLoader;
         }
 
-        public event Action<PartialUpgradableUnit> OnOpenedWindow;
-
         public BarracksUnitElement CreateBarracksElement(Transform parent)
         {
             BarracksUnitElement unitElement = Object.Instantiate(_assetLoader.LoadBarracksElement(), parent);
-            unitElement.OpenWindowRequested += OnOpenedWindow;
             return unitElement;
         }
     }

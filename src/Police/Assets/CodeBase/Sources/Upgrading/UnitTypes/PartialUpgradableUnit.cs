@@ -1,4 +1,5 @@
 ﻿using Helpers;
+using ModestTree;
 using UniRx;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Upgrading.UnitTypes
             }
         }
 
+        public int MaxSuperLevel => LevelPartsUnitAppearances.Length;
+
         public ReactiveProperty<LevelPartUnits> CurrentAppearance;
 
         public void Initialize() 
@@ -27,16 +30,19 @@ namespace Upgrading.UnitTypes
 
         public LevelPartUnits GetCurrentAppearance()
         {
-            for (int i = UpgradePartsReachedSerial - 1; i >= 0; i--)
+            Debug.Log($"{nameof(PartialUpgradableUnit)}.{nameof(GetCurrentAppearance)} at {name} Called");
+            var origin = Mathf.Clamp(UpgradePartsReachedSerial - 1, 0, LevelPartsUnitAppearances.Length - 1);
+            for (int i = origin; i >= 0; i--)
             {
                 LevelPartUnits appearanceByLevel = LevelPartsUnitAppearances[i];
-                if (appearanceByLevel == null)
+                if (appearanceByLevel.Asset.RuntimeKeyIsValid() == false)
                 {
                     continue;
                 }
+                Debug.Log($"{nameof(PartialUpgradableUnit)}.{nameof(GetCurrentAppearance)} Resolved at {name} {appearanceByLevel.Asset}");
                 return appearanceByLevel;
             }
-
+            
             throw new InvalidStateException(
                 $"Array {nameof(LevelPartsUnitAppearances)} must contain at least first element, and it must be not null");
         }
@@ -44,7 +50,30 @@ namespace Upgrading.UnitTypes
         public bool IsFullyUpgraded()
             => UpgradePartsReachedSerial == _levelPartsQuantity;
 
+        protected override bool IsCanUpgrade() => IsFullyUpgraded() == false;
+
         protected override void OnLevelIncremented()
-            => CurrentAppearance.Value = GetCurrentAppearance();
+        {
+            
+            Debug.Log($"{name} upgraded! Current level: {UpgradedLevel.Value}, IsFullyUpgraded: {IsFullyUpgraded()}, SuperLevels: {UpgradePartsReachedSerial}");
+            CurrentAppearance.Value = GetCurrentAppearance();
+        }
+
+        public bool TryGetNextAppearance(out LevelPartUnits next)
+        {
+            int current = LevelPartsUnitAppearances.IndexOf(GetCurrentAppearance());
+            int nextIndex = current + 1;
+            if (LevelPartsUnitAppearances.Length <= nextIndex)
+            {
+                next = null;
+                return false;
+            }
+
+            next = LevelPartsUnitAppearances[nextIndex];
+            return true;
+        }
+
+        public LevelPartUnits GetLastAppearance() 
+            => LevelPartsUnitAppearances[^1];
     }
 }

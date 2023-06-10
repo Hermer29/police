@@ -8,6 +8,7 @@ using Gameplay.PeopleDraw.EnergyConsumption;
 using Gameplay.PeopleDraw.Factory;
 using Gameplay.UI;
 using Helpers;
+using Infrastructure.Services.UseService;
 using Infrastructure.States;
 using Logic.Audio;
 using PeopleDraw.AssetManagement;

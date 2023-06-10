@@ -2,6 +2,7 @@
 using Interface;
 using UnityEngine;
 using UnityEngine.UI;
+using Upgrading.UI.Barracks;
 
 namespace Gameplay.UI
 {
@@ -10,7 +11,7 @@ namespace Gameplay.UI
         [SerializeField] private BarracksSubwindow _barracks;
         [SerializeField] private ShopSubwindow _shop;
         [SerializeField] private Button _close;
-
+        
         public event Action Closed;
 
         public void ShowBarracks()

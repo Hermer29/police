@@ -5,6 +5,7 @@ using SpecialPlatforms;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization.Tables;
 
 namespace Upgrading.UnitTypes
 {
@@ -15,7 +16,8 @@ namespace Upgrading.UnitTypes
         [field: SerializeField] public int Tier { get; private set; }
         [field: SerializeField] public UnitType Type { get; private set; }
         [field: SerializeField] public bool Purchasable { get; private set; }
-        
+        [field: SerializeField] public TableEntryReference LocalizedName { get; private set; }
+
         public ReactiveProperty<int> UpgradedLevel { get; } = new(initialValue: 1);
         int IEstimated.UpgradedLevel => UpgradedLevel.Value;
 
@@ -32,9 +34,14 @@ namespace Upgrading.UnitTypes
 
         public void Upgrade()
         {
+            if (IsCanUpgrade() == false)
+                return;
+            
             UpgradedLevel.Value++;
             OnLevelIncremented();
         }
+
+        protected abstract bool IsCanUpgrade(); // ¯\_(ツ)_/¯
 
         string ISavableData.GetData()
         {

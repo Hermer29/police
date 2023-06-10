@@ -9,20 +9,19 @@ namespace Upgrading.UnitTypes
         public static IEnumerable<PartialUpgradableUnit> OrderByLogic(this IEnumerable<PartialUpgradableUnit> units)
         {
             var upgradableUnits = units as PartialUpgradableUnit[] ?? units.ToArray();
-            var partialUpgradableUnits = units as PartialUpgradableUnit[] ?? upgradableUnits.ToArray();
-            if (partialUpgradableUnits.Count() == 1)
-                return new Queue<PartialUpgradableUnit>(partialUpgradableUnits);
+            if (upgradableUnits.Length == 1)
+                return upgradableUnits;
 
             var queue = new List<PartialUpgradableUnit>();
-            PartialUpgradableUnit startingUnit = GetUnitStartingUpgradeChain(partialUpgradableUnits);
+            PartialUpgradableUnit startingUnit = GetUnitStartingUpgradeChain(upgradableUnits);
             queue.Add(startingUnit);
-            var otherUnpurchasableUnits = NonStartingEvolvingUnits(partialUpgradableUnits).ToList();
+            var otherUnpurchasableUnits = NonStartingEvolvingUnits(upgradableUnits).ToList();
             
             PartialUpgradableUnit tail = startingUnit;
 
             while (otherUnpurchasableUnits.Count != 0)
             {
-                EvolvedUpgradableUnit next = otherUnpurchasableUnits.First(x => x.PreviousUnit.Guid == tail.Guid);
+                EvolvedUpgradableUnit next = otherUnpurchasableUnits.FirstOrDefault(x => x.PreviousUnit.Guid == tail.Guid);
                 otherUnpurchasableUnits.Remove(next);
                 queue.Add(next);
                 tail = next;
@@ -47,24 +46,19 @@ namespace Upgrading.UnitTypes
             return current;
         }
 
-        private static IEnumerable<EvolvedUpgradableUnit> NonStartingEvolvingUnits(PartialUpgradableUnit[] units)
-        {
-            return units.Where(x => x.Purchasable == false && x != GetUnitStartingUpgradeChain(units))
-                .Where(x => x is EvolvedUpgradableUnit)
+        private static IEnumerable<EvolvedUpgradableUnit> NonStartingEvolvingUnits(PartialUpgradableUnit[] units) =>
+            units.Where(x => x is EvolvedUpgradableUnit)
                 .Cast<EvolvedUpgradableUnit>();
-        }
 
-        private static PartialUpgradableUnit GetUnitStartingUpgradeChain(PartialUpgradableUnit[] partialUpgradableUnits)
-        {
-            return partialUpgradableUnits
-                .First(x => x is not EvolvedUpgradableUnit && x.Purchasable == false);
-        }
+        private static PartialUpgradableUnit GetUnitStartingUpgradeChain(PartialUpgradableUnit[] partialUpgradableUnits) 
+            => partialUpgradableUnits.First(x => x.OwnedByDefault);
 
         public static PartialUpgradableUnit GetNext(this IEnumerable<PartialUpgradableUnit> orderedUnits, PartialUpgradableUnit previous)
         {
             var asArr = orderedUnits as PartialUpgradableUnit[] ?? orderedUnits.ToArray();
             int targetIndex = asArr.IndexOf(previous);
-            return targetIndex == -1 ? null : asArr[targetIndex];
+            bool isNextIndexIsOutOfRange = asArr.Length == targetIndex + 1;
+            return isNextIndexIsOutOfRange ? null : asArr[targetIndex + 1];
         }
     }
 }

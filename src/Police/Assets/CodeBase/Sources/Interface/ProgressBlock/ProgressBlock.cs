@@ -60,5 +60,10 @@ namespace Interface
                 current.Extinguish();
             }
         }
+
+        public void WriteAtLast(int unitMaxSuperLevel)
+        {
+            _nextSuperLevel.text = unitMaxSuperLevel.ToString();
+        }
     }
 }

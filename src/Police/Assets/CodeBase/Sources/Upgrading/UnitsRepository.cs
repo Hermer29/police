@@ -18,9 +18,18 @@ namespace Upgrading
                 saveService.Bind(partialUpgradableUnit);
         }
 
-        public IEnumerable<PartialUpgradableUnit> GetAll()
+        public IEnumerable<PartialUpgradableUnit> GetAll() => _upgradableUnits;
+
+        public IEnumerable<PartialUpgradableUnit> GetWithType(UnitType unit) 
+            => GetAll().Where(x => x.Type == unit);
+
+        public IEnumerable<PartialUpgradableUnit> GetOrderedWithType(UnitType unit) 
+            => GetWithType(unit).OrderByLogic();
+
+        public bool TryGetNext(PartialUpgradableUnit unit, out PartialUpgradableUnit next)
         {
-            return _upgradableUnits;
+            next = GetOrderedWithType(unit.Type).GetNext(unit);
+            return next != null;
         }
     }
 }

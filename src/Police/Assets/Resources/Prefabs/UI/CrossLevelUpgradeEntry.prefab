@@ -2715,8 +2715,11 @@ MonoBehaviour:
   <UpgradeForAds>k__BackingField: {fileID: 0}
   <UpgradeForCurrency>k__BackingField: {fileID: 0}
   <UpgradeForCoins>k__BackingField: {fileID: 0}
+  _localizeString: {fileID: 0}
   _upgradeCost: {fileID: 0}
   _progressBlock: {fileID: 0}
+  _maxUpgrade: {fileID: 0}
+  _upDoubleArrow: {fileID: 0}
 --- !u!1 &8318538480956370960
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ MonoBehaviour:
   <Tier>k__BackingField: 1
   <Type>k__BackingField: 0
   <Purchasable>k__BackingField: 0
+  <LocalizedName>k__BackingField:
+    m_KeyId: 9448681472
+    m_Key: BarrierNames
   LevelPartsUnitAppearances:
   - Asset:
       m_AssetGUID: e158ab0c05c5813409afff9ff0d182ba

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Services.UseService;
 using Services.AdvertisingService;
 using Services.MoneyService;
-using Services.UseService;
+using Services.PurchasesService.PurchasesWrapper;
+using UniRx;
 using UnityEngine;
 using Upgrading.Factory;
 using Upgrading.Services.CostEstimation;
@@ -22,14 +24,17 @@ namespace Upgrading.UI.CrossLevels
         private UnitsUsingService _usingService;
         private IMoneyService _moneyService;
         private IAdvertisingService _advertising;
+        private IProductsService _purchasesService;
 
         private bool _initialized;
         private readonly Dictionary<UpgradableUnit, CrossLevelUpgradeEntry> _unitsAndTheirEntries = new();
 
         [Inject]
         public void Construct(UnitsRepository repository, UnitsUpgrades upgrades, IUpgradableUnitsFactory factory,
-            IUpgradeCostService costService, UnitsUsingService usingService, IMoneyService moneyService, IAdvertisingService advertisingService)
+            IUpgradeCostService costService, UnitsUsingService usingService, IMoneyService moneyService, IAdvertisingService advertisingService, 
+            IProductsService purchasesService)
         {
+            _purchasesService = purchasesService;
             _advertising = advertisingService;
             _moneyService = moneyService;
             _usingService = usingService;
@@ -52,18 +57,51 @@ namespace Upgrading.UI.CrossLevels
             var entriesAndCorrespondingUnits =
                 _entries.Zip(_usingService.UsedUnits.Values, (entry, unit) => (entry, unit));
             foreach ((CrossLevelUpgradeEntry entry, PartialUpgradableUnit unit) in entriesAndCorrespondingUnits)
-            {
-                entry.UpgradeForCoins.onClick.AddListener(() => OnUpgradeForMoney(unit));
-                entry.UpgradeForAds.onClick.AddListener(() => OnUpgradeForAds(unit));
-                _unitsAndTheirEntries.Add(unit, entry);
-                var cost = CalculateCost(unit);
-                UpdateInformation(unit, entry);
-            }
+                InitializeEntry(unit, entry);
+            
             _initialized = true;
         }
 
+        private void InitializeEntry(PartialUpgradableUnit unit, CrossLevelUpgradeEntry entry)
+        {
+            _unitsAndTheirEntries.Add(unit, entry);
+            if (_usingService.MaxUpgraded.Contains(unit.Type))
+            {
+                UpdateInformation(unit, entry);
+                entry.ShowMaxUpgradeActive(true);
+                return;
+            }
+            entry.ShowMaxUpgradeActive(false);
+            _usingService.MaxUpgraded.ObserveAdd().Subscribe(update 
+                => OnUnitMaxUpgraded(update, unit));
+            entry.UpgradeForCoins.onClick.AddListener(() => OnUpgradeForMoney(unit));
+            entry.UpgradeForAds.onClick.AddListener(() => OnUpgradeForAds(unit));
+            entry.UpgradeForCurrency.onClick.AddListener(() => OnUpgradeForCurrency(unit));
+            UpdateInformation(unit, entry);
+        }
+
+        private void OnUnitMaxUpgraded(CollectionAddEvent<UnitType> type, PartialUpgradableUnit unitType)
+        {
+            if (type.Value == unitType.Type) 
+                _unitsAndTheirEntries[unitType].ShowMaxUpgradeActive(true);
+        }
+
+        private void OnUpgradeForCurrency(PartialUpgradableUnit unit) =>
+            _purchasesService.TryBuy(Product.UnitUpgrade, 
+                () => Upgrade(unit));
+
         private void OnUpgradeForAds(PartialUpgradableUnit unit) 
-            => _advertising.ShowRewarded(() => Upgrade(unit));
+            => _advertising.ShowRewarded(
+                () => Upgrade(unit));
+
+        private void OnUpgradeForMoney(UpgradableUnit relatedUnit)
+        {
+            int upgradeCost = CalculateCost(relatedUnit);
+            if (_moneyService.TrySpendMoney(upgradeCost))
+            {
+                Upgrade(relatedUnit);
+            }
+        }
 
         private void UpdateInformation(UpgradableUnit unit, CrossLevelUpgradeEntry ui)
         {
@@ -76,15 +114,6 @@ namespace Upgrading.UI.CrossLevels
             CrossLevelUpgradeEntry ui = _unitsAndTheirEntries[unit];
             int cost = CalculateCost(unit);
             ui.ShowUpgradeCost(cost);
-        }
-
-        private void OnUpgradeForMoney(UpgradableUnit relatedUnit)
-        {
-            int upgradeCost = CalculateCost(relatedUnit);
-            if (_moneyService.TrySpendMoney(upgradeCost))
-            {
-                Upgrade(relatedUnit);
-            }
         }
 
         private void Upgrade(UpgradableUnit relatedUnit)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Helpers;
 using UI.Factory;
 using UniRx;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Barracks
     public class BarracksUnitGroup : MonoBehaviour
     {
         private UiElementsFactory _factory;
+        private BarracksWindow _window;
+        
         public LocalizeStringEvent StringEvent;
         private IEnumerable<PartialUpgradableUnit> _group;
         
@@ -21,14 +24,20 @@ namespace Barracks
         [Tooltip("Used by localization")]public int CurrentLevel;
         private IDisposable _previousSubscription;
 
-        public void Construct(UiElementsFactory factory) => _factory = factory;
+        public void Construct(UiElementsFactory factory, BarracksWindow window) 
+            => (_factory, _window) = (factory, window);
 
         public void BuildUiGroupUnitsByType(IEnumerable<PartialUpgradableUnit> units)
         {
             var group = units
                 .OrderByLogic();
             _group = group;
-            foreach (PartialUpgradableUnit unit in group) CreateUnitUiElement(unit);
+            
+            foreach (PartialUpgradableUnit unit in group) 
+                CreateUnitUiElement(unit).With(x => x.UpgradeWindowOpening.onClick.AddListener(() =>
+                {
+                    _window.ShowModal(unit);
+                }));
 
             _current = group.GetCurrentFromOrdered();
             ApplyCurrentUnit();
@@ -72,7 +81,11 @@ namespace Barracks
             ApplyCurrentUnit();
         }
 
-        private void CreateUnitUiElement(PartialUpgradableUnit unit)
-            => _factory.CreateBarracksElement(_parent).Construct(unit);
+        private BarracksUnitElement CreateUnitUiElement(PartialUpgradableUnit unit)
+        { 
+            var element = _factory.CreateBarracksElement(_parent);
+            element.Construct(unit);
+            return element;
+        }
     }
 }

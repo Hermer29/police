@@ -25,6 +25,18 @@ MonoBehaviour:
     m_Address: Assets/Localization/Towns Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: 7126174e7eea4724eba9fe3e899c8066
+    m_Address: Assets/Localization/Units Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 7dfe44e3a4a978e4a946b1fedf21e93d
+    m_Address: Assets/Localization/MeleeNames Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 4f8de2b49d0c5334ea2a29f131f72f81
+    m_Address: Assets/Localization/RangedNames Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:

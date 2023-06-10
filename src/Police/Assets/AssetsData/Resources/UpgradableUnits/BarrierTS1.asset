@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431768c085ef4ae5902ac600373a2836, type: 3}
+  m_Name: BarrierTS1
+  m_EditorClassIdentifier: 
+  <Guid>k__BackingField: e2a53b29-6764-42a4-9f3e-5c468207344a
+  <OwnedByDefault>k__BackingField: 0
+  <Tier>k__BackingField: 0
+  <Type>k__BackingField: 0
+  <Purchasable>k__BackingField: 0
+  <LocalizedName>k__BackingField:
+    m_KeyId: 51617045901312
+    m_Key: BarrierNames
+  LevelPartsUnitAppearances:
+  - Asset:
+      m_AssetGUID: e158ab0c05c5813409afff9ff0d182ba
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  - Asset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 0}
+  _levelPartsQuantity: 4
+  CurrentAppearance:
+    value:
+      Asset:
+        m_AssetGUID: e158ab0c05c5813409afff9ff0d182ba
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      Illustration: {fileID: 0}
