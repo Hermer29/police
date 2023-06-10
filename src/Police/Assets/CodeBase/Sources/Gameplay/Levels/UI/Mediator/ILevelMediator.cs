@@ -15,5 +15,6 @@ namespace Gameplay.Levels.UI
         void DefineMaxEnergyAndFill(int levelEnergyAmount);
         int EnergyAmount { get; }
         void RestoreEnergy(int restorePerKill);
+        void DestroyOldPeople();
     }
 }

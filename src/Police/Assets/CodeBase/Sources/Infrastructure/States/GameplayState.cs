@@ -139,10 +139,13 @@ namespace Infrastructure.States
                 _warpToNextTown = true;
                 yield break;
             }
-            AllServices.Get<ILevelMediator>().StartNextLevelTimeline();
+
+            var mediator = AllServices.Get<ILevelMediator>();
+            mediator.StartNextLevelTimeline();
+            
             yield return new WaitForSeconds(2);
             _goingToMenu = true;
-            
+            mediator.DestroyOldPeople();
         }
         
         private IEnumerator WaitAndGoToMenuStateWhenLost()
@@ -159,6 +162,7 @@ namespace Infrastructure.States
             _levelEngine.Won -= HandleWon;
             _levelEngine.Canceled -= HandleCancel;
             _enemiesFactory.FlushEnemies();
+            AllServices.Get<ILevelMediator>().DestroyOldPeople();
         }
 
         [Transition(typeof(MenuState))]
