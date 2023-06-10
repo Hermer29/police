@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewYorkCity.unity
     guid: 60a3d443be302a14c84d02fadd8dd363
+  - enabled: 1
+    path: Assets/Scenes/Tokyo.unity
+    guid: db5614f1e51a3de4691370355b2808f2
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1521c3bb5f508464ea6ae8ee649925b2, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: bf0fece568a61b744b44cb295bc1fd5a, type: 2}
