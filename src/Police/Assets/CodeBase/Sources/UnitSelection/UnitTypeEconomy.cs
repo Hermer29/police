@@ -8,7 +8,8 @@ namespace UnitSelection
         {
             UnitType.Barrier => 2, 
             UnitType.Melee => 8,
-            UnitType.Ranged => 32
+            UnitType.Ranged => 32,
+            UnitType.None => 0
         };
     }
 }

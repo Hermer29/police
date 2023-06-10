@@ -11,7 +11,6 @@ namespace PeopleDraw.Selection
 {
     public class SelectedUnits : MonoBehaviour
     {
-        private UnitType _currentType;
         private Energy _energy;
         private SelectorUi _ui;
 
@@ -37,6 +36,8 @@ namespace PeopleDraw.Selection
 
         private void OnEnergyUpdated()
         {
+            if (HasEnoughEnergyToSpawnSelected() == false)
+                SelectedType.Value = UnitType.None;
             UpdateButtonsActivation();
         }
 
@@ -82,6 +83,6 @@ namespace PeopleDraw.Selection
             => button.UnitType.Cost() <= _energy.Amount;
 
         public bool HasEnoughEnergyToSpawnSelected() 
-            => _currentType.Cost() <= _energy.Amount;
+            => SelectedType.Value.Cost() <= _energy.Amount;
     }
 }
