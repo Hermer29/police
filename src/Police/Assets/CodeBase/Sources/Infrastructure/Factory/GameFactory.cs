@@ -1,6 +1,8 @@
 ﻿using Gameplay.Levels.UI.CrossLevelUi;
+using Helpers;
 using Infrastructure.AssetManagement;
 using Tutorial;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Factory
@@ -20,5 +22,12 @@ namespace Infrastructure.Factory
             AllServices.Get<DiContainer>()
                 .InstantiatePrefabForComponent<TutorialEngine>(
                     _assets.LoadTutorial());
+
+        public GameObject CreateNuke() => 
+            Object.Instantiate(_assets.LoadNuke());
+        
+        public async void CreateNukeFx(Vector3 at) =>
+            Object.Instantiate(await _assets.LoadNukeFx())
+                .WithPosition(at);
     }
 }

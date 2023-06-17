@@ -4111,7 +4111,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1301120264}
-    LevelMiddle: {fileID: 2115513430}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 888803469}
@@ -4142,7 +4141,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 927927063}
-    LevelMiddle: {fileID: 317440685}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 711598242}
@@ -4173,7 +4171,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 2065641914}
-    LevelMiddle: {fileID: 534286243}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 132277425}
@@ -4204,7 +4201,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 2123825782}
-    LevelMiddle: {fileID: 461191685}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 533440658}
@@ -4235,7 +4231,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 472640389}
-    LevelMiddle: {fileID: 1715559368}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 2060773150}
@@ -4266,7 +4261,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1956053369}
-    LevelMiddle: {fileID: 593949655}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 799623806}
@@ -4297,7 +4291,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 658786609}
-    LevelMiddle: {fileID: 68795204}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 1648003203}
@@ -4328,7 +4321,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 586683608}
-    LevelMiddle: {fileID: 1121755271}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 2046848580}
@@ -4359,7 +4351,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 2018640088}
-    LevelMiddle: {fileID: 1634165541}
   - EnergyAmount: 300
     Waves:
     - SpawnPoint: {fileID: 1551403850}
@@ -4390,7 +4381,6 @@ MonoBehaviour:
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1793539310}
-    LevelMiddle: {fileID: 1129862652}
 --- !u!4 &223215415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 74978b6b36516b04b92f6ec6b3b0898d, type: 3}
@@ -17134,7 +17124,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 6199
+    m_Bits: 268343
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

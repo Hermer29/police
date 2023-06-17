@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431768c085ef4ae5902ac600373a2836, type: 3}
+  m_Name: ShooterT1
+  m_EditorClassIdentifier: 
+  <Guid>k__BackingField: 6ab29cf5-83cf-49e7-8093-10ae8cd77b84
+  <OwnedByDefault>k__BackingField: 1
+  <Tier>k__BackingField: 1
+  <Type>k__BackingField: 2
+  <Purchasable>k__BackingField: 0
+  <LocalizedName>k__BackingField:
+    m_KeyId: 9448681472
+    m_Key: RangedNames
+  LevelPartsUnitAppearances:
+  - Asset:
+      m_AssetGUID: c229b6594cf65ed4794a98570f15896d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: 908c4ac289879fe499e1d21b1d4c41b2, type: 3}
+  - Asset:
+      m_AssetGUID: 2cf8d0ca8169da146ad5ca70df5531bf
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: d089649fbaf4e4e45b0ca92ddc8c26aa, type: 3}
+  - Asset:
+      m_AssetGUID: 048ede3560c555349a7691fab11a5bb7
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: fb6cdb6baaee9194a941aa12bb7db2ad, type: 3}
+  _levelPartsQuantity: 4
+  CurrentAppearance:
+    value:
+      Asset:
+        m_AssetGUID: c229b6594cf65ed4794a98570f15896d
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      Illustration: {fileID: 0}

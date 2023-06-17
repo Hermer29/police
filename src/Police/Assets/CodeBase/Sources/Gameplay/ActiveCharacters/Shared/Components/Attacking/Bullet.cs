@@ -48,6 +48,11 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
                 OnHit();
             }
         }
+        
+        public void ForceFree()
+        {
+            _target = null;
+        }
 
         private void OnHit()
         {

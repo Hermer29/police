@@ -20,5 +20,11 @@ namespace Helpers
             action.Invoke(required);
             return required;
         }
+
+        public static GameObject WithPosition(this GameObject gameObject, Vector3 position)
+        {
+            gameObject.transform.position = position;
+            return gameObject;
+        }
     }
 }

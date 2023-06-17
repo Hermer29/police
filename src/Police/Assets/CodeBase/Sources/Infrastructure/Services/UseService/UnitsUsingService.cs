@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Services.PrefsService;
 using Services.UseService;
 using UniRx;
@@ -11,11 +12,19 @@ using Upgrading.UnitTypes;
 
 namespace Infrastructure.Services.UseService
 {
-    public class UnitsUsingService
+    public class UnitsUsingService : IManuallyInitializable
     {
         private readonly IPrefsService _prefsService;
         private readonly UnitsRepository _repository;
-        public readonly ReactiveDictionary<UnitType, PartialUpgradableUnit> UsedUnits = new();
+
+        private readonly ReactiveDictionary<UnitType, PartialUpgradableUnit> _usedUnits = new()
+        {
+            { UnitType.Barrier, null},
+            { UnitType.Melee, null},
+            { UnitType.Ranged, null}
+        };
+
+        public IReadOnlyReactiveDictionary<UnitType, PartialUpgradableUnit> UsedUnits => _usedUnits;
         public readonly ReactiveCollection<UnitType> MaxUpgraded = new();
 
         public UnitsUsingService(IPrefsService prefsService, UnitsRepository repository)
@@ -24,23 +33,29 @@ namespace Infrastructure.Services.UseService
             _repository = repository;
         }
 
-        public void PreloadUsedUnits()
+        void IManuallyInitializable.Initialize() => PreloadUsedUnits();
+
+        private void PreloadUsedUnits()
         {
             var equippedUnits = GetEquipped(_repository);
             AssertThatEquippedUnitsIsSingleInTheirTypes(equippedUnits);
             InitializeSelectedDictionary(equippedUnits);
-            WatchForNextSuperLevelCommencing();
+            foreach (PartialUpgradableUnit partialUpgradableUnit in equippedUnits)
+            {
+                _usedUnits[partialUpgradableUnit.Type] = partialUpgradableUnit;
+                Debug.Log($"{partialUpgradableUnit.Type}:{partialUpgradableUnit.name} -- upgrade level: {partialUpgradableUnit.UpgradedLevel.Value}");
+            }
+            OnSuperLevelUpgraded();
             Debug.Log($"{nameof(UnitsUsingService)}.{nameof(PreloadUsedUnits)} finished");
         }
 
-        private void WatchForNextSuperLevelCommencing()
+        private void OnSuperLevelUpgraded()
         {
             foreach (PartialUpgradableUnit partialUpgradableUnit in _repository.GetAll())
             {
                 partialUpgradableUnit.UpgradedLevel
                     .Subscribe(
-                        _ => 
-                            CheckIsUnitMaxUpgradedInHierarchy(partialUpgradableUnit));
+                        _ => CheckIsUnitMaxUpgradedInHierarchy(partialUpgradableUnit));
             }
         }
 
@@ -56,7 +71,7 @@ namespace Infrastructure.Services.UseService
                 MaxUpgraded.Add(partialUpgradableUnit.Type);
                 return;
             }
-            UsedUnits[partialUpgradableUnit.Type] = next;
+            _usedUnits[partialUpgradableUnit.Type] = next;
         }
 
         private IEnumerable<PartialUpgradableUnit> GetEquipped(UnitsRepository repository)
@@ -69,6 +84,8 @@ namespace Infrastructure.Services.UseService
 
         private void WriteDefaults(IEnumerable<PartialUpgradableUnit> upgradableUnits)
         {
+            if (_prefsService.HasKey("NotFirstStart"))
+                return;
             var grouped = upgradableUnits.GroupBy(x => x.Type);
             foreach (var grouping in grouped)
             {
@@ -79,19 +96,17 @@ namespace Infrastructure.Services.UseService
 
         public void Use(PartialUpgradableUnit shopProduct)
         {
-            UsedUnits[shopProduct.Type] = shopProduct;
+            _usedUnits[shopProduct.Type] = shopProduct;
             SaveEquip(shopProduct);
         }
 
         public bool IsEquipped<TEnum>(ITypedUnit<TEnum> equippable) where TEnum: Enum => 
-            _prefsService.GetString(equippable.Type.ToString()) == equippable.Guid;
+            _prefsService.GetString(ConstructTypeKey(equippable)) == equippable.Guid;
 
         private void InitializeSelectedDictionary(IEnumerable<PartialUpgradableUnit> equippedUnits)
         {
             foreach (PartialUpgradableUnit upgradableUnit in equippedUnits)
             {
-                if (UsedUnits.ContainsKey(upgradableUnit.Type)) continue;
-                UsedUnits.Add(upgradableUnit.Type, upgradableUnit);
                 CheckIsUnitMaxUpgradedInHierarchy(upgradableUnit);
             }
         }
@@ -102,6 +117,11 @@ namespace Infrastructure.Services.UseService
                 .Aggregate((result, curr) => result && curr));
 
         private void SaveEquip<TEnum>(ITypedUnit<TEnum> ownable) where TEnum: Enum => 
-            _prefsService.SetString(ownable.Type.ToString(), ownable.Guid);
+            _prefsService.SetString(ConstructTypeKey(ownable), ownable.Guid);
+
+        private string ConstructTypeKey<TEnum>(ITypedUnit<TEnum> ownable) where TEnum : Enum
+        {
+            return $"{ownable.Type}_Using";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace.Audio.Components;
+using UnityEngine;
 
 namespace ActiveCharacters.Shared.Components.Attacking
 {
@@ -6,6 +7,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
     {
         [SerializeField] private AttackingAnimator _animator;
         [SerializeField] private AttackAnimationEventsListener _eventsListener;
+        [SerializeField] private ShootAudio _shoot;
         
         public float Cooldown;
         
@@ -46,6 +48,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
         private void StartAttack()
         {
             _isAttacking = true;
+            _shoot?.Play();
             transform.LookAt(_target.Root); 
             _animator.Attack();
         }

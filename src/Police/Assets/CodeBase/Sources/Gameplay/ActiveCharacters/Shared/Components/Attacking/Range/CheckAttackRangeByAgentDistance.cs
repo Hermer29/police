@@ -34,7 +34,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
             }
         }
 
-        private bool TargetIsNear() => _agent.remainingDistance <= _range * _range;
+        private bool TargetIsNear() => _agent.remainingDistance <= _range;
 
         public void CheckFor(Attackable target)
         {

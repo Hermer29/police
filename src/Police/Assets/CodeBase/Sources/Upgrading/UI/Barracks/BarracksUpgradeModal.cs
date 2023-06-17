@@ -114,8 +114,8 @@ namespace Upgrading.UI.Barracks
 
         private void ShowCurrentUnitIlluistration(PartialUpgradableUnit unit)
         {
-            _currentUnit.sprite = unit.GetCurrentAppearance().Illustration;
-            _currentUnitSmall.sprite = unit.GetCurrentAppearance().Illustration;
+            _currentUnit.sprite = unit.CurrentIcon.Value;
+            _currentUnitSmall.sprite = unit.CurrentIcon.Value;
         }
 
         public void Hide()

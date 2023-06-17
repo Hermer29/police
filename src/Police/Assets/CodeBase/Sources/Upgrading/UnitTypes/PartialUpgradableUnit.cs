@@ -1,7 +1,9 @@
-﻿using Helpers;
+﻿using System.Linq;
+using Helpers;
 using ModestTree;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Upgrading.UnitTypes
 {
@@ -9,7 +11,6 @@ namespace Upgrading.UnitTypes
     public class PartialUpgradableUnit : UpgradableUnit
     {
         [SerializeField] public LevelPartUnits[] LevelPartsUnitAppearances;
-        [SerializeField, Min(1)] private int _levelPartsQuantity = 1;
 
         public int UpgradePartsReachedSerial
         {
@@ -17,46 +18,53 @@ namespace Upgrading.UnitTypes
             {
                 if (UpgradedLevel.Value == 1)
                     return 1;
-                return (UpgradedLevel.Value + 2) / UpgradeUnitsConstants.LevelsToUpgradePart;
+                return Mathf.Clamp((UpgradedLevel.Value + 2) / UpgradeUnitsConstants.LevelsToUpgradePart,
+                    1, MaxSuperLevel);
             }
         }
 
         public int MaxSuperLevel => LevelPartsUnitAppearances.Length;
 
-        public ReactiveProperty<LevelPartUnits> CurrentAppearance;
+        private ReactiveProperty<LevelPartUnits> _currentAppearance;
+        private ReactiveProperty<Sprite> _currentIcon;
+        private ReactiveProperty<AssetReference> _currentReference;
+        public IReadOnlyReactiveProperty<LevelPartUnits> CurrentAppearance => _currentAppearance;
+        public IReadOnlyReactiveProperty<Sprite> CurrentIcon => _currentIcon;
+        public IReadOnlyReactiveProperty<AssetReference> CurrentReference => _currentReference;
 
-        public void Initialize() 
-            => CurrentAppearance = new ReactiveProperty<LevelPartUnits>(GetCurrentAppearance());
-
-        public LevelPartUnits GetCurrentAppearance()
+        public void Initialize()
         {
-            Debug.Log($"{nameof(PartialUpgradableUnit)}.{nameof(GetCurrentAppearance)} at {name} Called");
-            var origin = Mathf.Clamp(UpgradePartsReachedSerial - 1, 0, LevelPartsUnitAppearances.Length - 1);
-            for (int i = origin; i >= 0; i--)
+            _currentAppearance = new ReactiveProperty<LevelPartUnits>(GetCurrentAppearance());
+            _currentIcon = new ReactiveProperty<Sprite>(_currentAppearance.Value.Illustration);
+            _currentReference = new ReactiveProperty<AssetReference>(_currentAppearance.Value.Asset);
+            _currentAppearance.Subscribe(newValue =>
             {
-                LevelPartUnits appearanceByLevel = LevelPartsUnitAppearances[i];
-                if (appearanceByLevel.Asset.RuntimeKeyIsValid() == false)
-                {
-                    continue;
-                }
-                Debug.Log($"{nameof(PartialUpgradableUnit)}.{nameof(GetCurrentAppearance)} Resolved at {name} {appearanceByLevel.Asset}");
-                return appearanceByLevel;
-            }
+                _currentIcon.Value = newValue.Illustration;
+                _currentReference.Value = newValue.Asset;
+            });
+        }
+
+        private LevelPartUnits GetCurrentAppearance()
+        {
+            int currentAppearanceIndex = UpgradePartsReachedSerial - 1;
+            LevelPartUnits currentAppearance = LevelPartsUnitAppearances[currentAppearanceIndex];
             
-            throw new InvalidStateException(
-                $"Array {nameof(LevelPartsUnitAppearances)} must contain at least first element, and it must be not null");
+            if(currentAppearance.IsEmpty == false)
+                return currentAppearance;
+            
+            return LevelPartsUnitAppearances.Take(UpgradePartsReachedSerial)
+                .Reverse().First(x => x.Asset.RuntimeKeyIsValid());
         }
 
         public bool IsFullyUpgraded()
-            => UpgradePartsReachedSerial == _levelPartsQuantity;
+            => UpgradePartsReachedSerial >= MaxSuperLevel;
 
         protected override bool IsCanUpgrade() => IsFullyUpgraded() == false;
 
         protected override void OnLevelIncremented()
         {
-            
             Debug.Log($"{name} upgraded! Current level: {UpgradedLevel.Value}, IsFullyUpgraded: {IsFullyUpgraded()}, SuperLevels: {UpgradePartsReachedSerial}");
-            CurrentAppearance.Value = GetCurrentAppearance();
+            _currentAppearance.Value = GetCurrentAppearance();
         }
 
         public bool TryGetNextAppearance(out LevelPartUnits next)

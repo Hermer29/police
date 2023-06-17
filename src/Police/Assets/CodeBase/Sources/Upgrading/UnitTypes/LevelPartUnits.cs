@@ -9,5 +9,7 @@ namespace Upgrading.UnitTypes
     {
         public AssetReference Asset;
         public Sprite Illustration;
+
+        public bool IsEmpty => Asset.RuntimeKeyIsValid() == false;
     }
 }

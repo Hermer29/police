@@ -13,6 +13,8 @@ namespace Gameplay.PeopleDraw.EnergyConsumption
         public Energy(EnergyUi energyUi) => _energyUi = energyUi;
         
         public int Amount => _currentEnergyValue;
+        public int MaxAmount => _maxEnergyValue;
+
         public event Action Updated;
 
         public void DefineMaxEnergyAndFill(int value)
@@ -40,5 +42,8 @@ namespace Gameplay.PeopleDraw.EnergyConsumption
             _energyUi.SetEnergyValue(_currentEnergyValue);
             Updated?.Invoke();
         }
+
+        public void RestoreEnergyToMax() 
+            => RestoreEnergy(_maxEnergyValue);
     }
 }

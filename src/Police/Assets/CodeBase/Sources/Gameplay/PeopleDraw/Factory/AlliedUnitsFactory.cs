@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ActiveCharacters.Allies.Components;
+using ActiveCharacters.Shared.Components;
+using DG.Tweening;
 using Gameplay.ActiveCharacters.Shared.Components;
 using Helpers;
+using Infrastructure.Services.UseService;
+using PeopleDraw.AssetManagement;
 using PeopleDraw.Components;
+using Services.UseService;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Pool;
+using Upgrading.UnitTypes;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Gameplay.PeopleDraw.Factory
 {
@@ -16,29 +25,82 @@ namespace Gameplay.PeopleDraw.Factory
         private readonly IInstantiator _instantiator;
         private readonly ParentsForGeneratedObjects _parents;
         private readonly IUnitsFxFactory _unitsFxFactory;
+        private readonly GameAssetLoader _assetLoader;
+        private readonly UnitsAssetCache _cache;
+        private readonly UnitsUsingService _usingService;
 
         private List<WinAnimator> _winAnimators = new ();
-        private Lazy<Dictionary<int, ObjectPool<PoolUnit>>> _poolForTypes = new(
-            valueFactory: () => new Dictionary<int, ObjectPool<PoolUnit>>());
-        private List<PoolUnit> _policeMans = new ();
 
-        public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents, IUnitsFxFactory unitsFxFactory)
+        private Lazy<Dictionary<UnitType, ObjectPool<PoolUnit>>> _poolForTypes = new(
+            valueFactory: () => new Dictionary<UnitType, ObjectPool<PoolUnit>>
+            {
+                { UnitType.Barrier, null },
+                { UnitType.Melee, null },
+                { UnitType.Ranged, null }
+            });
+
+        private readonly List<PoolUnit> _policemen = new ();
+        public int ActivePolicemenAmount { get; private set; }
+        
+        public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents, IUnitsFxFactory unitsFxFactory,
+            GameAssetLoader assetLoader, UnitsAssetCache cache, UnitsUsingService usingService)
         {
+            _cache = cache;
+            _assetLoader = assetLoader;
             _instantiator = instantiator;
             _parents = parents;
             _unitsFxFactory = unitsFxFactory;
+            _cache = cache;
+            _usingService = usingService;
+        }
+
+        public void Initialize()
+        {
+            _usingService.UsedUnits.ObserveReplace().Subscribe(OnUnitTypeReplaced);
+        }
+
+        private void OnUnitTypeReplaced(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> units)
+        {
+            var relatedUnitPool = _poolForTypes.Value[units.NewValue.Type];
+            relatedUnitPool.Clear();
+            _cache.SelectedUnits.ObserveReplace().First().Subscribe(update =>
+            {
+                _poolForTypes.Value[units.NewValue.Type] = CreateUnitsPool(update.NewValue);
+            });
         }
         
-        public PoolUnit InstantiateDrawnUnit(PoolUnit prefab, Vector3 position, int selectedSerial)
+        public async Task<GameObject> CreateSuperUnit() 
+            => Object.Instantiate(await _assetLoader.LoadSuperUnit());
+
+        public async Task<GameObject> CreateHelicopter() 
+            => Object.Instantiate(await _assetLoader.LoadHelicopter());
+
+        public PoolUnit InstantiateDrawnUnit(UnitType unitType, Vector3 position)
         {
-            if (_poolForTypes.Value.ContainsKey(selectedSerial) == false)
+            var prefab = _cache.SelectedUnits[unitType];
+            if(PoolNotInitialized(unitType))
             {
-                _poolForTypes.Value.Add(selectedSerial, CreateUnitsPool(prefab));
+                _poolForTypes.Value[unitType] = CreateUnitsPool(prefab);
             }
 
-            PoolUnit unplacableUnit = _poolForTypes.Value[selectedSerial].Get();
+            PoolUnit unplacableUnit = _poolForTypes.Value[unitType].Get();
             unplacableUnit.transform.position = position;
+            if (unplacableUnit.TryGetComponent(out PolicemenDyingListener policemenDyingListener))
+            {
+                ActivePolicemenAmount++;
+                policemenDyingListener.Restore();
+            }
+
+            if (unplacableUnit.TryGetComponent(out CharactersNavigationLinks navLinks))
+            {
+                navLinks.Attackable.Restore();
+            }
             return unplacableUnit;
+        }
+
+        private bool PoolNotInitialized(UnitType unitType)
+        {
+            return _poolForTypes.Value[unitType] == null;
         }
 
         private ObjectPool<PoolUnit> CreateUnitsPool(PoolUnit prefab)
@@ -57,6 +119,10 @@ namespace Gameplay.PeopleDraw.Factory
 
         private void OnAlliedRelease(PoolUnit obj)
         {
+            if (obj.TryGetComponent<PolicemenDyingListener>(out var listener))
+            {
+                ActivePolicemenAmount--;
+            }
             _unitsFxFactory.CreateDyingFx(obj.transform.position);
             obj.gameObject.SetActive(false);
         }
@@ -66,7 +132,7 @@ namespace Gameplay.PeopleDraw.Factory
 
         public void ReturnAllToPool()
         {
-            foreach (PoolUnit policeMan in _policeMans.Where(policeMan => policeMan.Used))
+            foreach (PoolUnit policeMan in _policemen.Where(policeMan => policeMan.Used))
             {
                 policeMan.ReturnToPool();
             }
@@ -80,7 +146,7 @@ namespace Gameplay.PeopleDraw.Factory
                 rotation: Quaternion.identity, 
                 parentTransform: _parents.Policemen);
             unit.Construct(pool);
-            _policeMans.Add(unit);
+            _policemen.Add(unit);
             if (unit.TryGetComponent(out WinAnimator winAnimator))
             {
                 _winAnimators.Add(winAnimator);

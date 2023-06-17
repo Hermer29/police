@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DefaultNamespace.Audio;
 using Gameplay.PeopleDraw.EnergyConsumption;
 using Selection;
 using UniRx;
@@ -13,10 +14,12 @@ namespace PeopleDraw.Selection
     {
         private Energy _energy;
         private SelectorUi _ui;
+        private GlobalAudio _audio;
 
         [Inject]
-        public void Construct(Energy energy, SelectorUi ui)
+        public void Construct(Energy energy, SelectorUi ui, GlobalAudio audio)
         {
+            _audio = audio;
             _ui = ui;
             _energy = energy;
 
@@ -49,6 +52,7 @@ namespace PeopleDraw.Selection
         private void OnSelect(SelectorButton uiSelectorButton)
         {
             Debug.Log($"Button selected {uiSelectorButton.UnitType}");
+            _audio.PlayActiveUnitChange();
             foreach (SelectorButton button in _ui.SelectorButtons)
             {
                 button.Deselect();

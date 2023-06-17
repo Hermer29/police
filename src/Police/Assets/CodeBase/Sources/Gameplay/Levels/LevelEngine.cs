@@ -17,9 +17,8 @@ namespace Gameplay.Levels
         private readonly ILevelMediator _mediator;
         private readonly EnemiesFactory _factory;
 
-        private bool _lost;
-        private bool _won;
         private bool _canceled;
+        private Coroutine _waitingForLooseCoroutine;
 
         public LevelEngine(CityDefinition cityDefinition, EnemiesFactory factory,
             ILevelMediator mediator, GameplayUI gameplayUi)
@@ -39,6 +38,7 @@ namespace Gameplay.Levels
         private void ReplayRequested()
         {
             _canceled = true;
+            Debug.Log($"{nameof(LevelEngine)}.{nameof(ReplayRequested)} {_canceled} set true");
         }
 
         public void ExecuteLevel(int localLevel) => CityCoroutine(localLevel);
@@ -55,6 +55,7 @@ namespace Gameplay.Levels
         {
             Debug.Log($"{nameof(LevelEngine)}.{nameof(OnHandlingEnded)} Level handling ended");
             _canceled = false;
+            _coroutineRunner.StopCoroutine(_waitingForLooseCoroutine);
         }
 
         private IEnumerator LevelCoroutine(LevelEntry level)
@@ -72,6 +73,7 @@ namespace Gameplay.Levels
             {
                 if (_canceled)
                 {
+                    Debug.Log($"{nameof(LevelEngine)} {nameof(_canceled)} equals true");
                     spawner.Stop();
                     Canceled?.Invoke();
                     yield break;
@@ -82,10 +84,12 @@ namespace Gameplay.Levels
 
             if (playerLost)
             {
+                Debug.Log($"{nameof(LevelEngine)} {nameof(playerLost)} equals true");
                 spawner.Stop();
                 Lost?.Invoke();
                 yield break;
             }
+            Debug.Log($"{nameof(LevelEngine)} {nameof(playerLost)} equals false");
             Won?.Invoke();
         }
 
@@ -94,7 +98,7 @@ namespace Gameplay.Levels
             _mediator.DefineMaxEnergyAndFill(level.EnergyAmount);
             spawner = CreateEnemiesSpawner(level);
             spawner.Start();
-            _coroutineRunner.StartCoroutine(WaitForLoose(level.LooseTrigger, onLost));
+            _waitingForLooseCoroutine = _coroutineRunner.StartCoroutine(WaitForLoose(level.LooseTrigger, onLost));
         }
 
         private IEnumerator WaitForLoose(LooseTrigger looseTrigger, Action onLose)

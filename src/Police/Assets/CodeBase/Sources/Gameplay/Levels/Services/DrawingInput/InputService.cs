@@ -27,10 +27,14 @@ namespace Services
             
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = _camera.ScreenPointToRay(mousePosition);
-            int hits = Physics.RaycastNonAlloc(ray, _hits, Mathf.Infinity, _drawingPlane);
+            var raycastDetectable = 1 << LayerMask.NameToLayer("RaycastDetectable");
+            
+            int hits = Physics.RaycastNonAlloc(ray, _hits, Mathf.Infinity, _drawingPlane | raycastDetectable);
             if (hits == 0)
                 return;
             RaycastHit hit = _hits[0];
+            if (1 << hit.transform.gameObject.layer == raycastDetectable)
+                return;
             DrawnAtPoint?.Invoke(hit, _previous ?? hit);
             _previous = hit;
         }

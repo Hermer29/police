@@ -621,6 +621,7 @@ GameObject:
   - component: {fileID: 2174198257486354496}
   - component: {fileID: 262705521}
   - component: {fileID: 262705520}
+  - component: {fileID: 2531246682290156400}
   m_Layer: 5
   m_Name: UpgradeForYans
   m_TagString: Untagged
@@ -780,6 +781,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Range: {x: 2, y: 3}
+--- !u!114 &2531246682290156400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3563401189067694090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &4624425703984610424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1160,7 @@ GameObject:
   - component: {fileID: 8318538480122828302}
   - component: {fileID: 353797651}
   - component: {fileID: 353797650}
+  - component: {fileID: 6213101404248951328}
   m_Layer: 5
   m_Name: Upgrade
   m_TagString: Untagged
@@ -1306,6 +1321,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Range: {x: 2, y: 3}
+--- !u!114 &6213101404248951328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318538480122828300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &8318538480156638436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,6 +1406,7 @@ MonoBehaviour:
   _progressBlock: {fileID: 1570190503818406676}
   _maxUpgrade: {fileID: 232975509468184730}
   _upDoubleArrow: {fileID: 8411154307843469030}
+  _unitIcon: {fileID: 4084374740729179166}
 --- !u!1 &8318538481641962007
 GameObject:
   m_ObjectHideFlags: 0

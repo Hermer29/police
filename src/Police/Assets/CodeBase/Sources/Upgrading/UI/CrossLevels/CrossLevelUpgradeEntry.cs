@@ -21,6 +21,7 @@ namespace Upgrading.UI.CrossLevels
         [SerializeField] private ProgressBlock _progressBlock;
         [SerializeField] private GameObject _maxUpgrade;
         [SerializeField] private GameObject _upDoubleArrow;
+        [SerializeField] private Image _unitIcon;
 
         public int CurrentLevel { get; private set; }
         
@@ -45,5 +46,8 @@ namespace Upgrading.UI.CrossLevels
             CurrentLevel = upgradeLevel;
             _localizeString.RefreshString();
         }
+
+        public void ShowIcon(Sprite valueIllustration) 
+            => _unitIcon.sprite = valueIllustration;
     }
 }

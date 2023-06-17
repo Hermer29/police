@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace.Audio.Components;
 using UnityEngine;
 using Animation = AnimationUtility.Animation;
 
@@ -8,7 +9,8 @@ namespace ActiveCharacters.Shared.Components
     {
         [field: SerializeField] public Transform Root { get; private set; }
         [SerializeField] private Animation _animation;
-
+        [SerializeField] private DyingAudio _dying;
+        
         public bool Died;
         public int MaxHp = 1;
 
@@ -27,9 +29,22 @@ namespace ActiveCharacters.Shared.Components
             _hp--;
             if (_hp <= 0)
             {
+                _dying?.Play();
                 Died = true;
                 UnitDied?.Invoke(this,this);
             }
+        }
+
+        public void Restore()
+        {
+            Died = false;
+            _hp = MaxHp;
+        }
+
+        public void Kill()
+        {
+            _hp = -1;
+            ApplyDamage();
         }
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System.Collections;
+using System.Linq;
+using DefaultNamespace.Audio;
 using Gameplay.Levels;
 using Gameplay.Levels.Factory;
 using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI;
+using Gameplay.PeopleDraw.Factory;
 using Gameplay.UI;
 using Hermer29.Almasury;
+using Infrastructure.Services.UseService;
+using Monetization.AdvertisingPlane;
 using PeopleDraw.Selection;
 using Services;
 using Services.AdvertisingService;
+using Services.PrefsService;
 using Tutorial;
 using UnityEngine;
 using Upgrading.UnitTypes;
@@ -34,6 +40,11 @@ namespace Infrastructure.States
         private bool _warpToNextTown;
         private bool _justCompletedLastTownLevel;
         private SelectedUnits _selection;
+        private AdPlane _adPlane;
+        private BulletFactory _bulletsFactory;
+        private SuperPowersUi _superPowersUi;
+        private UnitsUsingService _usingService;
+        private GlobalAudio _audio;
 
         private void ResolveDependencies()
         {
@@ -50,22 +61,30 @@ namespace Infrastructure.States
             _endGameLogic = _container.Resolve<EndGameLogic>();
             _advertising = _container.Resolve<IAdvertisingService>();
             _selection = _container.Resolve<SelectedUnits>();
+            _adPlane = _container.Resolve<AdPlane>();
+            _bulletsFactory = _container.Resolve<BulletFactory>();
+            _superPowersUi = _container.Resolve<SuperPowersUi>();
+            _usingService = _container.Resolve<UnitsUsingService>();
+            _audio = _container.Resolve<GlobalAudio>();
         }
 
         protected override void OnEnter()
         {
             Debug.Log($"{nameof(GameplayState)}.{nameof(OnEnter)} called");
             ResolveDependencies();
-            
+            AllServices.Get<IPrefsService>().SetInt("NotFirstStart", 1);
             ExecuteAction();
         }
 
         private void ExecuteAction()
         {
+            _adPlane.StartWaitingForMoment();
             _selection.SelectUnit(UnitType.Barrier);
             _advertising.ShowInterstitial();
             _adBlockWindow.Reposition();
-            _gameplayUi.Show();
+            _gameplayUi.SetIcons(_usingService.UsedUnits.Select(
+                x => x.Value.CurrentIcon.Value).ToArray());
+            _superPowersUi.ShowButtons();
             _inputService.Enable();
 
             if (TutorialRequired())
@@ -101,25 +120,39 @@ namespace Infrastructure.States
             _endGameLogic.NotifyLost(_levelService.Level);
             _endGameLogic.Closed += CloseLost;
             _advertising.ShowInterstitial();
+            _audio.PlayLoose();
             RegisterGamesEnd();
         }
 
         private void HandleWon()
         {
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
-            _endGameLogic.NotifyWon(_levelService.Level);
-            _endGameLogic.Closed += CloseWon;
+            var mediator = AllServices.Get<ILevelMediator>();
+            mediator.AlliedUnitsToVictory();
             if (_levelService.LocalLevel == 10)
             {
                 _justCompletedLastTownLevel = true;
             }
+            _audio.PlayWin();
+            
+            _coroutineRunner.StartCoroutine(WaitForWinProcess());
+        }
+
+        private IEnumerator WaitForWinProcess()
+        {
+            yield return new WaitForSeconds(2);
+            _endGameLogic.NotifyWon(_levelService.Level);
+            _endGameLogic.Closed += CloseWon;
             _levelService.IncrementLevel();
             _advertising.ShowInterstitial();
             RegisterGamesEnd();
         }
-
+        
         private void RegisterGamesEnd()
         {
+            _superPowersUi.HideButtons();
+            _bulletsFactory.FreeAll();
+            _adPlane.Uninitialize();
             if (TutorialRequired())
             {
                 _tutorial.Disable();
@@ -128,9 +161,17 @@ namespace Infrastructure.States
             _gameplayUi.Hide();
         }
 
-        private void CloseWon() => _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenWon());
+        private void CloseWon()
+        {
+            _endGameLogic.Closed -= CloseWon;
+            _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenWon());
+        }
 
-        private void CloseLost() => _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenLost());
+        private void CloseLost()
+        {
+            _endGameLogic.Closed -= CloseLost;
+            _coroutineRunner.StartCoroutine(WaitAndGoToMenuStateWhenLost());
+        }
 
         private IEnumerator WaitAndGoToMenuStateWhenWon()
         {
@@ -142,21 +183,23 @@ namespace Infrastructure.States
 
             var mediator = AllServices.Get<ILevelMediator>();
             mediator.StartNextLevelTimeline();
-            
-            yield return new WaitForSeconds(2);
             _goingToMenu = true;
             mediator.DestroyOldPeople();
         }
         
         private IEnumerator WaitAndGoToMenuStateWhenLost()
         {
+            Debug.Log($"{nameof(GameplayState)}.{nameof(WaitAndGoToMenuStateWhenLost)} called");
+
             yield return null;
             _goingToMenu = true;
         }
 
         protected override void OnExit()
         {
+            _justCompletedLastTownLevel = false;
             _goingToMenu = false;
+            _warpToNextTown = false;
             _adBlockWindow.Reposition();
             _levelEngine.Lost -= HandleLoss;
             _levelEngine.Won -= HandleWon;

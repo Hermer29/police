@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Shop;
 using SpecialPlatforms;
 using Upgrading.AssetManagement;
@@ -7,15 +8,23 @@ using Upgrading.UnitTypes;
 
 namespace Upgrading
 {
-    public class UnitsRepository
+    public class UnitsRepository : IManuallyInitializable
     {
+        private readonly IUnitsAssetLoader _loadAllUpgradableUnits;
+        private readonly SaveService _saveService;
         private PartialUpgradableUnit[] _upgradableUnits;
 
         public UnitsRepository(IUnitsAssetLoader loadAllUpgradableUnits, SaveService saveService)
         {
-            _upgradableUnits = loadAllUpgradableUnits.LoadAllUpgradableUnits().ToArray();
+            _loadAllUpgradableUnits = loadAllUpgradableUnits;
+            _saveService = saveService;
+        }
+
+        void IManuallyInitializable.Initialize()
+        {
+            _upgradableUnits = _loadAllUpgradableUnits.LoadAllUpgradableUnits().ToArray();
             foreach (ISavableData partialUpgradableUnit in _upgradableUnits.Cast<ISavableData>())
-                saveService.Bind(partialUpgradableUnit);
+                _saveService.Bind(partialUpgradableUnit);
         }
 
         public IEnumerable<PartialUpgradableUnit> GetAll() => _upgradableUnits;

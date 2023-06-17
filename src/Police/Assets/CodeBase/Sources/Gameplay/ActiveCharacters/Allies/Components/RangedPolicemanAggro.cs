@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Gameplay.ActiveCharacters.Allies.Components
 {
-    public class RangedPolicemanAggro : MonoBehaviour
+    public class RangedPolicemanAggro : AlliedAggro
     {
         [SerializeField] private NearestTargetListener _reader;
         [FormerlySerializedAs("_movingToTargetAttack")] [SerializeField] private DetectionReaction _detectionReaction;
@@ -76,9 +76,14 @@ namespace Gameplay.ActiveCharacters.Allies.Components
             _target = null;
         }
 
-        public void Stop()
+        public override void Stop()
         {
             DiscardTarget();
+        }
+
+        public override void Enable()
+        {
+            _stopped = false;
         }
     }
 }

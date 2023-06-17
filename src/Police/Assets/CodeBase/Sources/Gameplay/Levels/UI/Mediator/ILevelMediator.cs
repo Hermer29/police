@@ -16,5 +16,6 @@ namespace Gameplay.Levels.UI
         int EnergyAmount { get; }
         void RestoreEnergy(int restorePerKill);
         void DestroyOldPeople();
+        void LaunchNuke();
     }
 }

@@ -47,6 +47,7 @@ namespace Infrastructure.States
 
         public void NotifyLost(int levelServiceLevel)
         {
+            Debug.Log($"{nameof(EndGameLogic)}.{nameof(NotifyLost)} called");
             _rewardForLevel = RewardCalculator.WinRewardForLevel(levelServiceLevel);
             _endGameWindow.ShowLost(_rewardForLevel);
             StartEndGamePhase();

@@ -11,6 +11,7 @@ namespace Services.PrefsService
         public PlayerPrefsService(ICoroutineRunner coroutineRunner)
         {
             coroutineRunner.StartCoroutine(SaveOverTime());
+            AllServices.Bind<IPrefsService>(this);
         }
 
         private IEnumerator SaveOverTime()

@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6545191286518911414}
   - component: {fileID: 2763273251708669173}
   - component: {fileID: 1239175118123120233}
+  - component: {fileID: 3888915522192718704}
   m_Layer: 0
   m_Name: BarracksUnitEntry
   m_TagString: Untagged
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 6940825487218512150}
+  _icon: {fileID: 782693210430909918}
   <UpgradeWindowOpening>k__BackingField: {fileID: 2763273251708669173}
 --- !u!114 &2763273251708669173
 MonoBehaviour:
@@ -227,6 +229,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cd5f0c4fa74522903e844c742c7073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3888915522192718704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633542592668591408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1001 &4618361194040968070
 PrefabInstance:
   m_ObjectHideFlags: 0

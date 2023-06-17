@@ -884,7 +884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 396.67, y: 0}
   m_SizeDelta: {x: 0, y: 70.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6461339413876656074
@@ -2174,6 +2174,7 @@ GameObject:
   - component: {fileID: 6461339414841343556}
   - component: {fileID: 6461339414841343559}
   - component: {fileID: 6461339414841343557}
+  - component: {fileID: 2410575087092589730}
   m_Layer: 5
   m_Name: Later
   m_TagString: Untagged
@@ -2254,6 +2255,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2410575087092589730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461339414841343555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &6461339414854033933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2415,7 @@ GameObject:
   - component: {fileID: 6461339414903708543}
   - component: {fileID: 6461339414903708542}
   - component: {fileID: 6461339414903708541}
+  - component: {fileID: 8121703041251199396}
   m_Layer: 5
   m_Name: TakeMoreReward
   m_TagString: Untagged
@@ -2511,6 +2526,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8121703041251199396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461339414903708539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1 &6461339414942249533
 GameObject:
   m_ObjectHideFlags: 0

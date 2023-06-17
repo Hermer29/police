@@ -1,5 +1,6 @@
 ﻿using ActiveCharacters.Shared.Components;
 using ActiveCharacters.Shared.Components.Attacking;
+using DefaultNamespace.Audio.Components;
 using Gameplay.PeopleDraw.Factory;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         
         [SerializeField] private AimingAnimator _animator;
         [SerializeField] private Transform _muzzle;
+        [SerializeField] private ShootAudio _shoot;
         
         public float Cooldown;
         
@@ -34,14 +36,14 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
 
         public override void EnableAttack(Attackable target)
         {
-            _animator.StartAiming();
+            _animator?.StartAiming();
             _attackEnabled = true;
             _target = target;
         }
 
         public override void DisableAttack()
         {
-            _animator.StopAiming();
+            _animator?.StopAiming();
             _attackEnabled = false;
         }
 
@@ -57,6 +59,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
 
         private void StartAttack()
         {
+            _shoot?.Play();
             transform.LookAt(_target.Root);
             Bullet bullet = _bulletFactory.CreateBullet(_muzzle.position);
             bullet.ShotTowards(_target, OnStartAttack);

@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVEL {n}
+  m_text: "\u0423\u0420\u041E\u0412\u0415\u041D\u042C 0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7169e20402c01f74c9e5e857637a09b9, type: 2}
   m_sharedMaterial: {fileID: 2027925773275625720, guid: 7169e20402c01f74c9e5e857637a09b9, type: 2}
@@ -541,6 +541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StringEvent: {fileID: 6991824941606396851}
   _parent: {fileID: 110255251}
+  _currentIcon: {fileID: 4233924501958356929}
   <UnitType>k__BackingField: 0
   CurrentLevel: 0
 --- !u!114 &9106464807911577391

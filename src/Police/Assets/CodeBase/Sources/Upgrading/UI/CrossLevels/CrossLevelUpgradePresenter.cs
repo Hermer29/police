@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.Audio;
 using Infrastructure.Services.UseService;
 using Services.AdvertisingService;
 using Services.MoneyService;
@@ -25,15 +27,20 @@ namespace Upgrading.UI.CrossLevels
         private IMoneyService _moneyService;
         private IAdvertisingService _advertising;
         private IProductsService _purchasesService;
+        private GlobalAudio _audio;
 
         private bool _initialized;
-        private readonly Dictionary<UpgradableUnit, CrossLevelUpgradeEntry> _unitsAndTheirEntries = new();
+        private readonly Dictionary<UnitType, (UpgradableUnit, CrossLevelUpgradeEntry)> _unitsAndTheirEntries = new();
+        private IDisposable _subToUnitChange;
+        private IDisposable _subOnUnitMaxUpgrade;
+        private IDisposable _subToUnitAppearanceChange;
 
         [Inject]
         public void Construct(UnitsRepository repository, UnitsUpgrades upgrades, IUpgradableUnitsFactory factory,
             IUpgradeCostService costService, UnitsUsingService usingService, IMoneyService moneyService, IAdvertisingService advertisingService, 
-            IProductsService purchasesService)
+            IProductsService purchasesService, GlobalAudio audio)
         {
+            _audio = audio;
             _purchasesService = purchasesService;
             _advertising = advertisingService;
             _moneyService = moneyService;
@@ -53,9 +60,10 @@ namespace Upgrading.UI.CrossLevels
         {
             if (_initialized)
                 return;
-            
+
+            var partialUpgradableUnits = _usingService.UsedUnits.Select(x => x.Value);
             var entriesAndCorrespondingUnits =
-                _entries.Zip(_usingService.UsedUnits.Values, (entry, unit) => (entry, unit));
+                _entries.Zip(partialUpgradableUnits, (entry, unit) => (entry, unit));
             foreach ((CrossLevelUpgradeEntry entry, PartialUpgradableUnit unit) in entriesAndCorrespondingUnits)
                 InitializeEntry(unit, entry);
             
@@ -64,7 +72,21 @@ namespace Upgrading.UI.CrossLevels
 
         private void InitializeEntry(PartialUpgradableUnit unit, CrossLevelUpgradeEntry entry)
         {
-            _unitsAndTheirEntries.Add(unit, entry);
+            _subToUnitChange = _usingService.UsedUnits.ObserveReplace().Where(x 
+                    => x.Key == unit.Type)
+                .Subscribe(updateData => Reinitialize(updateData, entry));
+
+            _subToUnitAppearanceChange = unit.CurrentAppearance.Subscribe(x =>
+            {
+                Debug.Log($"Appearance changed: {unit.name}");
+                entry.ShowIcon(x.Illustration);
+            });
+            
+            entry.ShowIcon(unit.CurrentAppearance.Value.Illustration);
+            if (_unitsAndTheirEntries.ContainsKey(unit.Type) == false)
+            {
+                _unitsAndTheirEntries.Add(unit.Type, (unit, entry));
+            }
             if (_usingService.MaxUpgraded.Contains(unit.Type))
             {
                 UpdateInformation(unit, entry);
@@ -72,18 +94,30 @@ namespace Upgrading.UI.CrossLevels
                 return;
             }
             entry.ShowMaxUpgradeActive(false);
-            _usingService.MaxUpgraded.ObserveAdd().Subscribe(update 
-                => OnUnitMaxUpgraded(update, unit));
+            _subOnUnitMaxUpgrade = _usingService.MaxUpgraded.ObserveAdd().Subscribe(
+                update => OnUnitMaxUpgraded(update, unit));
             entry.UpgradeForCoins.onClick.AddListener(() => OnUpgradeForMoney(unit));
             entry.UpgradeForAds.onClick.AddListener(() => OnUpgradeForAds(unit));
             entry.UpgradeForCurrency.onClick.AddListener(() => OnUpgradeForCurrency(unit));
             UpdateInformation(unit, entry);
         }
 
+        public void Reinitialize(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> replaceEvent, CrossLevelUpgradeEntry entry)
+        {
+            _unitsAndTheirEntries[replaceEvent.Key] = (replaceEvent.NewValue, entry);
+            _subToUnitChange.Dispose();
+            _subOnUnitMaxUpgrade.Dispose();
+            _subToUnitAppearanceChange.Dispose();
+            entry.UpgradeForCoins.onClick.RemoveAllListeners();
+            entry.UpgradeForAds.onClick.RemoveAllListeners();
+            entry.UpgradeForCurrency.onClick.RemoveAllListeners();
+            InitializeEntry(replaceEvent.NewValue, entry);
+        }
+
         private void OnUnitMaxUpgraded(CollectionAddEvent<UnitType> type, PartialUpgradableUnit unitType)
         {
             if (type.Value == unitType.Type) 
-                _unitsAndTheirEntries[unitType].ShowMaxUpgradeActive(true);
+                _unitsAndTheirEntries[type.Value].Item2.ShowMaxUpgradeActive(true);
         }
 
         private void OnUpgradeForCurrency(PartialUpgradableUnit unit) =>
@@ -111,15 +145,16 @@ namespace Upgrading.UI.CrossLevels
 
         private void RecalculateUpgradeCost(UpgradableUnit unit)
         {
-            CrossLevelUpgradeEntry ui = _unitsAndTheirEntries[unit];
+            CrossLevelUpgradeEntry ui = _unitsAndTheirEntries[unit.Type].Item2;
             int cost = CalculateCost(unit);
             ui.ShowUpgradeCost(cost);
         }
 
         private void Upgrade(UpgradableUnit relatedUnit)
         {
+            _audio.PlayUpgrade();
             _upgrades.Upgrade(relatedUnit);
-            UpdateInformation(relatedUnit, _unitsAndTheirEntries[relatedUnit]);
+            UpdateInformation(relatedUnit, _unitsAndTheirEntries[relatedUnit.Type].Item2);
         }
 
         private int CalculateCost(UpgradableUnit relatedUnit) => _costService.Calculate(relatedUnit);

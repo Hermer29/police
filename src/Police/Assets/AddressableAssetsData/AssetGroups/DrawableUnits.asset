@@ -17,12 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 9cf0174ca31ef364bae8efa5cce4de4f
   m_SerializeEntries:
-  - m_GUID: a14a2df0d47fd054ab43db2f8f78b424
-    m_Address: MeleeT1_1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: e158ab0c05c5813409afff9ff0d182ba
-    m_Address: BarrierT1_1
+    m_Address: Fence
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

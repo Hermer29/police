@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 4538918795428393223}
   - component: {fileID: 6101885612088966856}
   - component: {fileID: 1537640874137542456}
+  - component: {fileID: 8086667282778689474}
   m_Layer: 5
   m_Name: UpgradeForAds
   m_TagString: Untagged
@@ -214,3 +215,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8086667282778689474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919128162301597296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c4333e0f14117b8dd61ae058aaaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0

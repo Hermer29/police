@@ -1,11 +1,12 @@
 ﻿using ActiveCharacters.Shared.Components;
 using ActiveCharacters.Shared.Components.Attacking;
+using Gameplay.ActiveCharacters.Allies.Components;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace ActiveCharacters.Allies.Components
 {
-    public class PolicemenAggro : MonoBehaviour
+    public class PolicemenAggro : AlliedAggro
     {
         [SerializeField] private NearestTargetListener _reader;
         [FormerlySerializedAs("_movingToTargetAttack")] [SerializeField] private DetectionReaction _detectionReaction;
@@ -13,19 +14,11 @@ namespace ActiveCharacters.Allies.Components
         
         private Attackable _target;
         private bool _stopped;
+        private float _targetTimeout;
 
         private void Start()
         {
             _reader.ClosestObjectApproached += TriggerEntered;
-            _reader.ClosestObjectLeftTheZone += LostTarget;
-            _reader.FindAgain();
-        }
-
-        private void LostTarget(Collider obj)
-        {
-            if (_stopped)
-                return;
-            DiscardTarget();
             _reader.FindAgain();
         }
 
@@ -33,8 +26,10 @@ namespace ActiveCharacters.Allies.Components
         {
             if (_stopped)
                 return;
+            _targetTimeout += Time.deltaTime;
             if (NeedToForgetDeadTarget())
             {
+                _targetTimeout = 0;
                 DiscardTarget();
                 _reader.FindAgain();
             }
@@ -42,7 +37,12 @@ namespace ActiveCharacters.Allies.Components
 
         private bool NeedToForgetDeadTarget()
         {
-            return TargetNotDiscarded() && TargetDead();
+            return (TargetNotDiscarded() && TargetDead()) || TargetTimeoutReached();
+        }
+
+        private bool TargetTimeoutReached()
+        {
+            return _targetTimeout > 2f;
         }
 
         private bool TargetNotDiscarded()
@@ -76,9 +76,11 @@ namespace ActiveCharacters.Allies.Components
             _target = null;
         }
 
-        public void Stop()
+        public override void Stop()
         {
             DiscardTarget();
         }
+
+        public override void Enable() => _stopped = false;
     }
 }

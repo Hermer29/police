@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431768c085ef4ae5902ac600373a2836, type: 3}
+  m_Name: MeleeT1
+  m_EditorClassIdentifier: 
+  <Guid>k__BackingField: 2de6dd5b-9c21-4db9-8826-1a980737897d
+  <OwnedByDefault>k__BackingField: 1
+  <Tier>k__BackingField: 1
+  <Type>k__BackingField: 1
+  <Purchasable>k__BackingField: 0
+  <LocalizedName>k__BackingField:
+    m_KeyId: 224549367808
+    m_Key: MeleeNames
+  LevelPartsUnitAppearances:
+  - Asset:
+      m_AssetGUID: a14a2df0d47fd054ab43db2f8f78b424
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: b2bb6184b769d604195622bb763e93b0, type: 3}
+  - Asset:
+      m_AssetGUID: 69dd99bec59921045aae866356e1171d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: 598b2e2e7cda5a04fa9dea8d3b7fb8eb, type: 3}
+  - Asset:
+      m_AssetGUID: 164287270b06f3b458a0d95ce3a99b30
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: 984c7d0798e8edf41b92a8e60026eba4, type: 3}
+  _levelPartsQuantity: 3
+  CurrentAppearance:
+    value:
+      Asset:
+        m_AssetGUID: a14a2df0d47fd054ab43db2f8f78b424
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+      Illustration: {fileID: 0}

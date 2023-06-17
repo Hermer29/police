@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using DefaultNamespace;
 using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI.CrossLevelUi;
 using Gameplay.UI;
@@ -15,6 +16,7 @@ namespace Infrastructure.States
         private MoneyUi _moneyUi;
         private ILevelService _levelService;
         private readonly ICoroutineRunner _coroutineRunner;
+        private NewUnitWindow _newUnitWindow;
 
         private bool _goingToPlay;
 
@@ -26,6 +28,7 @@ namespace Infrastructure.States
             _crossLevelUi = container.Resolve<CrossLevelUi>();
             _moneyUi = container.Resolve<MoneyUi>();
             _levelService = container.Resolve<ILevelService>();
+            _newUnitWindow = container.Resolve<NewUnitWindow>();
         }
         
         protected override void OnEnter()
@@ -33,6 +36,7 @@ namespace Infrastructure.States
             Debug.Log($"{nameof(MenuState)}.{nameof(OnEnter)} called");
             ResolveDependencies();
 
+            _newUnitWindow.TryInitialize();
             _moneyUi.Show();
             _coroutineRunner.StartCoroutine(Work());
         }

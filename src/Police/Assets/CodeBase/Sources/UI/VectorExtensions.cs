@@ -15,5 +15,15 @@ namespace UI
             source.y = y;
             return source;
         }
+
+        public static Vector3 Clamp(this Vector3 source, Vector3 min, Vector3 max)
+        {
+            return new Vector3
+            {
+                x = Mathf.Clamp(min.x, max.x, source.x),
+                y = Mathf.Clamp(min.y, max.y, source.y),
+                z = Mathf.Clamp(min.z, max.z, source.z)
+            };
+        }
     }
 }

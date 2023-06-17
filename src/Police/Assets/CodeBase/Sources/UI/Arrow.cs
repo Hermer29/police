@@ -14,7 +14,7 @@ namespace UI
         [Header("Additional target")]
         [SerializeField] private RectTransform _additionalRectTransform;
         [SerializeField, Range(0, 1)] private float _additionalNormalizedOffsetFromCenter = 0.6f;
-    
+        
         private Vector2? _targetDirection;
         private Vector2 _previousDirection;
         private Camera _camera;
@@ -29,6 +29,8 @@ namespace UI
 
         public void ShowTowards(Vector3 playerPosition, Vector3 targetPosition)
         {
+            _camera ??= Camera.main;
+            
             _fading.alpha = 1;
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, .4f);
@@ -36,6 +38,14 @@ namespace UI
             twoDimDirection = DetermineArrowRotation(twoDimDirection);
             _previousDirection = _targetDirection ?? twoDimDirection;
             _targetDirection = twoDimDirection;
+        }
+
+        private Vector3 CalculatePosition(Vector3 position)
+        {
+            var prevPosition = _rectTransform.position;
+            var viewport = Camera.main.WorldToViewportPoint(position)
+                .Clamp(new Vector3(.2f, .2f), new Vector3(.8f, .8f));
+            return prevPosition.SetY(Camera.main.ViewportToScreenPoint(viewport).y);
         }
 
         private static Vector2 DetermineArrowRotation(Vector2 twoDimDirection)
@@ -55,8 +65,16 @@ namespace UI
         {
             ShowTowards(from.SetY(0), to.SetY(0));
             SlerpTowardsTarget(Time.deltaTime);
+            var screenPoint = CalculatePosition(to);
+            _rectTransform.position = screenPoint;
+            _additionalRectTransform.position = screenPoint + CalculateVectorTowardsCenter(screenPoint) * 100;
             yield return new WaitForSeconds(3);
             Hide();
+        }
+
+        public Vector3 CalculateVectorTowardsCenter(Vector3 screenPoint)
+        {
+            return (_camera.ViewportToScreenPoint(new Vector2(.5f, .5f)) - screenPoint).normalized;
         }
 
         public void ShowArrowTowardsTarget(Vector3 from, Vector3 to) 

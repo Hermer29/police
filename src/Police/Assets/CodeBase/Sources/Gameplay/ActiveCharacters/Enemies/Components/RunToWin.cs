@@ -19,12 +19,19 @@ namespace Enemies.Components
         
         private void Update()
         {
+            if(NotInitialized())
+                return;
             var pointOnBounds = _looseTrigger.Collider.center + _looseTrigger.transform.position;
             pointOnBounds.y = _agent.transform.position.y;
             var path = new NavMeshPath();
             _agent.isStopped = false;
             var isSuccess = _agent.CalculatePath(pointOnBounds, path);
             _agent.SetPath(path);
+        }
+
+        private bool NotInitialized()
+        {
+            return _looseTrigger == null;
         }
 
         private Vector3 WinPosition()

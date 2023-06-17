@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Helpers;
+using Infrastructure.Services.UseService;
 using UI.Factory;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 using Upgrading.UnitTypes;
 
 namespace Barracks
@@ -13,19 +15,21 @@ namespace Barracks
     {
         private UiElementsFactory _factory;
         private BarracksWindow _window;
+        private UnitsUsingService _usingService;
         
         public LocalizeStringEvent StringEvent;
         private IEnumerable<PartialUpgradableUnit> _group;
         
         [SerializeField] private RectTransform _parent;
+        [SerializeField] private Image _currentIcon;
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
         private PartialUpgradableUnit _current;
         [Tooltip("Used by localization")]public int CurrentLevel;
         private IDisposable _previousSubscription;
 
-        public void Construct(UiElementsFactory factory, BarracksWindow window) 
-            => (_factory, _window) = (factory, window);
+        public void Construct(UiElementsFactory factory, BarracksWindow window, UnitsUsingService usingService) 
+            => (_factory, _window, _usingService) = (factory, window, usingService);
 
         public void BuildUiGroupUnitsByType(IEnumerable<PartialUpgradableUnit> units)
         {
@@ -38,8 +42,9 @@ namespace Barracks
                 {
                     _window.ShowModal(unit);
                 }));
-
-            _current = group.GetCurrentFromOrdered();
+            
+            _current = _usingService.UsedUnits[UnitType];
+            _currentIcon.sprite = _current.CurrentAppearance.Value.Illustration;
             ApplyCurrentUnit();
         }
 

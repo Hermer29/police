@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Services.UseService;
 using UI.Factory;
 using UnityEngine;
 using Upgrading;
@@ -21,12 +22,12 @@ namespace Barracks
         private IEnumerable<PartialUpgradableUnit> _units;
 
         [Inject]
-        public void Construct(UnitsRepository unitsRepository, UiElementsFactory uiElementsFactory)
+        public void Construct(UnitsRepository unitsRepository, UiElementsFactory uiElementsFactory, UnitsUsingService usingService)
         {
             _unitsRepository = unitsRepository;
             _uiElementsFactory = uiElementsFactory;
             foreach (BarracksUnitGroup barracksUnitGroup in _groups) 
-                barracksUnitGroup.Construct(_uiElementsFactory, this);
+                barracksUnitGroup.Construct(_uiElementsFactory, this, usingService);
         }
         
         public void Show()

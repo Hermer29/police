@@ -1,5 +1,6 @@
 ﻿using Gameplay.Levels.UI.CrossLevelUi;
 using Tutorial;
+using UnityEngine;
 
 namespace Infrastructure
 {
@@ -7,5 +8,7 @@ namespace Infrastructure
     {
         CrossLevelUi CreateCrossLevelUI();
         TutorialEngine CreateTutorial();
+        GameObject CreateNuke();
+        void CreateNukeFx(Vector3 at);
     }
 }

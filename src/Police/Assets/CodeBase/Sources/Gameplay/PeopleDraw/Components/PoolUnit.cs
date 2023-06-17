@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Pool;
 
 namespace PeopleDraw.Components
 {
     public class PoolUnit : MonoBehaviour
     {
-        [SerializeField] private ParticleSystem _vfxOnRelease;
-        
+        [field: SerializeField] public PlacingBlock PlacingBlock { get; private set; }
+
         private ObjectPool<PoolUnit> _pool;
 
         public void Construct(ObjectPool<PoolUnit> pool)

@@ -8,7 +8,6 @@ using Gameplay.PeopleDraw.Factory;
 using Helpers;
 using Infrastructure;
 using LevelsMachine;
-using PeopleDraw.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -17,18 +16,16 @@ namespace Gameplay.Levels.Factory
     public class EnemiesFactory : ICharactersFactory
     {
         private readonly CharactersAssetLoader _loader;
-        private readonly ILevelMediator _mediator;
         private readonly ParentsForGeneratedObjects _parents;
         private readonly IUnitsFxFactory _unitsFxFactory;
         private readonly LevelEngine _levelEngine;
 
         private List<Attackable> _enemies = new();
 
-        public EnemiesFactory(CharactersAssetLoader loader, ILevelMediator mediator, ParentsForGeneratedObjects parents, 
+        public EnemiesFactory(CharactersAssetLoader loader, ParentsForGeneratedObjects parents, 
             IUnitsFxFactory unitsFxFactory)
         {
             _loader = loader;
-            _mediator = mediator;
             _parents = parents;
             _unitsFxFactory = unitsFxFactory;
         }
@@ -48,7 +45,7 @@ namespace Gameplay.Levels.Factory
         private void AttackableOnUnitDied(object sender, Attackable e)
         {
             e.UnitDied -= AttackableOnUnitDied;
-            _mediator.IncrementEnergyForEnemyDeath(e);
+            AllServices.Get<ILevelMediator>().IncrementEnergyForEnemyDeath(e);
             _unitsFxFactory.CreateDyingFx(e.Root.position);
         }
 
@@ -62,6 +59,14 @@ namespace Gameplay.Levels.Factory
                 Object.Destroy(enemy.Root.gameObject);
             }
             _enemies.Clear();
+        }
+
+        public void TerminateEnemies()
+        {
+            foreach (Attackable enemy in _enemies)
+            {
+                enemy.Kill();
+            }
         }
     }
 }

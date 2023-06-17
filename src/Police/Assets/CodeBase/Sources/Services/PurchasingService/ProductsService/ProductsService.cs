@@ -13,7 +13,16 @@ namespace Services.PurchasesService.PurchasesWrapper
             { Product.FirePack, "firepack" },
             { Product.StarterPack, "starterpack" },
             { Product.AdvertisingDisable, "adblock" },
-            { Product.UnitUpgrade, "unitupgrade" }
+            { Product.UnitUpgrade, "unitupgrade" },
+            { Product.Coins500, "coins500" },
+            { Product.Coins2000, "coins2000" },
+            { Product.Coins10000, "coins10000" },
+            {Product.Nuke1, "nuke1"},
+            {Product.Nuke10, "nuke10"},
+            { Product.Nuke30, "nuke30"},
+            { Product.SuperUnit1, "superunit1"},
+            { Product.SuperUnit10, "superunit10"},
+            {Product.SuperUnit30, "superunit30"},
         };
 
         public ProductsService(IPurchasesService purchasesService) => _purchasesService = purchasesService;

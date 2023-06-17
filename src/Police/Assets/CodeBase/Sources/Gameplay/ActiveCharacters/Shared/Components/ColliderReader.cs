@@ -9,7 +9,7 @@ namespace ActiveCharacters.Shared.Components
 {
     public class ColliderReader : MonoBehaviour
     {
-        private const int UpdateFrequency = 2;
+        private const float UpdateFrequency = .5f;
         [SerializeField] private Color _color;
         [SerializeField] private SphereCollider _collider;
         [SerializeField] private LayerMask _mask;
@@ -42,7 +42,7 @@ namespace ActiveCharacters.Shared.Components
             {
                 foreach (Collider col in Overlap())
                 {
-                    OnTriggerEnter(col);
+                    TriggerEnter(col);
                 }
 
                 yield return new WaitForSeconds(UpdateFrequency);
@@ -54,11 +54,8 @@ namespace ActiveCharacters.Shared.Components
             return transform.position + _collider.center;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void TriggerEnter(Collider other)
         {
-            if (LayerMaskExtensions.LayerEquals(other, _mask) == false)
-                return;
-            
             TriggerEntered?.Invoke(other);
         }
         
