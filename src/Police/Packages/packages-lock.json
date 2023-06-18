@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "f3c8338c2ad0819ec5ee76c0d3fcda1641344292"
     },
+    "com.immortalsgames.builderscripts": {
+      "version": "https://github.com/Hermer29/builder-scripts.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4ae3f7d12df699ff75c499298631cda48d878a66"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,

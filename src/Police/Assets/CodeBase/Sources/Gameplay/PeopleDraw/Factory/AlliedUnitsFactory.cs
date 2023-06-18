@@ -7,7 +7,6 @@ using ActiveCharacters.Shared.Components;
 using DG.Tweening;
 using Gameplay.ActiveCharacters.Shared.Components;
 using Helpers;
-using Infrastructure.Services.UseService;
 using PeopleDraw.AssetManagement;
 using PeopleDraw.Components;
 using Services.UseService;
@@ -27,7 +26,6 @@ namespace Gameplay.PeopleDraw.Factory
         private readonly IUnitsFxFactory _unitsFxFactory;
         private readonly GameAssetLoader _assetLoader;
         private readonly UnitsAssetCache _cache;
-        private readonly UnitsUsingService _usingService;
 
         private List<WinAnimator> _winAnimators = new ();
 
@@ -43,7 +41,7 @@ namespace Gameplay.PeopleDraw.Factory
         public int ActivePolicemenAmount { get; private set; }
         
         public AlliedUnitsFactory(IInstantiator instantiator, ParentsForGeneratedObjects parents, IUnitsFxFactory unitsFxFactory,
-            GameAssetLoader assetLoader, UnitsAssetCache cache, UnitsUsingService usingService)
+            GameAssetLoader assetLoader, UnitsAssetCache cache)
         {
             _cache = cache;
             _assetLoader = assetLoader;
@@ -51,23 +49,22 @@ namespace Gameplay.PeopleDraw.Factory
             _parents = parents;
             _unitsFxFactory = unitsFxFactory;
             _cache = cache;
-            _usingService = usingService;
         }
 
         public void Initialize()
         {
-            _usingService.UsedUnits.ObserveReplace().Subscribe(OnUnitTypeReplaced);
+            _cache.SelectedUnits.ObserveReplace().Subscribe(OnUnitTypeReplaced);
         }
 
-        private void OnUnitTypeReplaced(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> units)
+        private void OnUnitTypeReplaced(DictionaryReplaceEvent<UnitType, PoolUnit> unit)
         {
-            var relatedUnitPool = _poolForTypes.Value[units.NewValue.Type];
+            var relatedUnitPool = _poolForTypes.Value[unit.Key];
+            if (relatedUnitPool == null)
+                return;
             relatedUnitPool.Clear();
-            _cache.SelectedUnits.ObserveReplace().First().Subscribe(update =>
-            {
-                _poolForTypes.Value[units.NewValue.Type] = CreateUnitsPool(update.NewValue);
-            });
+            _poolForTypes.Value[unit.Key] = CreateUnitsPool(unit.NewValue);
         }
+
         
         public async Task<GameObject> CreateSuperUnit() 
             => Object.Instantiate(await _assetLoader.LoadSuperUnit());

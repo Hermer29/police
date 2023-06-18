@@ -7,6 +7,8 @@ using PeopleDraw.Components;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Upgrading.UnitTypes;
 
 namespace Services.UseService
@@ -15,11 +17,12 @@ namespace Services.UseService
     {
         private class AssetReferenceHolder
         {
-            public AssetReference Asset = new();
+            public AsyncOperationHandle<GameObject> Asset;
             public IDisposable ChangeAppearanceSubscription;
+            public bool Loaded;
         }
         
-        private readonly UnitsUsingService _unitsUsingService;
+        private readonly UsedUnitsService _usedUnitsService;
 
         private Dictionary<UnitType, AssetReferenceHolder> _assetLinks = new()
         {
@@ -37,83 +40,87 @@ namespace Services.UseService
 
         public IReadOnlyReactiveDictionary<UnitType, PoolUnit> SelectedUnits => _selectedUnits;
 
-        public UnitsAssetCache(UnitsUsingService unitsUsingService)
+        public UnitsAssetCache(UsedUnitsService usedUnitsService)
         {
-            _unitsUsingService = unitsUsingService;
+            _usedUnitsService = usedUnitsService;
         }
 
-        void IManuallyInitializable.Initialize()
-        {
-            PreloadAndHoldLinks();
-        }
+        void IManuallyInitializable.Initialize() => PreloadAndHoldLinks();
 
         private void PreloadAndHoldLinks()
         {
-            _unitsUsingService.UsedUnits.ObserveReplace().Subscribe(OnUnitReplaced);
-            foreach ((UnitType key, PartialUpgradableUnit value) in _unitsUsingService.UsedUnits)
-                UseUnit(value.CurrentReference.Value, key);
+            _usedUnitsService.UsedUnits.ObserveReplace().Subscribe(OnUnitReplaced);
+            foreach ((UnitType key, PartialUpgradableUnit value) in _usedUnitsService.UsedUnits)
+                LoadNewUnit(key, value);
             Debug.Log($"{nameof(UnitsAssetCache)}.{nameof(PreloadAndHoldLinks)} finished");
         }
 
-        private void OnUnitReplaced(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> update)
+        private void OnUnitReplaced(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> update) => LoadNewUnit(update.Key, update.NewValue);
+
+        private void OnPartUpgraded(PartialUpgradableUnit levelPartUnits, UnitType updateKey) => LoadNewUnit(updateKey, levelPartUnits);
+
+        private void LoadNewUnit(UnitType unitType, PartialUpgradableUnit unit)
         {
-            LoadNewUnit(update);
+            ReleasePrevious(unitType);
+            MakeAppearanceChangeSubscription(unitType, unit);
+            UseUnit(unit.CurrentReference.Value, unitType);
         }
 
-        private void LoadNewUnit(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> update)
+        private void ReleasePrevious(UnitType unitType)
         {
-            TryReleasePreviousAsset(update.Key);
-            DisposeAppearanceChangeSubscription(update);
-            MakeAppearanceChangeSubscription(update);
-            UseUnit(update.NewValue.CurrentReference.Value, update.Key);
-        }
-
-        private void OnPartUpgraded(AssetReference levelPartUnits, UnitType updateKey)
-        {
-            TryReleasePreviousAsset(updateKey);
-            UseUnit(levelPartUnits, updateKey);
+            if (_assetLinks[unitType].Loaded == false) 
+                return;
+            Debug.Log($"{nameof(UnitsAssetCache)}.{nameof(ReleasePrevious)} {unitType} disposing. _assetLinks[unitType] = {_assetLinks[unitType].Asset}");
+            TryReleasePreviousAsset(unitType);
+            DisposeAppearanceChangeSubscription(unitType);
         }
 
         private async void UseUnit(AssetReference assetReference, UnitType unitType)
-        {
-            if (AlreadyUsingReference(assetReference, unitType))
-                return;
-            
-            GameObject unit = await Addressables.LoadAssetAsync<GameObject>(assetReference).Task;
-            Debug.Log($"{nameof(UnitsAssetCache)}.{nameof(UseUnit)} loaded {unitType}, asset name: {unit.name}");
-            _assetLinks[unitType].Asset = assetReference;
+        { 
+            var handle = Addressables.LoadAssetAsync<GameObject>(assetReference);
+            GameObject unit = await handle.Task;
+            Debug.Log($"{nameof(UnitsAssetCache)}.{nameof(UseUnit)} loaded {unitType}, asset name: {unit.name}, id: {assetReference}");
+            _assetLinks[unitType].Asset = handle;
+            _assetLinks[unitType].Loaded = true;
             _selectedUnits[unitType] = unit.GetComponent<PoolUnit>();
         }
 
-        private void MakeAppearanceChangeSubscription(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> update)
+        private void MakeAppearanceChangeSubscription(UnitType key, PartialUpgradableUnit unit)
         {
-            _assetLinks[update.Key].ChangeAppearanceSubscription = 
-                update.NewValue.CurrentReference.Subscribe(
-                    value => OnPartUpgraded(value, update.Key));
+            Assert.IsNotNull(_assetLinks[key]);
+            Assert.IsNull(_assetLinks[key].ChangeAppearanceSubscription);
+            Assert.IsNotNull(unit);
+            Assert.IsNotNull(unit.CurrentReference);
+            _assetLinks[key].ChangeAppearanceSubscription = unit.CurrentReference.Skip(1).Subscribe(
+                    _ => OnPartUpgraded(unit, key));
         }
 
-        private void DisposeAppearanceChangeSubscription(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> update) 
-            => _assetLinks[update.Key].ChangeAppearanceSubscription?.Dispose();
-
-        private bool AlreadyUsingReference(AssetReference assetReference, UnitType unitType) 
-            => ReferenceAlreadyInUse(assetReference, unitType);
-
-        private bool ReferenceAlreadyInUse(AssetReference assetReference, UnitType unitType) 
-            => _assetLinks[unitType].Asset == assetReference;
-
+        private void DisposeAppearanceChangeSubscription(UnitType type)
+        {
+            _assetLinks[type].ChangeAppearanceSubscription.Dispose();
+            _assetLinks[type].ChangeAppearanceSubscription = null;
+        }
+        
         private void TryReleasePreviousAsset(UnitType unitType)
         {
-            if (AssetLinkExists(unitType)) 
-                Addressables.Release(_assetLinks[unitType].Asset);
+            Assert.IsTrue(_assetLinks[unitType].Loaded);
+            Addressables.Release(_assetLinks[unitType].Asset);
+            _assetLinks[unitType].Loaded = false;
         }
 
-        private bool AssetLinkExists(UnitType unitType)
+        public void Dispose()
         {
-            return _assetLinks[unitType].Asset != null && _assetLinks[unitType].Asset.RuntimeKeyIsValid();
+            DisposeReferences();
+            DisposeAppearanceChangeSubscriptions();
         }
 
-        public void Dispose() 
-            => DisposeAppearanceChangeSubscriptions();
+        private void DisposeReferences()
+        {
+            foreach (var assetReferenceHolder in _assetLinks)
+            {
+                Addressables.Release(assetReferenceHolder);
+            }
+        }
 
         private void DisposeAppearanceChangeSubscriptions()
         {

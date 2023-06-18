@@ -146,7 +146,7 @@ namespace Gameplay.Infrastructure
                 .ToSelf()
                 .AsSingle();
 
-            Container.Bind<UnitsUsingService>().ToSelf().AsSingle();
+            Container.Bind<UsedUnitsService>().ToSelf().AsSingle();
             
             Container.Bind<IAudioService>()
                 .To<AudioService>()

@@ -22,11 +22,11 @@ MonoBehaviour:
     m_Key: BarrierNames
   LevelPartsUnitAppearances:
   - Asset:
-      m_AssetGUID: bb5745301858ab6438961c1db4f25e21
+      m_AssetGUID: 153b0b4cdd3ac2f4a9be7c3fd882ebd1
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: 5f526c40737c2e046822f9a5cd8098ae, type: 3}
+    Illustration: {fileID: 21300000, guid: 07165e2ca9badc84489a7815c615d3c2, type: 3}
   - Asset:
       m_AssetGUID: 
       m_SubObjectName: 
@@ -45,12 +45,3 @@ MonoBehaviour:
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Illustration: {fileID: 0}
-  _levelPartsQuantity: 4
-  CurrentAppearance:
-    value:
-      Asset:
-        m_AssetGUID: bb5745301858ab6438961c1db4f25e21
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-      Illustration: {fileID: 21300000, guid: 5f526c40737c2e046822f9a5cd8098ae, type: 3}

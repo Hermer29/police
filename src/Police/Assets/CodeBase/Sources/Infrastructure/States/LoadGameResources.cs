@@ -18,7 +18,7 @@ namespace Infrastructure.States
     public class LoadGameResources : State, ILoadingProcessor
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private UnitsUsingService _unitsUsingService;
+        private UsedUnitsService _usedUnitsService;
         private UnitsAssetCache _unitsAssetCache;
         private DiContainer _container;
         private CrossLevelUi _crossLevelUi;
@@ -41,7 +41,7 @@ namespace Infrastructure.States
             _container = AllServices.Get<DiContainer>();
             _repository = _container.Resolve<UnitsRepository>();
             _unitsAssetCache = _container.Resolve<UnitsAssetCache>();
-            _unitsUsingService = _container.Resolve<UnitsUsingService>();
+            _usedUnitsService = _container.Resolve<UsedUnitsService>();
             _crossLevelUi = _container.Resolve<CrossLevelUi>();
             _gameplayUi = _container.Resolve<GameplayUI>();
             _newUnitWindow = _container.Resolve<NewUnitWindow>();
@@ -71,7 +71,7 @@ namespace Infrastructure.States
             var initializing = new IManuallyInitializable[]
             {
                 _repository,
-                _unitsUsingService,
+                _usedUnitsService,
                 _unitsAssetCache,
                 _alliedUnitsFactory
                 //_newUnitWindow

@@ -15,7 +15,7 @@ namespace Barracks
     {
         private UiElementsFactory _factory;
         private BarracksWindow _window;
-        private UnitsUsingService _usingService;
+        private UsedUnitsService _service;
         
         public LocalizeStringEvent StringEvent;
         private IEnumerable<PartialUpgradableUnit> _group;
@@ -28,8 +28,8 @@ namespace Barracks
         [Tooltip("Used by localization")]public int CurrentLevel;
         private IDisposable _previousSubscription;
 
-        public void Construct(UiElementsFactory factory, BarracksWindow window, UnitsUsingService usingService) 
-            => (_factory, _window, _usingService) = (factory, window, usingService);
+        public void Construct(UiElementsFactory factory, BarracksWindow window, UsedUnitsService service) 
+            => (_factory, _window, _service) = (factory, window, service);
 
         public void BuildUiGroupUnitsByType(IEnumerable<PartialUpgradableUnit> units)
         {
@@ -43,7 +43,7 @@ namespace Barracks
                     _window.ShowModal(unit);
                 }));
             
-            _current = _usingService.UsedUnits[UnitType];
+            _current = _service.UsedUnits[UnitType];
             _currentIcon.sprite = _current.CurrentAppearance.Value.Illustration;
             ApplyCurrentUnit();
         }

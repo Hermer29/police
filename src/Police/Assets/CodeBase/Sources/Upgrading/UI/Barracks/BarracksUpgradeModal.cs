@@ -16,7 +16,7 @@ namespace Upgrading.UI.Barracks
 {
     public class BarracksUpgradeModal : MonoBehaviour
     {
-        private UnitsUsingService _usingService;
+        private UsedUnitsService _service;
         private IUpgradeCostService _costService;
         private IProductsService _products;
         private IMoneyService _moneyService;
@@ -39,7 +39,7 @@ namespace Upgrading.UI.Barracks
         private IDisposable _maxUpgradeSubscription;
 
         [Inject]
-        public void Construct(UnitsUsingService usingService, IUpgradeCostService costService, 
+        public void Construct(UsedUnitsService service, IUpgradeCostService costService, 
             IProductsService products, IMoneyService moneyService, IAdvertisingService advertisingService, 
             UnitsRepository repository)
         {
@@ -47,7 +47,7 @@ namespace Upgrading.UI.Barracks
             _moneyService = moneyService;
             _products = products;
             _costService = costService;
-            _usingService = usingService;
+            _service = service;
             _repository = repository;
             
             _close.onClick.AddListener(Hide);
@@ -60,14 +60,14 @@ namespace Upgrading.UI.Barracks
             gameObject.SetActive(true);
             ShowCurrentUnitIlluistration(unit);
             
-            if (_usingService.MaxUpgraded.Contains(unit.Type))
+            if (_service.MaxUpgraded.Contains(unit.Type))
             {
                 UpdateInformation(unit);
                 SetActiveMaxUpgrade(true);
                 return; 
             }
             SetActiveMaxUpgrade(false);
-            _maxUpgradeSubscription = _usingService.MaxUpgraded.ObserveAdd().Subscribe(update 
+            _maxUpgradeSubscription = _service.MaxUpgraded.ObserveAdd().Subscribe(update 
                 => OnUnitMaxUpgraded(update, unit));
             _yans.onClick.AddListener(() =>  OnUpgradeForCurrency(unit));
             _ads.onClick.AddListener(() => OnUpgradeForAds(unit));

@@ -43,7 +43,7 @@ namespace Infrastructure.States
         private AdPlane _adPlane;
         private BulletFactory _bulletsFactory;
         private SuperPowersUi _superPowersUi;
-        private UnitsUsingService _usingService;
+        private UsedUnitsService _service;
         private GlobalAudio _audio;
 
         private void ResolveDependencies()
@@ -64,7 +64,7 @@ namespace Infrastructure.States
             _adPlane = _container.Resolve<AdPlane>();
             _bulletsFactory = _container.Resolve<BulletFactory>();
             _superPowersUi = _container.Resolve<SuperPowersUi>();
-            _usingService = _container.Resolve<UnitsUsingService>();
+            _service = _container.Resolve<UsedUnitsService>();
             _audio = _container.Resolve<GlobalAudio>();
         }
 
@@ -82,7 +82,7 @@ namespace Infrastructure.States
             _selection.SelectUnit(UnitType.Barrier);
             _advertising.ShowInterstitial();
             _adBlockWindow.Reposition();
-            _gameplayUi.SetIcons(_usingService.UsedUnits.Select(
+            _gameplayUi.SetIcons(_service.UsedUnits.Select(
                 x => x.Value.CurrentIcon.Value).ToArray());
             _superPowersUi.ShowButtons();
             _inputService.Enable();

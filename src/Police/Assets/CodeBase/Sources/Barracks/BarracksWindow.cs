@@ -22,12 +22,12 @@ namespace Barracks
         private IEnumerable<PartialUpgradableUnit> _units;
 
         [Inject]
-        public void Construct(UnitsRepository unitsRepository, UiElementsFactory uiElementsFactory, UnitsUsingService usingService)
+        public void Construct(UnitsRepository unitsRepository, UiElementsFactory uiElementsFactory, UsedUnitsService service)
         {
             _unitsRepository = unitsRepository;
             _uiElementsFactory = uiElementsFactory;
             foreach (BarracksUnitGroup barracksUnitGroup in _groups) 
-                barracksUnitGroup.Construct(_uiElementsFactory, this, usingService);
+                barracksUnitGroup.Construct(_uiElementsFactory, this, service);
         }
         
         public void Show()

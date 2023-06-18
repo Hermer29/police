@@ -22,11 +22,11 @@ MonoBehaviour:
     m_Key: MeleeNames
   LevelPartsUnitAppearances:
   - Asset:
-      m_AssetGUID: b25bb69935a3f694b99bdf99515e7a8b
+      m_AssetGUID: 164287270b06f3b458a0d95ce3a99b30
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: ab4a97f6cec8c154aad2d1cac4244a5a, type: 3}
+    Illustration: {fileID: 21300000, guid: 984c7d0798e8edf41b92a8e60026eba4, type: 3}
   - Asset:
       m_AssetGUID: 
       m_SubObjectName: 
@@ -39,21 +39,5 @@ MonoBehaviour:
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Illustration: {fileID: 0}
-  CurrentAppearance:
-    value:
-      Asset:
-        m_AssetGUID: a14a2df0d47fd054ab43db2f8f78b424
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-      Illustration: {fileID: 0}
-  CurrentIcon:
-    value: {fileID: 0}
-  CurrentReference:
-    value:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
   <IsHiddenWhenNotUnlocked>k__BackingField: 0
   PreviousUnit: {fileID: 11400000, guid: 5fb568be751ddf74ea1e7fd04de2b18a, type: 2}

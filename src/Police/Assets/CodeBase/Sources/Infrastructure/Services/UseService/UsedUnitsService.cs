@@ -12,7 +12,7 @@ using Upgrading.UnitTypes;
 
 namespace Infrastructure.Services.UseService
 {
-    public class UnitsUsingService : IManuallyInitializable
+    public class UsedUnitsService : IManuallyInitializable
     {
         private readonly IPrefsService _prefsService;
         private readonly UnitsRepository _repository;
@@ -27,7 +27,7 @@ namespace Infrastructure.Services.UseService
         public IReadOnlyReactiveDictionary<UnitType, PartialUpgradableUnit> UsedUnits => _usedUnits;
         public readonly ReactiveCollection<UnitType> MaxUpgraded = new();
 
-        public UnitsUsingService(IPrefsService prefsService, UnitsRepository repository)
+        public UsedUnitsService(IPrefsService prefsService, UnitsRepository repository)
         {
             _prefsService = prefsService;
             _repository = repository;
@@ -46,7 +46,7 @@ namespace Infrastructure.Services.UseService
                 Debug.Log($"{partialUpgradableUnit.Type}:{partialUpgradableUnit.name} -- upgrade level: {partialUpgradableUnit.UpgradedLevel.Value}");
             }
             OnSuperLevelUpgraded();
-            Debug.Log($"{nameof(UnitsUsingService)}.{nameof(PreloadUsedUnits)} finished");
+            Debug.Log($"{nameof(UsedUnitsService)}.{nameof(PreloadUsedUnits)} finished");
         }
 
         private void OnSuperLevelUpgraded()
@@ -54,15 +54,14 @@ namespace Infrastructure.Services.UseService
             foreach (PartialUpgradableUnit partialUpgradableUnit in _repository.GetAll())
             {
                 partialUpgradableUnit.UpgradedLevel
-                    .Subscribe(
-                        _ => CheckIsUnitMaxUpgradedInHierarchy(partialUpgradableUnit));
+                    .Subscribe(_ => CheckIsUnitMaxUpgradedInHierarchy(partialUpgradableUnit));
             }
         }
 
         private void CheckIsUnitMaxUpgradedInHierarchy(PartialUpgradableUnit partialUpgradableUnit)
         {
             if (!partialUpgradableUnit.IsFullyUpgraded()) return;
-            Debug.Log($"{nameof(UnitsUsingService)}.{nameof(CheckIsUnitMaxUpgradedInHierarchy)} processing {partialUpgradableUnit.name}");
+            Debug.Log($"{nameof(UsedUnitsService)}.{nameof(CheckIsUnitMaxUpgradedInHierarchy)} processing {partialUpgradableUnit.name}");
             UnitType type = partialUpgradableUnit.Type;
             PartialUpgradableUnit next = _repository.GetOrderedWithType(type)
                 .GetNext(partialUpgradableUnit);

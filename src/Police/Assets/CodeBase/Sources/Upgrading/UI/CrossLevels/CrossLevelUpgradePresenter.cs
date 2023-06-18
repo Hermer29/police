@@ -23,7 +23,7 @@ namespace Upgrading.UI.CrossLevels
         private UnitsUpgrades _upgrades;
         private IUpgradableUnitsFactory _factory;
         private IUpgradeCostService _costService;
-        private UnitsUsingService _usingService;
+        private UsedUnitsService _service;
         private IMoneyService _moneyService;
         private IAdvertisingService _advertising;
         private IProductsService _purchasesService;
@@ -37,14 +37,14 @@ namespace Upgrading.UI.CrossLevels
 
         [Inject]
         public void Construct(UnitsRepository repository, UnitsUpgrades upgrades, IUpgradableUnitsFactory factory,
-            IUpgradeCostService costService, UnitsUsingService usingService, IMoneyService moneyService, IAdvertisingService advertisingService, 
+            IUpgradeCostService costService, UsedUnitsService service, IMoneyService moneyService, IAdvertisingService advertisingService, 
             IProductsService purchasesService, GlobalAudio audio)
         {
             _audio = audio;
             _purchasesService = purchasesService;
             _advertising = advertisingService;
             _moneyService = moneyService;
-            _usingService = usingService;
+            _service = service;
             _costService = costService;
             _factory = factory;
             _upgrades = upgrades;
@@ -61,7 +61,7 @@ namespace Upgrading.UI.CrossLevels
             if (_initialized)
                 return;
 
-            var partialUpgradableUnits = _usingService.UsedUnits.Select(x => x.Value);
+            var partialUpgradableUnits = _service.UsedUnits.Select(x => x.Value);
             var entriesAndCorrespondingUnits =
                 _entries.Zip(partialUpgradableUnits, (entry, unit) => (entry, unit));
             foreach ((CrossLevelUpgradeEntry entry, PartialUpgradableUnit unit) in entriesAndCorrespondingUnits)
@@ -72,7 +72,7 @@ namespace Upgrading.UI.CrossLevels
 
         private void InitializeEntry(PartialUpgradableUnit unit, CrossLevelUpgradeEntry entry)
         {
-            _subToUnitChange = _usingService.UsedUnits.ObserveReplace().Where(x 
+            _subToUnitChange = _service.UsedUnits.ObserveReplace().Where(x 
                     => x.Key == unit.Type)
                 .Subscribe(updateData => Reinitialize(updateData, entry));
 
@@ -87,14 +87,14 @@ namespace Upgrading.UI.CrossLevels
             {
                 _unitsAndTheirEntries.Add(unit.Type, (unit, entry));
             }
-            if (_usingService.MaxUpgraded.Contains(unit.Type))
+            if (_service.MaxUpgraded.Contains(unit.Type))
             {
                 UpdateInformation(unit, entry);
                 entry.ShowMaxUpgradeActive(true);
                 return;
             }
             entry.ShowMaxUpgradeActive(false);
-            _subOnUnitMaxUpgrade = _usingService.MaxUpgraded.ObserveAdd().Subscribe(
+            _subOnUnitMaxUpgrade = _service.MaxUpgraded.ObserveAdd().Subscribe(
                 update => OnUnitMaxUpgraded(update, unit));
             entry.UpgradeForCoins.onClick.AddListener(() => OnUpgradeForMoney(unit));
             entry.UpgradeForAds.onClick.AddListener(() => OnUpgradeForAds(unit));

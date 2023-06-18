@@ -1,4 +1,5 @@
 ﻿using Helpers;
+using Infrastructure.Services.UseService;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,13 @@ namespace DefaultNamespace
         [SerializeField] private Image _newUnit;
         [SerializeField] private Button _close;
         private bool _initialized;
+        private UsedUnitsService _units;
 
         [Inject]
-        public void Construct(UnitsRepository repo)
+        public void Construct(UnitsRepository repo, UsedUnitsService units)
         {
             _repo = repo;
+            _units = units;
             
             Close();
             _close.onClick.AddListener(Close);
@@ -42,6 +45,13 @@ namespace DefaultNamespace
                 partialUpgradableUnit.CurrentIcon.Skip(1).Subscribe(
                     changed => OnAppearanceChanged(partialUpgradableUnit, changed));
             }
+
+            _units.UsedUnits.ObserveReplace().Subscribe(OnReplace);
+        }
+
+        private void OnReplace(DictionaryReplaceEvent<UnitType, PartialUpgradableUnit> upgradableUnit)
+        {
+            OnAppearanceChanged(upgradableUnit.NewValue, upgradableUnit.NewValue.CurrentIcon.Value);
         }
 
         private void OnAppearanceChanged(PartialUpgradableUnit partialUpgradableUnit, Sprite icon)

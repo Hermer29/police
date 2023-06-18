@@ -22,22 +22,22 @@ MonoBehaviour:
     m_Key: RangedNames
   LevelPartsUnitAppearances:
   - Asset:
+      m_AssetGUID: 048ede3560c555349a7691fab11a5bb7
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Illustration: {fileID: 21300000, guid: fb6cdb6baaee9194a941aa12bb7db2ad, type: 3}
+  - Asset:
       m_AssetGUID: 7148a04d72d86b24a84ef951d8edea77
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Illustration: {fileID: 21300000, guid: 87260bc65b19f3e439d72f4242c1d8eb, type: 3}
   - Asset:
-      m_AssetGUID: 39e90d919618d9144b790d10dc42baff
+      m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: 510a451ec5cec94448075d9fa227b514, type: 3}
-  - Asset:
-      m_AssetGUID: bc4903a96f8ad9e438f47a7ad90a03c0
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: ad1bfacd4e4a632499de30efd88e5991, type: 3}
+    Illustration: {fileID: 0}
   <IsHiddenWhenNotUnlocked>k__BackingField: 0
   PreviousUnit: {fileID: 11400000, guid: 19872f5b24a8f104b85b153460994ce9, type: 2}

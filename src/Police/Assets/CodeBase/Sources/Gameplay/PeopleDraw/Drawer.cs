@@ -20,7 +20,7 @@ namespace PeopleDraw
         private readonly SelectedUnits _unitSelectedUnits;
         private readonly IAlliedUnitsFactory _factory;
         private readonly IUnitsFxFactory _fxFactory;
-        private readonly UnitsUsingService _usingService;
+        private readonly UsedUnitsService _service;
         private readonly UnitsAssetCache _unitsAssetCache;
         private readonly GlobalAudio _audio;
 
@@ -28,13 +28,13 @@ namespace PeopleDraw
         private float _cooldown;
 
         public Drawer(IInputService inputService, SelectedUnits unitSelectedUnits, IAlliedUnitsFactory factory, IUnitsFxFactory fxFactory,
-            UnitsUsingService usingService, UnitsAssetCache unitsAssetCache, GlobalAudio audio)
+            UsedUnitsService service, UnitsAssetCache unitsAssetCache, GlobalAudio audio)
         {
             _inputService = inputService;
             _unitSelectedUnits = unitSelectedUnits;
             _factory = factory;
             _fxFactory = fxFactory;
-            _usingService = usingService;
+            _service = service;
             _unitsAssetCache = unitsAssetCache;
             _audio = audio;
 

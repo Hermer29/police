@@ -34,17 +34,8 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
     Illustration: {fileID: 21300000, guid: 598b2e2e7cda5a04fa9dea8d3b7fb8eb, type: 3}
   - Asset:
-      m_AssetGUID: 164287270b06f3b458a0d95ce3a99b30
+      m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: 984c7d0798e8edf41b92a8e60026eba4, type: 3}
-  _levelPartsQuantity: 3
-  CurrentAppearance:
-    value:
-      Asset:
-        m_AssetGUID: a14a2df0d47fd054ab43db2f8f78b424
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-      Illustration: {fileID: 0}
+    Illustration: {fileID: 0}

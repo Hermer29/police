@@ -37,7 +37,7 @@ namespace Upgrading.UnitTypes
             _currentAppearance = new ReactiveProperty<LevelPartUnits>(GetCurrentAppearance());
             _currentIcon = new ReactiveProperty<Sprite>(_currentAppearance.Value.Illustration);
             _currentReference = new ReactiveProperty<AssetReference>(_currentAppearance.Value.Asset);
-            _currentAppearance.Subscribe(newValue =>
+            _currentAppearance.Skip(1).Subscribe(newValue =>
             {
                 _currentIcon.Value = newValue.Illustration;
                 _currentReference.Value = newValue.Asset;

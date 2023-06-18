@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eaf4453b52af4de9a92432beb4225c08, type: 3}
-  m_Name: BarrierT2
+  m_Name: ShooterT3
   m_EditorClassIdentifier: 
-  <Guid>k__BackingField: 46c06331-b2e9-447e-b33c-61788de1b4e0
+  <Guid>k__BackingField: 3e4f9ab6-be12-48ee-b7e3-fd3ef6305bfb
   <OwnedByDefault>k__BackingField: 0
-  <Tier>k__BackingField: 2
-  <Type>k__BackingField: 0
+  <Tier>k__BackingField: 3
+  <Type>k__BackingField: 2
   <Purchasable>k__BackingField: 0
   <LocalizedName>k__BackingField:
-    m_KeyId: 51607713574912
-    m_Key: BarrierNames
+    m_KeyId: 15710777344
+    m_Key: RangedNames
   LevelPartsUnitAppearances:
   - Asset:
-      m_AssetGUID: df6f30b1f53043642b4683b87bae278d
+      m_AssetGUID: 39e90d919618d9144b790d10dc42baff
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: 1779672a510c7d24e96410b2eca8a4a1, type: 3}
+    Illustration: {fileID: 21300000, guid: 510a451ec5cec94448075d9fa227b514, type: 3}
   - Asset:
-      m_AssetGUID: bb5745301858ab6438961c1db4f25e21
+      m_AssetGUID: bc4903a96f8ad9e438f47a7ad90a03c0
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Illustration: {fileID: 21300000, guid: 5f526c40737c2e046822f9a5cd8098ae, type: 3}
+    Illustration: {fileID: 21300000, guid: ad1bfacd4e4a632499de30efd88e5991, type: 3}
   - Asset:
       m_AssetGUID: 
       m_SubObjectName: 
@@ -40,4 +40,4 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
     Illustration: {fileID: 0}
   <IsHiddenWhenNotUnlocked>k__BackingField: 0
-  PreviousUnit: {fileID: 11400000, guid: decb3c71125211c4990fe684c480d556, type: 2}
+  PreviousUnit: {fileID: 11400000, guid: 19872f5b24a8f104b85b153460994ce9, type: 2}
