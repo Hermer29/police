@@ -519,5 +519,5 @@ MonoBehaviour:
   _speed: 0.1
   _fading: {fileID: 8402980017760246065}
   _rectTransform: {fileID: 8402980018443906902}
-  _additionalRectTransform: {fileID: 8402980019174404440}
+  _additionalRectTransform: {fileID: 8402980017605739118}
   _additionalNormalizedOffsetFromCenter: 0.6

@@ -67,7 +67,7 @@ namespace UI
             SlerpTowardsTarget(Time.deltaTime);
             var screenPoint = CalculatePosition(to);
             _rectTransform.position = screenPoint;
-            _additionalRectTransform.position = screenPoint + CalculateVectorTowardsCenter(screenPoint) * 100;
+            _additionalRectTransform.position = screenPoint + ((Vector3) _targetDirection.Value) * (100 * -1);
             yield return new WaitForSeconds(3);
             Hide();
         }

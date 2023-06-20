@@ -66,6 +66,26 @@ MonoBehaviour:
     m_Localized: Get Packs
     m_Metadata:
       m_Items: []
+  - m_Id: 698747998994432
+    m_Localized: CLAIM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699015792721920
+    m_Localized: No, thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705827505995776
+    m_Localized: 'You earned:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709368891080704
+    m_Localized: Victory!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709758705500160
+    m_Localized: Failed!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

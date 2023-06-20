@@ -63,6 +63,26 @@ MonoBehaviour:
     m_Key: Get Packs
     m_Metadata:
       m_Items: []
+  - m_Id: 698747998994432
+    m_Key: Claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699015792721920
+    m_Key: No, thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705827505995776
+    m_Key: You earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709368891080704
+    m_Key: Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709758705500160
+    m_Key: Failed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
