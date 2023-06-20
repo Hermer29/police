@@ -2,6 +2,7 @@
 using Infrastructure.Services.UseService;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 using Upgrading;
 using Upgrading.UnitTypes;
@@ -15,6 +16,7 @@ namespace DefaultNamespace
 
         [SerializeField] private Image _newUnit;
         [SerializeField] private Button _close;
+        [SerializeField] private LocalizeStringEvent _unitName;
         private bool _initialized;
         private UsedUnitsService _units;
 
@@ -56,9 +58,11 @@ namespace DefaultNamespace
 
         private void OnAppearanceChanged(PartialUpgradableUnit partialUpgradableUnit, Sprite icon)
         {
+            
             Debug.Log($"{nameof(NewUnitWindow)}.{partialUpgradableUnit.name} appearance change detected");
             gameObject.SetActive(true);
             _newUnit.sprite = icon;
+            _unitName.StringReference = partialUpgradableUnit.LocalizedName;
         }
 
         public void TryInitialize()

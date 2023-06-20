@@ -1,6 +1,8 @@
-﻿using Interface;
+﻿using Infrastructure.Services;
+using Interface;
 using Services.MoneyService;
 using Services.PrefsService;
+using Services.PropertyAcquisition;
 using Services.PurchasesService.PurchasesWrapper;
 using UnityEngine;
 using Zenject;
@@ -12,13 +14,16 @@ namespace Gameplay.UI
         private IProductsService _products;
         private IPrefsService _prefs;
         private IMoneyService _moneyService;
+        private PropertyService _propertyService;
         
         [SerializeField] private ButtonWithTint _buyStarterPack;
         [SerializeField] private ButtonWithTint _buyFirePack;
 
         [Inject]
-        public void Construct(IProductsService productsService, IPrefsService prefsService, IMoneyService moneyService)
+        public void Construct(IProductsService productsService, IPrefsService prefsService, IMoneyService moneyService, 
+            PropertyService propertyService)
         {
+            _propertyService = propertyService;
             _moneyService = moneyService;
             _prefs = prefsService;
             _products = productsService;
@@ -45,11 +50,15 @@ namespace Gameplay.UI
 
         private void BuyFirePack() => BuyProduct(Product.FirePack, _buyFirePack, new ProductReward
         {
-            Coins = 50000
+            Coins = 50000,
+            Nukes = 30,
+            SuperUnits = 30
         });
 
         private void BuyStarterPack() => BuyProduct(Product.StarterPack, _buyStarterPack, new ProductReward
         {
+            Nukes = 5,
+            SuperUnits = 5,
             Coins = 2000
         });
 
@@ -59,6 +68,8 @@ namespace Gameplay.UI
             {
                 _moneyService.AddMoney(productReward.Coins);
                 _prefs.SetInt(ConstructBoughtKey(product), 1);
+                _propertyService.OwnMultiple(Property.Nuke, productReward.Nukes);
+                _propertyService.OwnMultiple(Property.SuperUnit, productReward.SuperUnits);
                 buttonWithTint.ShowTint();
             });
         }

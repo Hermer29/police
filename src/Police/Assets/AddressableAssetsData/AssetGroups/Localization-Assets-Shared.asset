@@ -37,6 +37,18 @@ MonoBehaviour:
     m_Address: Assets/Localization/RangedNames Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: 4571c01fe40a654499bc36782cd53f9d
+    m_Address: Assets/Localization/Menu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 552590587fc7bdd468450f965e6697e8
+    m_Address: Assets/Localization/SuperPowersWindow Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 535a9463aea1a5b49af035fab3ef0373
+    m_Address: Assets/Localization/Barracks Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:

@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reader: {fileID: 5893293721193993440}
+  _root: {fileID: 1122293289621114920}
 --- !u!1 &2113347542813360279
 GameObject:
   m_ObjectHideFlags: 0

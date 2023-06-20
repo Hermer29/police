@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Tables;
 
@@ -8,10 +9,9 @@ namespace Upgrading.UI.Barracks
     {
         [SerializeField] private LocalizeStringEvent _localizeString;
 
-        public void SetKey(TableEntryReference entryReference)
+        public void SetKey(LocalizedString localizedString)
         {
-            var tableEntry = (TableEntryReference)entryReference.KeyId;
-            _localizeString.SetEntry(tableEntry);
+            _localizeString.StringReference = localizedString;
         }
     }
 }

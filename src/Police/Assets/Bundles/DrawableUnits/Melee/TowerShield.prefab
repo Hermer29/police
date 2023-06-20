@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attack: {fileID: 4709640152320038880}
   _agent: {fileID: 378455209628248858}
-  _range: 2.5
+  _range: 2.7
 --- !u!114 &6368879939201018456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reader: {fileID: 5893293721193993440}
+  _root: {fileID: 1122293289621114920}
 --- !u!1 &6234288827662655999
 GameObject:
   m_ObjectHideFlags: 0

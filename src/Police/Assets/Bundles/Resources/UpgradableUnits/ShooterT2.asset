@@ -17,9 +17,15 @@ MonoBehaviour:
   <Tier>k__BackingField: 2
   <Type>k__BackingField: 2
   <Purchasable>k__BackingField: 0
-  <LocalizedName>k__BackingField:
-    m_KeyId: 15710777344
-    m_Key: RangedNames
+  _localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:4f8de2b49d0c5334ea2a29f131f72f81
+    m_TableEntryReference:
+      m_KeyId: 15710777344
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   LevelPartsUnitAppearances:
   - Asset:
       m_AssetGUID: 048ede3560c555349a7691fab11a5bb7
@@ -41,3 +47,6 @@ MonoBehaviour:
     Illustration: {fileID: 0}
   <IsHiddenWhenNotUnlocked>k__BackingField: 0
   PreviousUnit: {fileID: 11400000, guid: 19872f5b24a8f104b85b153460994ce9, type: 2}
+  references:
+    version: 2
+    RefIds: []

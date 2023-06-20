@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Menu_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4571c01fe40a654499bc36782cd53f9d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 11826851840
+    m_Localized: Barracks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850461159424
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1360849235968
+    m_Localized: No Ads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1712105418752
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2269201264640
+    m_Localized: New Unit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2504640131072
+    m_Localized: Unlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3678583877632
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15887040999424
+    m_Localized: Vic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16209415204864
+    m_Localized: Special
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16578237132800
+    m_Localized: SWAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16878486384640
+    m_Localized: Nuke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17978891399168
+    m_Localized: Get Packs
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

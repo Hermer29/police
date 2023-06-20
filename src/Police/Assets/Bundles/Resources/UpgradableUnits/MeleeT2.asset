@@ -14,12 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Guid>k__BackingField: 520fde75-0cf3-49dd-a23e-6a4072781fbf
   <OwnedByDefault>k__BackingField: 0
-  <Tier>k__BackingField: 0
+  <Tier>k__BackingField: 2
   <Type>k__BackingField: 1
   <Purchasable>k__BackingField: 0
-  <LocalizedName>k__BackingField:
-    m_KeyId: 228689145856
-    m_Key: MeleeNames
+  _localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7dfe44e3a4a978e4a946b1fedf21e93d
+    m_TableEntryReference:
+      m_KeyId: 228689145856
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   LevelPartsUnitAppearances:
   - Asset:
       m_AssetGUID: 164287270b06f3b458a0d95ce3a99b30
@@ -41,3 +47,6 @@ MonoBehaviour:
     Illustration: {fileID: 0}
   <IsHiddenWhenNotUnlocked>k__BackingField: 0
   PreviousUnit: {fileID: 11400000, guid: 5fb568be751ddf74ea1e7fd04de2b18a, type: 2}
+  references:
+    version: 2
+    RefIds: []

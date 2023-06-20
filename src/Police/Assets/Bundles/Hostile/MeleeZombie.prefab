@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attack: {fileID: 2445752348442463778}
   _agent: {fileID: 8531660128621829230}
-  _range: 2.5
+  _range: 3.55
 --- !u!114 &7129451462201605962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reader: {fileID: 3229751982440763870}
+  _root: {fileID: 1122293289621114920}
 --- !u!1001 &1289052257495973863
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5380,29 +5380,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 940391833}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 940391833}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 940391833}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 915444137}
@@ -5410,29 +5398,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 888803469}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 505646830}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 955723783}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 486746421}
@@ -5440,29 +5416,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 711598242}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 711598242}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 711598242}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 150519548}
@@ -5470,29 +5434,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 132277425}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1035619144}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 132277425}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 581981011}
@@ -5500,29 +5452,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 533440658}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 129830756}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 196224770}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 586405599}
@@ -5530,29 +5470,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 2060773150}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1045846720}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 425828746}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1957211976}
@@ -5560,29 +5488,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 799623806}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1453481110}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 483883252}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1670722841}
@@ -5590,29 +5506,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 1648003203}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1648003203}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1648003203}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 1953349388}
@@ -5620,29 +5524,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 2046848580}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 259565814}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 397227997}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 902816998}
@@ -5650,29 +5542,17 @@ MonoBehaviour:
     Waves:
     - SpawnPoint: {fileID: 1551403850}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 21
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 530399749}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1551403850}
       Enemies:
-      - Prefab:
-          m_AssetGUID: 849addc08fb78d74aab7774d36a97d37
-          m_SubObjectName: 
-          m_SubObjectType: 
-          m_EditorAssetChanged: 0
+      - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
         Quantity: 20
       TimeToThisWave: 6
     LooseTrigger: {fileID: 892448965}

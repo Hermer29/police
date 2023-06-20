@@ -7,7 +7,8 @@ namespace ActiveCharacters.Shared.Components
     public class NearestTargetListener : MonoBehaviour
     {
         [SerializeField] private ColliderReader _reader;
-
+        [SerializeField] private Transform _root;
+        
         public event Action<Collider> ClosestObjectLeftTheZone;
         public event Action<Collider> ClosestObjectApproached;
 
@@ -56,7 +57,7 @@ namespace ActiveCharacters.Shared.Components
 
         private float CalculateSqrDistance(Collider other)
         {
-            return (other.transform.position - transform.position).sqrMagnitude;
+            return (other.transform.position - _root.position).sqrMagnitude;
         }
     }
 }

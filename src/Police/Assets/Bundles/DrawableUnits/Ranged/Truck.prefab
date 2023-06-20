@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
   _muzzle: {fileID: 2248344195151946908}
+  _shoot: {fileID: 0}
   Cooldown: 0.4
 --- !u!114 &6748102552123719941
 MonoBehaviour:
@@ -203,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reader: {fileID: 5893293721193993440}
+  _root: {fileID: 1122293289621114920}
 --- !u!1 &5344631612765268536
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Root>k__BackingField: {fileID: 1122293289621114920}
   _animation: {fileID: 0}
+  _dying: {fileID: 0}
   Died: 0
   MaxHp: 3
 --- !u!1 &8524160947589305485

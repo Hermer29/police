@@ -67,7 +67,7 @@ namespace Gameplay.Levels
         {
             foreach (int unused in Enumerable.Repeat(0, enemyType.Quantity))
             {
-                InstantiateEnemy(enemyType.Prefab, spawnPoint);
+                InstantiateEnemy(enemyType.Hostile.AssetReference, spawnPoint);
             }
         }
 

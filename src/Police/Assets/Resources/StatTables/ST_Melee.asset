@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfa594755ff4604a961a91148e5d651, type: 3}
+  m_Name: ST_Melee
+  m_EditorClassIdentifier: 
+  _entries:
+  - RelatedUnit: {fileID: 11400000, guid: 5fb568be751ddf74ea1e7fd04de2b18a, type: 2}
+    InitialAttackRange: 0
+    InitialDamage: 0
+    DamageStrengthGrow: 0
+    InitialHealth: 0
+    HealthStrengthGrow: 0
+  - RelatedUnit: {fileID: 11400000, guid: 1131c381402b15b4da253180ada25562, type: 2}
+    InitialAttackRange: 0
+    InitialDamage: 0
+    DamageStrengthGrow: 0
+    InitialHealth: 0
+    HealthStrengthGrow: 0
+  - RelatedUnit: {fileID: 11400000, guid: 75041c8373e97e0409e95f609feae19f, type: 2}
+    InitialAttackRange: 0
+    InitialDamage: 0
+    DamageStrengthGrow: 0
+    InitialHealth: 0
+    HealthStrengthGrow: 0

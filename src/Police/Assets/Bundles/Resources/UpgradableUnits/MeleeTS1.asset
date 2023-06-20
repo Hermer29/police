@@ -17,9 +17,15 @@ MonoBehaviour:
   <Tier>k__BackingField: 3
   <Type>k__BackingField: 1
   <Purchasable>k__BackingField: 1
-  <LocalizedName>k__BackingField:
-    m_KeyId: 232606625792
-    m_Key: MeleeNames
+  _localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7dfe44e3a4a978e4a946b1fedf21e93d
+    m_TableEntryReference:
+      m_KeyId: 232606625792
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   LevelPartsUnitAppearances:
   - Asset:
       m_AssetGUID: b25bb69935a3f694b99bdf99515e7a8b
@@ -45,12 +51,6 @@ MonoBehaviour:
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Illustration: {fileID: 0}
-  _levelPartsQuantity: 4
-  CurrentAppearance:
-    value:
-      Asset:
-        m_AssetGUID: b25bb69935a3f694b99bdf99515e7a8b
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-      Illustration: {fileID: 21300000, guid: ab4a97f6cec8c154aad2d1cac4244a5a, type: 3}
+  references:
+    version: 2
+    RefIds: []

@@ -6,7 +6,9 @@ using SpecialPlatforms;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Tables;
+using UnityEngine.Serialization;
 
 namespace Upgrading.UnitTypes
 {
@@ -17,7 +19,7 @@ namespace Upgrading.UnitTypes
         [field: SerializeField] public int Tier { get; private set; }
         [field: SerializeField] public UnitType Type { get; private set; }
         [field: SerializeField] public bool Purchasable { get; private set; }
-        [field: SerializeField] public TableEntryReference LocalizedName { get; private set; }
+        [FormerlySerializedAs("_localizedName")] [field: SerializeField] public LocalizedString LocalizedName = new LocalizedString();
 
         [field: NonSerialized] public ReactiveProperty<int> UpgradedLevel { get; private set; } = new(initialValue: 1);
         int IEstimated.UpgradedLevel => UpgradedLevel.Value;
