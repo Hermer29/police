@@ -9,9 +9,9 @@ namespace Interface
     {
         [SerializeField] private Sprite _enabledState;
         [SerializeField] private Sprite _disabledState;
+        [SerializeField] private Image _image;
 
         private Button _button;
-        private Image _image;
         private bool _state = true;
         
         public UnityEvent<bool> OnToggle;
@@ -19,18 +19,18 @@ namespace Interface
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(ToggleState);
-            //SetState(_state);
+            SetState(_state);
         }
 
         public void SetState(bool state)
         {
             _state = state;
-            //_image.sprite = state ? _enabledState : _disabledState;
+            _image.sprite = state ? _enabledState : _disabledState;
         }
 
         private void ToggleState()
         {
-            //SetState(!_state);
+            SetState(!_state);
             OnToggle.Invoke(_state);
         }
     }
