@@ -38,6 +38,7 @@ namespace Gameplay.Levels.Factory
             var links = hostile.GetComponent<CharactersNavigationLinks>();
             _enemies.Add(links.Attackable);
             links.Attackable.UnitDied += AttackableOnUnitDied;
+            links.Attackable.Restore();
             links.RunToWin.Construct(AllServices.Get<LooseTrigger>());
             return links;
         }

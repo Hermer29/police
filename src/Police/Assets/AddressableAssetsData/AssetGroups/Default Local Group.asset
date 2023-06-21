@@ -89,6 +89,14 @@ MonoBehaviour:
     m_Address: Truck
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: aa2dcaf21eb2b764b87f082919405563
+    m_Address: SuperUnit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ae4cd18de2ad7344ad75db438e97bb1
+    m_Address: Helicopter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 34288a318649fd84c9e2bc3b6d1f4df1, type: 2}
   m_SchemaSet:

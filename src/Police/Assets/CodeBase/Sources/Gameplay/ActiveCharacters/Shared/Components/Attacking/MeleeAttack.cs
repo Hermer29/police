@@ -1,9 +1,10 @@
 ﻿using DefaultNamespace.Audio.Components;
+using Gameplay.ActiveCharacters.Shared.Components.Attacking;
 using UnityEngine;
 
 namespace ActiveCharacters.Shared.Components.Attacking
 {
-    public class MeleeAttack : Attack
+    public class MeleeAttack : Attack, IDamageValueDependent
     {
         [SerializeField] private AttackingAnimator _animator;
         [SerializeField] private AttackAnimationEventsListener _eventsListener;
@@ -15,7 +16,8 @@ namespace ActiveCharacters.Shared.Components.Attacking
         private bool _isAttacking;
         private bool _attackEnabled;
         private Attackable _target;
-        
+        private float _dealingDamage;
+
         private void Start()
         {
             _eventsListener.AttackStarted += OnStartAttack;
@@ -27,6 +29,11 @@ namespace ActiveCharacters.Shared.Components.Attacking
             UpdateCooldown();
             if(CanAttack())
                 StartAttack();
+        }
+
+        public void InitializeDamage(float damage)
+        {
+            _dealingDamage = damage;
         }
 
         public override void EnableAttack(Attackable target) => 
@@ -66,7 +73,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
                 _attackEnabled = false;
                 return;
             }
-            _target.ApplyDamage();
+            _target.ApplyDamage(_dealingDamage);
         }
 
         private void OnEndAttack()

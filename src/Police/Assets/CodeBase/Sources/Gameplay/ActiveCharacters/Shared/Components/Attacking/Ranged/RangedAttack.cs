@@ -1,9 +1,11 @@
-﻿using ActiveCharacters.Shared.Components;
+﻿using System.Collections;
+using System.Linq;
+using ActiveCharacters.Shared.Components;
 using ActiveCharacters.Shared.Components.Attacking;
 using DefaultNamespace.Audio.Components;
 using Gameplay.PeopleDraw.Factory;
+using UniRx;
 using UnityEngine;
-using Zenject;
 
 namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
 {
@@ -12,21 +14,15 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         private BulletFactory _bulletFactory;
         
         [SerializeField] private AimingAnimator _animator;
-        [SerializeField] private Transform _muzzle;
-        [SerializeField] private ShootAudio _shoot;
+        [SerializeField] private AttackEffector[] _effector;
         
         public float Cooldown;
         
         private float _remainingCooldown;
         private bool _attackEnabled;
+        private bool _attackInProgress;
         private Attackable _target;
 
-        [Inject]
-        public void Construct(BulletFactory bullets)
-        {
-            _bulletFactory = bullets;
-        }
-        
         private void Update()
         {
             UpdateCooldown();
@@ -41,28 +37,30 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             _target = target;
         }
 
+        private IEnumerator ProcessAttack()
+        {
+            _attackInProgress = true;
+            yield return _effector.Select(effector => effector.Execute(_target).ToObservable())
+                    .WhenAll().ToYieldInstruction();
+
+            _attackInProgress = false;
+            OnEndAttack();
+        }
+
         public override void DisableAttack()
         {
             _animator?.StopAiming();
             _attackEnabled = false;
         }
 
-        private bool CanAttack()
-        {
-            return CooldownIsUp() && _attackEnabled;
-        }
+        private bool CanAttack() => CooldownIsUp() && _attackEnabled && _attackInProgress == false;
 
-        private bool CooldownIsUp()
-        {
-            return _remainingCooldown <= 0;
-        }
+        private bool CooldownIsUp() => _remainingCooldown <= 0;
 
         private void StartAttack()
         {
-            _shoot?.Play();
+            StartCoroutine(ProcessAttack());
             transform.LookAt(_target.Root);
-            Bullet bullet = _bulletFactory.CreateBullet(_muzzle.position);
-            bullet.ShotTowards(_target, OnStartAttack);
             OnEndAttack();
         }
 
@@ -71,20 +69,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             if(!CooldownIsUp())
                 _remainingCooldown -= Time.deltaTime;
         }
-
-        private void OnStartAttack()
-        {
-            if (_target.Died)
-            {
-                _attackEnabled = false;
-                return;
-            }
-            _target.ApplyDamage();
-        }
-
-        private void OnEndAttack()
-        {
-            _remainingCooldown = Cooldown;
-        }
+        
+        private void OnEndAttack() => _remainingCooldown = Cooldown;
     }
 }

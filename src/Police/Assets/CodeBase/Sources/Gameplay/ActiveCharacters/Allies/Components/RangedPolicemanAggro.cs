@@ -1,5 +1,5 @@
 ﻿using ActiveCharacters.Shared.Components;
-using Gameplay.ActiveCharacters.Shared.Components.Attacking;
+using ActiveCharacters.Shared.Components.Attacking;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +9,7 @@ namespace Gameplay.ActiveCharacters.Allies.Components
     {
         [SerializeField] private NearestTargetListener _reader;
         [FormerlySerializedAs("_movingToTargetAttack")] [SerializeField] private DetectionReaction _detectionReaction;
-        [FormerlySerializedAs("_rangeChecker")] [SerializeField] private RangedAttack _attack;
+        [FormerlySerializedAs("_rangeChecker")] [SerializeField] private Attack _attack;
         
         private Attackable _target;
         private bool _stopped;

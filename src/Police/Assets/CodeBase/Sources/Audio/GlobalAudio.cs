@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Infrastructure;
+using UnityEngine;
+using Zenject;
 
 namespace DefaultNamespace.Audio
 {
@@ -13,6 +15,13 @@ namespace DefaultNamespace.Audio
         [SerializeField] private AudioSource _activeUnitChange;
         [SerializeField] private AudioSource _upgrade;
         [SerializeField] private AudioSource _backButton;
+        [SerializeField] private AudioSource _hitSound;
+        
+        [Inject]
+        public void Construct()
+        {
+            AllServices.Bind<GlobalAudio>(this);
+        }
         
         private void Play(AudioSource audioSource, float f = 0)
         {
@@ -32,5 +41,6 @@ namespace DefaultNamespace.Audio
         public void PlayActiveUnitChange() => Play(_activeUnitChange);
         public void PlayUpgrade() => Play(_upgrade);
         public void PlayBackButton() => Play(_backButton);
+        public void PlayHitSound() => Play(_hitSound);
     }
 }

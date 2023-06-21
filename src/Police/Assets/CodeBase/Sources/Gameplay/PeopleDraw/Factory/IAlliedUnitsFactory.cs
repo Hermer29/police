@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Helpers;
 using PeopleDraw.Components;
 using UnityEngine;
@@ -14,5 +15,7 @@ namespace Gameplay.PeopleDraw.Factory
         int ActivePolicemenAmount { get; }
         Task<GameObject> CreateSuperUnit();
         Task<GameObject> CreateHelicopter();
+
+        event Action DestructionQueried;
     }
 }

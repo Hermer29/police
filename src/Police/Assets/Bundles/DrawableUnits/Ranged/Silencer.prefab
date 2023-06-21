@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 6748102552123719941}
   - component: {fileID: 6910763766926645371}
   - component: {fileID: 5724644272964386058}
+  - component: {fileID: 16561010289958770}
   m_Layer: 12
   m_Name: Silencer
   m_TagString: Policeman
@@ -238,8 +239,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 7449725036175417001}
-  _muzzle: {fileID: 2799432334335126366}
   _shoot: {fileID: 5724644272964386058}
+  _effector:
+  - {fileID: 16561010289958770}
+  - {fileID: 5724644272964386058}
   Cooldown: 0.4
 --- !u!114 &7449725036175417001
 MonoBehaviour:
@@ -378,6 +381,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 6910763766926645371}
+--- !u!114 &16561010289958770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532b6c9225564f51b85a6d6292adbf5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzle: {fileID: 2799432334335126366}
 --- !u!1 &1858363678303849760
 GameObject:
   m_ObjectHideFlags: 0

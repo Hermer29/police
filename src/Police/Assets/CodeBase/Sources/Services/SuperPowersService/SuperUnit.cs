@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Gameplay.PeopleDraw.Factory;
@@ -11,14 +12,19 @@ namespace Services.SuperPowersService
     public class SuperUnit
     {
         private IAlliedUnitsFactory _factory;
+        private List<GameObject> _superUnits = new List<GameObject>();
 
         private const float HelicopterAppearingHeight = 40;
         private const float LandingDuration = 1.5f;
         private const float HalfGroundTime = 0.5F;
         private const float TakeOffTime = 1f;
         
-        public SuperUnit(IAlliedUnitsFactory factory) 
-            => _factory = factory;
+        public SuperUnit(IAlliedUnitsFactory factory)
+        {
+            _factory = factory;
+            
+            _factory.DestructionQueried += FactoryOnDestructionQueried;
+        }
 
         public async void Summon()
         {
@@ -38,8 +44,17 @@ namespace Services.SuperPowersService
 
         private async void CreateSuperUnit(MiddleScreenWorldPoint middleScreenWorldPoint)
         {
-            GameObject superUnit = await _factory.CreateSuperUnit();
+            var superUnit = await _factory.CreateSuperUnit();
             superUnit.GetComponent<NavMeshAgent>().Warp(middleScreenWorldPoint.Point);
+            _superUnits.Add(superUnit);
+        }
+
+        private void FactoryOnDestructionQueried()
+        {
+            foreach (GameObject gameObject in _superUnits)
+            {
+                Object.Destroy(gameObject);
+            }
         }
 
         private static TweenerCore<Vector3, Vector3, VectorOptions> Land(GameObject helicopter, MiddleScreenWorldPoint middle) 

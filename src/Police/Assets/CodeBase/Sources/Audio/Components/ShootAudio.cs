@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using ActiveCharacters.Shared.Components;
+using Gameplay.ActiveCharacters.Shared.Components.Attacking;
+using UnityEngine;
 
 namespace DefaultNamespace.Audio.Components
 {
     [RequireComponent(typeof(AudioSource))]
-    public class ShootAudio : MonoBehaviour
+    public class ShootAudio : AttackEffector
     {
         [SerializeField] private AudioSource _audio;
 
@@ -16,6 +19,12 @@ namespace DefaultNamespace.Audio.Components
         public void Play()
         {
             _audio.Play();
+        }
+
+        public override IEnumerator Execute(Attackable target)
+        {
+            Play();
+            yield break;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using DefaultNamespace.Audio;
 using DefaultNamespace.Audio.Components;
+using Infrastructure;
 using UnityEngine;
 using Animation = AnimationUtility.Animation;
 
@@ -12,9 +14,9 @@ namespace ActiveCharacters.Shared.Components
         [SerializeField] private DyingAudio _dying;
         
         public bool Died;
-        public int MaxHp = 1;
+        public float MaxHp = 1;
 
-        private int _hp;
+        private float _hp;
 
         public event EventHandler<Attackable> UnitDied;
 
@@ -23,10 +25,11 @@ namespace ActiveCharacters.Shared.Components
             _hp = MaxHp;
         }
 
-        public void ApplyDamage()
+        public void ApplyDamage(float applyingDamage)
         {
+            AllServices.Get<GlobalAudio>().PlayHitSound();
             _animation?.Play();
-            _hp--;
+            _hp -= applyingDamage;
             if (_hp <= 0)
             {
                 _dying?.Play();
@@ -43,8 +46,7 @@ namespace ActiveCharacters.Shared.Components
 
         public void Kill()
         {
-            _hp = -1;
-            ApplyDamage();
+            ApplyDamage(100000000);
         }
     }
 }

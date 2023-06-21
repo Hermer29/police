@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2089657222486960945}
   - component: {fileID: 4119947320051112770}
   - component: {fileID: 6748102552123719941}
+  - component: {fileID: 6519110863968478983}
   m_Layer: 12
   m_Name: Truck
   m_TagString: Policeman
@@ -109,8 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
-  _muzzle: {fileID: 2248344195151946908}
   _shoot: {fileID: 0}
+  _effector:
+  - {fileID: 6519110863968478983}
   Cooldown: 0.4
 --- !u!114 &6748102552123719941
 MonoBehaviour:
@@ -127,6 +129,19 @@ MonoBehaviour:
   _reader: {fileID: 7051962790841296480}
   _detectionReaction: {fileID: 2089657222486960945}
   _attack: {fileID: 4119947320051112770}
+--- !u!114 &6519110863968478983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532b6c9225564f51b85a6d6292adbf5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzle: {fileID: 2248344195151946908}
 --- !u!1 &1858363678303849760
 GameObject:
   m_ObjectHideFlags: 0

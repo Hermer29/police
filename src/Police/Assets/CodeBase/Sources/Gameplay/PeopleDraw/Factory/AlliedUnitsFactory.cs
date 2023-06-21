@@ -51,6 +51,8 @@ namespace Gameplay.PeopleDraw.Factory
             _cache = cache;
         }
 
+        public event Action DestructionQueried;
+
         public void Initialize()
         {
             _cache.SelectedUnits.ObserveReplace().Subscribe(OnUnitTypeReplaced);
@@ -65,7 +67,7 @@ namespace Gameplay.PeopleDraw.Factory
             _poolForTypes.Value[unit.Key] = CreateUnitsPool(unit.NewValue);
         }
 
-        
+
         public async Task<GameObject> CreateSuperUnit() 
             => Object.Instantiate(await _assetLoader.LoadSuperUnit());
 
@@ -133,6 +135,7 @@ namespace Gameplay.PeopleDraw.Factory
             {
                 policeMan.ReturnToPool();
             }
+            DestructionQueried?.Invoke();
         }
 
         private PoolUnit FactorizeUnit(PoolUnit prefab, ObjectPool<PoolUnit> pool)
