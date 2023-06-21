@@ -18,7 +18,7 @@ namespace Infrastructure.Services.Localization
             var currentLanguageCode =_languageService.GetLanguage();
             var locales = LocalizationSettings.AvailableLocales.Locales;
             LocalizationSettings.SelectedLocale = locales.Find(x => x.Identifier.Code == currentLanguageCode);
-            yield break;
+            yield return LocalizationSettings.InitializationOperation;
         }
     }
 }

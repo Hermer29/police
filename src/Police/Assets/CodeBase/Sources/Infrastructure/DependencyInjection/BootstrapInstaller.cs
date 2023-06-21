@@ -3,6 +3,8 @@ using Gameplay.Levels.Services.LevelsTracking;
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Loading;
+using Infrastructure.Services.Localization;
+using Infrastructure.Services.Localization.LanguageService;
 using Services.AdvertisingService;
 using Services.AdvertisingService.AdBlocking;
 using Services.MoneyService;
@@ -28,10 +30,15 @@ namespace Infrastructure.DependencyInjection
             BindPrefsService();
             BindMoneyService();
             BindPurchasingServices();
-            BindAdvertisingServices();
+            BindAdvertisingService();
+            BindLocalizationServices();
         }
 
-        private void BindAdvertisingServices() => BindAdvertisingService();
+        private void BindLocalizationServices()
+        {
+            Container.Bind(typeof(ILanguageService)).To<FakeLanguageService>().AsSingle();
+            Container.Bind(typeof(LocalizationService)).To<LocalizationService>().AsSingle();
+        }
 
         private void BindAdvertisingService()
         {
