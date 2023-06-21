@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 4119947320051112770}
   - component: {fileID: 6748102552123719941}
   - component: {fileID: 6519110863968478983}
+  - component: {fileID: 1421138312195018410}
+  - component: {fileID: 6146119524418425768}
   m_Layer: 12
   m_Name: Truck
   m_TagString: Policeman
@@ -85,6 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attackable: {fileID: 8902668783954916982}
   RunToWin: {fileID: 0}
+  Attacker: {fileID: 1421138312195018410}
+  RangeChanger: {fileID: 6146119524418425768}
 --- !u!114 &2089657222486960945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,10 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
-  _shoot: {fileID: 0}
   _effector:
   - {fileID: 6519110863968478983}
-  Cooldown: 0.4
+  Cooldown: 3
 --- !u!114 &6748102552123719941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +145,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzle: {fileID: 2248344195151946908}
+  _attacker: {fileID: 1421138312195018410}
+--- !u!114 &1421138312195018410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fecadf3beb84e92851bcc285dcda1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6146119524418425768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7babde2c424089b7c3409bb79814b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 7289635074562481906}
 --- !u!1 &1858363678303849760
 GameObject:
   m_ObjectHideFlags: 0

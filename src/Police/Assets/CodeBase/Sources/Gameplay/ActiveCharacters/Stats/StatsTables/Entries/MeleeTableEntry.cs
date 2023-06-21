@@ -8,7 +8,6 @@ namespace DefaultNamespace.Gameplay.ActiveCharacters.Stats
     public class MeleeTableEntry
     {
         public UpgradableUnit RelatedUnit;
-        public float InitialAttackRange;
         public float InitialDamage;
         public float DamageStrengthGrow;
         public EvaluationType DamageEvaluation;

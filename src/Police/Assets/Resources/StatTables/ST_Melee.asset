@@ -14,20 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entries:
   - RelatedUnit: {fileID: 11400000, guid: 5fb568be751ddf74ea1e7fd04de2b18a, type: 2}
-    InitialAttackRange: 0
-    InitialDamage: 0
-    DamageStrengthGrow: 0
-    InitialHealth: 0
-    HealthStrengthGrow: 0
+    InitialDamage: 25
+    DamageStrengthGrow: 25
+    DamageEvaluation: 0
+    InitialHealth: 75
+    HealthStrengthGrow: 25
+    HealthEvaluation: 0
+    ExtraHealthModifier: 0
+    ExtraDamageModifier: 0
   - RelatedUnit: {fileID: 11400000, guid: 1131c381402b15b4da253180ada25562, type: 2}
-    InitialAttackRange: 0
-    InitialDamage: 0
-    DamageStrengthGrow: 0
-    InitialHealth: 0
-    HealthStrengthGrow: 0
+    InitialDamage: 75
+    DamageStrengthGrow: 25
+    DamageEvaluation: 0
+    InitialHealth: 150
+    HealthStrengthGrow: 25
+    HealthEvaluation: 0
+    ExtraHealthModifier: 0.025
+    ExtraDamageModifier: 0.025
   - RelatedUnit: {fileID: 11400000, guid: 75041c8373e97e0409e95f609feae19f, type: 2}
-    InitialAttackRange: 0
-    InitialDamage: 0
-    DamageStrengthGrow: 0
-    InitialHealth: 0
-    HealthStrengthGrow: 0
+    InitialDamage: 150
+    DamageStrengthGrow: 25
+    DamageEvaluation: 0
+    InitialHealth: 225
+    HealthStrengthGrow: 25
+    HealthEvaluation: 0
+    ExtraHealthModifier: 0.05
+    ExtraDamageModifier: 0.05

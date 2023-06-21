@@ -1,5 +1,6 @@
 ﻿using DefaultNamespace;
 using DefaultNamespace.Audio;
+using DefaultNamespace.Gameplay.ActiveCharacters;
 using Gameplay.Levels;
 using Gameplay.Levels.AssetManagement;
 using Gameplay.Levels.Factory;
@@ -46,6 +47,10 @@ namespace Gameplay.Infrastructure
 
         public override void InstallBindings()
         {
+            Container.Bind<BalanceProvider>()
+                .ToSelf()
+                .AsSingle();
+
             Container.Bind<GlobalAudio>()
                 .ToSelf()
                 .FromComponentInNewPrefabResource("Prefabs/GlobalAudio")

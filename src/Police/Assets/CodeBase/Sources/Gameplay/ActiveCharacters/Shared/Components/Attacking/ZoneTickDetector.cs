@@ -23,7 +23,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         public void EnablePresenceDetection(Vector3 point)
         {
             if (_enabled)
-                Stop();
+                return;
             _enabled = true;
             _affectedPoint = point;
             _worker = StartCoroutine(Worker());
@@ -42,10 +42,9 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
                 if(_enabled == false)
                     yield break;
                 var targets = OverlapCapsule();
-                var enumerable = targets as Collider[] ?? targets.ToArray();
-                if (enumerable.Any())
+                if (targets.Any())
                 {
-                    OverlapedTargets?.Invoke(enumerable);
+                    OverlapedTargets?.Invoke(targets);
                 }
                 yield return new WaitForSeconds(_tickTime);
             }
@@ -54,7 +53,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         public void Stop()
         {
             _enabled = false;
-            StopCoroutine(_worker);
+            StopAllCoroutines();
         }
 
         private void OnDrawGizmos()

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ActiveCharacters.Shared.Components;
 using DefaultNamespace.Audio;
 using Gameplay.PeopleDraw.Factory;
 using Infrastructure.Services.UseService;
@@ -107,7 +108,9 @@ namespace PeopleDraw
             PoolUnit unit = _factory.InstantiateDrawnUnit(
                 unitType: _unitSelectedUnits.SelectedType.Value,
                 position: drawPoint.point);
-            
+            var balance = _service.UsedUnits[_unitSelectedUnits.SelectedType.Value].CalculateBalance();
+            unit.GetComponent<CharactersNavigationLinks>().SetBalance(balance);
+
             if (unit.TryGetComponent(out NavMeshAgent agent)) 
                 agent.Warp(drawPoint.point);
 

@@ -1,5 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using DefaultNamespace.Gameplay;
+using DefaultNamespace.Gameplay.ActiveCharacters.Stats;
+using DefaultNamespace.Gameplay.ActiveCharacters.Stats.StatsTables;
 using Helpers;
+using Infrastructure;
 using ModestTree;
 using UniRx;
 using UnityEngine;
@@ -83,5 +88,50 @@ namespace Upgrading.UnitTypes
 
         public LevelPartUnits GetLastAppearance() 
             => LevelPartsUnitAppearances[^1];
+
+        public AlliedUnitsBalanceDto CalculateBalance()
+        {
+            switch (Type)
+            {
+                case UnitType.Barrier:
+                    return CalculateBarrier();
+                case UnitType.Ranged:
+                    return CalculateRanged();
+                case UnitType.Melee:
+                    return CalculateMelee();
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(Type));
+        }
+
+        private AlliedUnitsBalanceDto CalculateBarrier()
+        {
+            var barriers = AllServices.Get<BarriersStatsTable>();
+            var related = barriers.First(x => x.RelatedUnit == this);
+            var health = related.HealthEvaluation.EvaluateFor(related.HealthGrow, UpgradedLevel.Value,
+                related.InitialHealth);
+            return new AlliedUnitsBalanceDto { Health = health + health * related.ExtraHealthModifier};
+        }
+        
+        private AlliedUnitsBalanceDto CalculateRanged()
+        {
+            var barriers = AllServices.Get<RangedStatsTable>();
+            var related = barriers.First(x => x.RelatedUnit == this);
+            var damage = related.DamageEvaluation.EvaluateFor(related.DamageGrowStrength, UpgradedLevel.Value,
+                related.InitialDamage);
+            return new AlliedUnitsBalanceDto { Damage = damage, Range = related.AttackRange + related.AttackRange * related.ExtraRangeModifier };
+        }
+        
+        private AlliedUnitsBalanceDto CalculateMelee()
+        {
+            var barriers = AllServices.Get<MeleeStatsTable>();
+            var related = barriers.First(x => x.RelatedUnit == this);
+            var damage = related.DamageEvaluation.EvaluateFor(related.DamageStrengthGrow, UpgradedLevel.Value,
+                related.InitialDamage);
+            var health = related.HealthEvaluation.EvaluateFor(related.HealthStrengthGrow, UpgradedLevel.Value,
+                related.InitialHealth);
+            return new AlliedUnitsBalanceDto { Damage = damage + damage * related.ExtraDamageModifier, 
+                Health = health + health * related.ExtraHealthModifier};
+        }
     }
 }

@@ -7,6 +7,7 @@ using ActiveCharacters.Shared.Components;
 using DG.Tweening;
 using Gameplay.ActiveCharacters.Shared.Components;
 using Helpers;
+using Infrastructure.Services.UseService;
 using PeopleDraw.AssetManagement;
 using PeopleDraw.Components;
 using Services.UseService;

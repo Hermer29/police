@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 6200754285402260681}
   - component: {fileID: 3504804777827554222}
   - component: {fileID: 1112304011434435735}
+  - component: {fileID: 4520849404304684071}
   m_Layer: 11
   m_Name: MeleeZombie
   m_TagString: Zombie
@@ -170,6 +171,7 @@ MonoBehaviour:
   _animator: {fileID: 4698902232315994673}
   _eventsListener: {fileID: 2324478328533270561}
   _shoot: {fileID: 1112304011434435735}
+  _attacker: {fileID: 4520849404304684071}
   Cooldown: 0.5
 --- !u!114 &4698902232315994673
 MonoBehaviour:
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attack: {fileID: 2445752348442463778}
   _agent: {fileID: 8531660128621829230}
-  _range: 3.55
+  _range: 5.99
 --- !u!114 &7129451462201605962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attackable: {fileID: 3875208316382380685}
   RunToWin: {fileID: 8056935174611611486}
+  Attacker: {fileID: 4520849404304684071}
+  RangeChanger: {fileID: 0}
 --- !u!82 &3504804777827554222
 AudioSource:
   m_ObjectHideFlags: 0
@@ -336,6 +340,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 3504804777827554222}
+--- !u!114 &4520849404304684071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122293289621114924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fecadf3beb84e92851bcc285dcda1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3085083360943430676
 GameObject:
   m_ObjectHideFlags: 0

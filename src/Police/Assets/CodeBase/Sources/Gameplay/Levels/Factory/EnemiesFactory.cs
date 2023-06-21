@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ActiveCharacters.Shared.Components;
+using DefaultNamespace.Gameplay;
 using Gameplay.Levels.AssetManagement;
 using Gameplay.Levels.UI;
 using Gameplay.PeopleDraw.Factory;
@@ -32,11 +33,12 @@ namespace Gameplay.Levels.Factory
 
         public int EnemiesDeadAmount => _enemies.Count(x => x.Died);
 
-        public async Task<CharactersNavigationLinks> FactorizeEnemy(AssetReference prefab, Vector3 position)
+        public async Task<CharactersNavigationLinks> FactorizeEnemy(AssetReference prefab, Vector3 position, UnitBalanceDto balanceDto)
         {
             GameObject hostile = await _loader.InstantiateHostile(prefab, position, Quaternion.identity, _parents.Zombie);
             var links = hostile.GetComponent<CharactersNavigationLinks>();
             _enemies.Add(links.Attackable);
+            links.SetBalance(balanceDto);
             links.Attackable.UnitDied += AttackableOnUnitDied;
             links.Attackable.Restore();
             links.RunToWin.Construct(AllServices.Get<LooseTrigger>());

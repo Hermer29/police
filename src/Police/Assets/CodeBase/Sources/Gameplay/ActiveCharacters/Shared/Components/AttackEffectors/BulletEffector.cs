@@ -6,24 +6,19 @@ using Zenject;
 
 namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
 {
-    public class BulletEffector : AttackEffector, IDamageValueDependent
+    public class BulletEffector : AttackEffector
     {
         [SerializeField] private Transform _muzzle;
+        [SerializeField] private Attacker _attacker;
         
         private BulletFactory _bulletFactory;
         private Attackable _target;
         private bool _endDetected;
-        private float _applyingDamage = .1f;
 
         [Inject]
         public void Construct(BulletFactory bullets)
         {
             _bulletFactory = bullets;
-        }
-
-        public void InitializeDamage(float damage)
-        {
-            _applyingDamage = damage;
         }
 
         public override IEnumerator Execute(Attackable target)
@@ -41,7 +36,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             {
                 return;
             }
-            _target.ApplyDamage(_applyingDamage);
+            _attacker.ApplyDamage(_target);
         }
     }
 }

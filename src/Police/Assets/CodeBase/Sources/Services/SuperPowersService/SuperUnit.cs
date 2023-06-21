@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ActiveCharacters.Shared.Components;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
@@ -6,6 +7,8 @@ using Gameplay.PeopleDraw.Factory;
 using Helpers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using Upgrading.UnitTypes;
 
 namespace Services.SuperPowersService
 {
@@ -46,6 +49,11 @@ namespace Services.SuperPowersService
         {
             var superUnit = await _factory.CreateSuperUnit();
             superUnit.GetComponent<NavMeshAgent>().Warp(middleScreenWorldPoint.Point);
+            superUnit.GetComponent<CharactersNavigationLinks>().SetBalance(new AlliedUnitsBalanceDto()
+            {
+                Damage = 25f,
+                Health = 1000
+            });
             _superUnits.Add(superUnit);
         }
 

@@ -27,7 +27,12 @@ namespace ActiveCharacters.Shared.Components
 
         public void ApplyDamage(float applyingDamage)
         {
+            if (applyingDamage <= 0)
+                throw new ArgumentOutOfRangeException(nameof(applyingDamage));
+            if (Died)
+                return;
             AllServices.Get<GlobalAudio>().PlayHitSound();
+            Debug.Log($"{nameof(Attackable)}.{nameof(ApplyDamage)} received damage {applyingDamage}. Now: {_hp}, Remains: {_hp - applyingDamage}");
             _animation?.Play();
             _hp -= applyingDamage;
             if (_hp <= 0)
@@ -47,6 +52,13 @@ namespace ActiveCharacters.Shared.Components
         public void Kill()
         {
             ApplyDamage(100000000);
+        }
+
+        public void SetHealth(float balanceDtoHealth)
+        {
+            Died = false;
+            MaxHp = balanceDtoHealth;
+            _hp = MaxHp;
         }
     }
 }

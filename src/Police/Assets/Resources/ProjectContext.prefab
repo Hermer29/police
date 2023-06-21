@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6124081200535991454}
   - component: {fileID: 8299236207065554523}
+  - component: {fileID: 4075166632505098469}
   m_Layer: 0
   m_Name: Installers
   m_TagString: Untagged
@@ -45,6 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelsMapper: {fileID: 11400000, guid: 8ef7af33ffa979e4d9276cb261aed61f, type: 2}
+--- !u!114 &4075166632505098469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538519278176311179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7119027d61b4082a2ff15b36b68098a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meleeStatsTable: {fileID: 11400000, guid: b9faedb448240d2489171e6de936b3fa, type: 2}
+  _rangedStatsTable: {fileID: 11400000, guid: 9cccbc16a2f150e4b812ebdabfb141d4, type: 2}
+  _barriersStatsTable: {fileID: 11400000, guid: c8e84b904b3ccbd4191083512831d5e7, type: 2}
+  _zombiesStatsTable: {fileID: 11400000, guid: 906d7cd51f4f49c4a8bd5fe5ab86f506, type: 2}
 --- !u!1 &6492644304722213828
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,6 +110,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 8299236207065554523}
+  - {fileID: 4075166632505098469}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0

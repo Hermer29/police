@@ -3,7 +3,11 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using ActiveCharacters.Enemies.Components;
+using DefaultNamespace.Gameplay;
+using DefaultNamespace.Gameplay.ActiveCharacters;
+using DefaultNamespace.Gameplay.ActiveCharacters.Stats;
 using GameBalance;
+using Gameplay.Levels.Services.LevelsTracking;
 using Gameplay.Levels.UI;
 using Infrastructure;
 using LevelsMachine;
@@ -19,13 +23,15 @@ namespace Gameplay.Levels
         private readonly ICharactersFactory _factory;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ILevelMediator _levelMediator;
+        private readonly BalanceProvider _balanceProvider;
         
         private int _waveIndex;
         private Coroutine _spawn;
 
         public LevelEnemiesSpawner(LevelEntry level, ICharactersFactory factory, ICoroutineRunner coroutineRunner,
-            ILevelMediator levelMediator)
+            ILevelMediator levelMediator, BalanceProvider balanceProvider)
         {
+            _balanceProvider = balanceProvider;
             _level = level;
             _factory = factory;
             _coroutineRunner = coroutineRunner;
@@ -65,17 +71,20 @@ namespace Gameplay.Levels
 
         private void InstantiateSpecifiedEnemyQuantity(EnemyEntry enemyType, EnemiesSpawnPoint spawnPoint)
         {
+            var stats = _balanceProvider.GetFor(enemyType.Hostile);
+            Debug.Log($"{nameof(LevelEnemiesSpawner)} instantiating enemies with stats Damage: {stats.Damage}, Health: {stats.Health}");
             foreach (int unused in Enumerable.Repeat(0, enemyType.Quantity))
             {
-                InstantiateEnemy(enemyType.Hostile.AssetReference, spawnPoint);
+                InstantiateEnemy(enemyType.Hostile, spawnPoint);
             }
         }
 
-        private void InstantiateEnemy(AssetReference enemyType, EnemiesSpawnPoint spawnPoint)
+        private void InstantiateEnemy(HostileUnit enemyType, EnemiesSpawnPoint spawnPoint)
         {
             _factory.FactorizeEnemy(
-                prefab: enemyType,
-                position: spawnPoint.transform.position);
+                prefab: enemyType.AssetReference,
+                position: spawnPoint.transform.position,
+                _balanceProvider.GetFor(enemyType));
         }
 
         private bool LastWave() => _waveIndex == _level.Waves.Length - 1;

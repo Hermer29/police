@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DefaultNamespace.Gameplay.ActiveCharacters;
 using GameBalance;
 using Gameplay.Levels.Factory;
 using Gameplay.Levels.UI;
@@ -15,18 +16,20 @@ namespace Gameplay.Levels
         private readonly CityDefinition _cityDefinition;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ILevelMediator _mediator;
+        private readonly BalanceProvider _balanceProvider;
         private readonly EnemiesFactory _factory;
 
         private bool _canceled;
         private Coroutine _waitingForLooseCoroutine;
 
         public LevelEngine(CityDefinition cityDefinition, EnemiesFactory factory,
-            ILevelMediator mediator, GameplayUI gameplayUi)
+            ILevelMediator mediator, GameplayUI gameplayUi, BalanceProvider balanceProvider)
         {
             _cityDefinition = cityDefinition;
             _coroutineRunner = AllServices.Get<ICoroutineRunner>();
             _factory = factory;
             _mediator = mediator;
+            _balanceProvider = balanceProvider;
 
             gameplayUi.Replay.onClick.AddListener(ReplayRequested);
         }
@@ -113,7 +116,8 @@ namespace Gameplay.Levels
                 level: level,
                 factory: _factory,
                 coroutineRunner: _coroutineRunner,
-                levelMediator: _mediator);
+                levelMediator: _mediator,
+                balanceProvider: _balanceProvider);
         }
 
         private bool LevelCompleted(LevelEntry rivalData) => _factory.EnemiesDeadAmount == rivalData.EnemiesAmount();

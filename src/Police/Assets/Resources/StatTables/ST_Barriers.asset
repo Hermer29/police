@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entries:
   - RelatedUnit: {fileID: 11400000, guid: decb3c71125211c4990fe684c480d556, type: 2}
-    InitialHealth: 1
-    HealthGrow: 0
+    InitialHealth: 100
+    HealthGrow: 100
+    HealthEvaluation: 0
     ExtraHealthModifier: 0
   - RelatedUnit: {fileID: 11400000, guid: 1a3d5841046c528438b03fc2cde8bcd2, type: 2}
-    InitialHealth: 0
-    HealthGrow: 0
-    ExtraHealthModifier: 0
+    InitialHealth: 200
+    HealthGrow: 150
+    HealthEvaluation: 0
+    ExtraHealthModifier: 0.15
   - RelatedUnit: {fileID: 11400000, guid: 6f13c889f6eee6b40ba8a689214cc83a, type: 2}
-    InitialHealth: 0
-    HealthGrow: 0
-    ExtraHealthModifier: 0
+    InitialHealth: 500
+    HealthGrow: 200
+    HealthEvaluation: 0
+    ExtraHealthModifier: 0.3
