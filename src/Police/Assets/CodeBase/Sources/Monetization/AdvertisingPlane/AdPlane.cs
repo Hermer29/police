@@ -54,6 +54,7 @@ namespace Monetization.AdvertisingPlane
                 {
                     Show();
                     _waitingForMoment = false;
+                    NearlyLost?.Invoke();
                     yield break;
                 }
                 
@@ -130,5 +131,7 @@ namespace Monetization.AdvertisingPlane
             Ray ray = _camera.ViewportPointToRay(leftMost);
             return ray.GetPoint(_distanceFromCamera);
         }
+
+        public event Action NearlyLost;
     }
 }

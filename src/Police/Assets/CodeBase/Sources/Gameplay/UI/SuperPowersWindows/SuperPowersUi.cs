@@ -15,7 +15,8 @@ namespace Gameplay.UI
         
         [SerializeField] private SuperPowersWindow _nuke;
         [SerializeField] private SuperPowersWindow _superUnit;
-
+        [SerializeField] private SuperPowersTutorial _tutorial;
+        
         [Inject]
         public void Construct(SuperPowers powers)
         {
@@ -24,8 +25,9 @@ namespace Gameplay.UI
             _close.onClick.AddListener(Close);
             _nuke.Construct(powers, this);
             _superUnit.Construct(powers, this);
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
             Close();
+            _tutorial.gameObject.SetActive(false);
         }
 
         public void ShowWindows()
@@ -48,6 +50,16 @@ namespace Gameplay.UI
             _windowsRoot.SetActive(false);
             _nuke.Hide();
             _superUnit.Hide();
+        }
+
+        public void ShowSuperUnitTutorial()
+        {
+            _tutorial.ShowSuperUnit();
+        }
+
+        public void ShowNukeTutorial()
+        {
+            _tutorial.ShowNukeTutorial();
         }
     }
 }

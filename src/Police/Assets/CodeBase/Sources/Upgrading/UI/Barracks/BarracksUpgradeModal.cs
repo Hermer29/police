@@ -34,7 +34,7 @@ namespace Upgrading.UI.Barracks
         [SerializeField] private ProgressBlock _progressBlock;
         [SerializeField] private TMP_Text _cost;
         [SerializeField] private GameObject[] _disableOnMaxUpgrade;
-        [SerializeField] private TMP_Text _maxTierWriting;
+        [SerializeField] private GameObject _maxTierWriting;
         
         private IDisposable _maxUpgradeSubscription;
 

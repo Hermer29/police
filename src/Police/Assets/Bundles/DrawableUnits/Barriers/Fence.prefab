@@ -525,7 +525,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.83, y: 0.84, z: 0.525}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.63, z: 0}
   m_TimeToStationary: 0.5
@@ -543,6 +543,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attackable: {fileID: 2979810601753598365}
   RunToWin: {fileID: 0}
+  Attacker: {fileID: 0}
+  RangeChanger: {fileID: 0}
 --- !u!1001 &3204306336688892463
 PrefabInstance:
   m_ObjectHideFlags: 0
