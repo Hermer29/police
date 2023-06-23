@@ -16,14 +16,15 @@ namespace Monetization.AdvertisingPlane
         private Coroutine _waitingForMomentToShow;
         private bool _waitingForMoment;
         private bool _unitsHeavilySpawned;
-        
+        private IDisposable _subscription;
+
         public event Action NearlyLost;
         
         public void StartWaitingForMoment()
         {
             if (_waitingForMoment)
                 return;
-            AllServices.Get<LooseTrigger>().OnAlmostLost.Subscribe(triggered =>
+            _subscription = AllServices.Get<LooseTrigger>().OnAlmostLost.Subscribe(triggered =>
             {
                 EndProcessing();
             });
@@ -59,6 +60,7 @@ namespace Monetization.AdvertisingPlane
         {
             Debug.Log("Almost lost detected");
             _waitingForMoment = false;
+            _subscription.Dispose();
             NearlyLost?.Invoke();
         }
 
