@@ -87,7 +87,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1122293289621114924}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 5
   m_Acceleration: 15
   avoidancePriority: 50
@@ -156,6 +156,7 @@ MonoBehaviour:
   _movingToTargetAttack: {fileID: 8215489426200601658}
   _runToWin: {fileID: 8056935174611611486}
   _rangeByAgentDistanceChecker: {fileID: 2282195015982781236}
+  _agent: {fileID: 8531660128621829230}
 --- !u!114 &2445752348442463778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attack: {fileID: 2445752348442463778}
   _agent: {fileID: 8531660128621829230}
-  _range: 5.99
+  _range: 2
 --- !u!114 &7129451462201605962
 MonoBehaviour:
   m_ObjectHideFlags: 0

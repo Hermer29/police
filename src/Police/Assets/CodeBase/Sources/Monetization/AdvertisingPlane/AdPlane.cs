@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using Gameplay.PeopleDraw.EnergyConsumption;
-using Gameplay.PeopleDraw.Factory;
+﻿using Gameplay.PeopleDraw.EnergyConsumption;
 using InputServices;
 using NaughtyAttributes;
 using Services.AdvertisingService;
@@ -14,9 +11,9 @@ namespace Monetization.AdvertisingPlane
     {
         [Inject] private SuggestAdvertisingWindow _window;
         [Inject] private RaycastInputService _raycastInput;
-        [Inject] private IAlliedUnitsFactory _unitsFactory;
         [Inject] private IAdvertisingService _advertising;
         [Inject] private Energy _energy;
+        [Inject] private AlmostLostDetector _almostLostDetector;
         
         [SerializeField] private AdPlaneObject _prefab;
         [SerializeField, Tooltip("screen normalized")] private float _viewportSpeedPerSecond;
@@ -26,55 +23,31 @@ namespace Monetization.AdvertisingPlane
 
         private Camera _camera;
         private AdPlaneObject _planeInstance;
-        private bool _unitsHeavilySpawned;
-        private Coroutine _waitingForMomentToShow;
-        private bool _waitingForMoment;
+        
         private float _currentOffset;
         private bool _disabled = true;
+        private bool _processingStarted;
 
+        public void StartProcessing()
+        {
+            if (_processingStarted)
+                return;
+            _processingStarted = true;
+            _almostLostDetector.NearlyLost += Show;
+        }
+
+        public void StopProcessing()
+        {
+            _processingStarted = false;
+            _almostLostDetector.NearlyLost -= Show;
+        }
+        
         [Button]
         public void Show()
         {
             Initialize();
             _disabled = false;
-        }
-
-        public void StartWaitingForMoment()
-        {
-            _waitingForMoment = true;
-            _waitingForMomentToShow = StartCoroutine(WaitForMomentToShowThePlane());
-        }
-
-        private IEnumerator WaitForMomentToShowThePlane()
-        {
-            const int heavyAmount = 10;
-            while (true)
-            {
-                if (PlayerOutOfEnergyAndEnemiesAlmostWon(heavyAmount))
-                {
-                    Show();
-                    _waitingForMoment = false;
-                    NearlyLost?.Invoke();
-                    yield break;
-                }
-                
-                if (PlayerJustSpentBigAmountOfEnergy(heavyAmount))
-                {
-                    _unitsHeavilySpawned = true;
-                }
-
-                yield return null;
-            }
-        }
-
-        private bool PlayerOutOfEnergyAndEnemiesAlmostWon(int heavyAmount)
-        {
-            return _unitsHeavilySpawned && _unitsFactory.ActivePolicemenAmount < heavyAmount;
-        }
-
-        private bool PlayerJustSpentBigAmountOfEnergy(int heavyAmount)
-        {
-            return _unitsFactory.ActivePolicemenAmount > heavyAmount && _unitsHeavilySpawned == false;
+            _almostLostDetector.NearlyLost -= Show;
         }
 
         private void Initialize()
@@ -98,15 +71,6 @@ namespace Monetization.AdvertisingPlane
         private void OnPlaneRewarded()
         {
             _energy.RestoreEnergyToMax();
-            Uninitialize();
-        }
-
-        public void Uninitialize()
-        {
-            if (_waitingForMoment == false)
-                return;
-            _unitsHeavilySpawned = false;
-            StopCoroutine(_waitingForMomentToShow);
         }
 
         private void Update()
@@ -131,7 +95,5 @@ namespace Monetization.AdvertisingPlane
             Ray ray = _camera.ViewportPointToRay(leftMost);
             return ray.GetPoint(_distanceFromCamera);
         }
-
-        public event Action NearlyLost;
     }
 }

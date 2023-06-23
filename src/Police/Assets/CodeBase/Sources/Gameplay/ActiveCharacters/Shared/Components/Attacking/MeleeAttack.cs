@@ -1,6 +1,5 @@
 ﻿using DefaultNamespace.Audio.Components;
 using Gameplay.ActiveCharacters.Shared.Components;
-using Gameplay.ActiveCharacters.Shared.Components.Attacking;
 using UnityEngine;
 
 namespace ActiveCharacters.Shared.Components.Attacking

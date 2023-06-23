@@ -4217,12 +4217,12 @@ MonoBehaviour:
     - SpawnPoint: {fileID: 1648003203}
       Enemies:
       - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
-        Quantity: 20
+        Quantity: 40
       TimeToThisWave: 6
     - SpawnPoint: {fileID: 1648003203}
       Enemies:
       - Hostile: {fileID: 11400000, guid: 0942d547c009fb94bbdfb8be71169331, type: 2}
-        Quantity: 20
+        Quantity: 60
       TimeToThisWave: 6
     LooseTrigger: {fileID: 586683608}
   - EnergyAmount: 300

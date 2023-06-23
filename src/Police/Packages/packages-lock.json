@@ -21,6 +21,13 @@
       "dependencies": {},
       "hash": "4ae3f7d12df699ff75c499298631cda48d878a66"
     },
+    "com.popcron.gizmos": {
+      "version": "https://github.com/popcron/gizmos.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b8bc3c994394be817915a6050169373915b811b4"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,

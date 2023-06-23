@@ -25,5 +25,11 @@ namespace UI
                 z = Mathf.Clamp(min.z, max.z, source.z)
             };
         }
+
+        public static Vector3 AddY(this Vector3 source, float value)
+        {
+            source.y += value;
+            return source;
+        }
     }
 }

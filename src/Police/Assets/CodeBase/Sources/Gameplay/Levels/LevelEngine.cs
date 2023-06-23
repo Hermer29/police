@@ -38,6 +38,8 @@ namespace Gameplay.Levels
         public event Action Won;
         public event Action Canceled;
 
+        public LooseTrigger CurrentTrigger(int localLevel) => _cityDefinition.Levels[localLevel - 1].LooseTrigger;
+        
         private void ReplayRequested()
         {
             _canceled = true;
@@ -50,12 +52,14 @@ namespace Gameplay.Levels
         {
             int asIndex = localLevel - 1;
             LevelEntry levelObject = _cityDefinition.Levels[asIndex];
+            AllServices.Bind(levelObject.LooseTrigger);
             _coroutineRunner.StartCoroutine(LevelCoroutine(levelObject))
                 .ContinueWith(OnHandlingEnded);
         }
 
         private void OnHandlingEnded()
         {
+            _balanceProvider.ResetDifficultyModification();
             Debug.Log($"{nameof(LevelEngine)}.{nameof(OnHandlingEnded)} Level handling ended");
             _canceled = false;
             _coroutineRunner.StopCoroutine(_waitingForLooseCoroutine);
@@ -64,7 +68,6 @@ namespace Gameplay.Levels
         private IEnumerator LevelCoroutine(LevelEntry level)
         {
             Debug.Log($"Bind loose trigger with name: " + level.LooseTrigger.name);
-            AllServices.Bind(level.LooseTrigger);
             bool playerLost = false;
             level.LooseTrigger.Reactivate();
             InitializeLevel(
@@ -121,5 +124,10 @@ namespace Gameplay.Levels
         }
 
         private bool LevelCompleted(LevelEntry rivalData) => _factory.EnemiesDeadAmount == rivalData.EnemiesAmount();
+
+        public void ModifyDifficulty(int i)
+        {
+            _balanceProvider.ModifyDifficulty(i);
+        }
     }
 }

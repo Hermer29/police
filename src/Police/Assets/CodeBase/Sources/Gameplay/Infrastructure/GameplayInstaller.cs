@@ -70,6 +70,10 @@ namespace Gameplay.Infrastructure
                 .FromComponentInNewPrefabResource("Prefabs/UI/UITypeB")
                 .AsSingle();
 
+            Container.Bind<AlmostLostDetector>()
+                .FromNewComponentOn(gameObject)
+                .AsSingle();
+
             Container.Bind<Arrow>()
                 .WithId("NextWaveArrow")
                 .FromComponentInNewPrefabResource("Prefabs/UI/NextWaveArrow")

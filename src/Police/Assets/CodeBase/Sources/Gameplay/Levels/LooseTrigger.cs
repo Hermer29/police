@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Gameplay.ActiveCharacters.Shared.Components;
+using Helpers;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +12,10 @@ namespace Gameplay.Levels
     public class LooseTrigger : MonoBehaviour
     {
         [FormerlySerializedAs("_collider")] public BoxCollider Collider;
+        public BoxCollider AlmostLostTrigger;
         private bool _triggered;
+
+        public IObservable<Collider> OnAlmostLost => AlmostLostTrigger.OnTriggerEnterAsObservable();
 
         private void Start()
         {

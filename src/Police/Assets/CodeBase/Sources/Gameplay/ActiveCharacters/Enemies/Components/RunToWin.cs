@@ -1,5 +1,8 @@
 ﻿using System;
+using Cinemachine.Utility;
 using Gameplay.Levels;
+using Helpers;
+using Infrastructure;
 using PeopleDraw;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +15,17 @@ namespace Enemies.Components
         
         [SerializeField] private NavMeshAgent _agent;
 
+        public Vector3 Destination
+        {
+            get
+            {
+                _looseTrigger = AllServices.Get<LooseTrigger>();
+                Vector3 pointOnBounds = _looseTrigger.Collider.center + _looseTrigger.transform.position;
+                pointOnBounds.y = _agent.transform.position.y;
+                return pointOnBounds.ProjectOnDrawPlane();
+            }
+        }
+
         public void Construct(LooseTrigger looseTrigger)
         {
             _looseTrigger = looseTrigger;
@@ -21,11 +35,10 @@ namespace Enemies.Components
         {
             if(NotInitialized())
                 return;
-            var pointOnBounds = _looseTrigger.Collider.center + _looseTrigger.transform.position;
-            pointOnBounds.y = _agent.transform.position.y;
+            
             var path = new NavMeshPath();
             _agent.isStopped = false;
-            var isSuccess = _agent.CalculatePath(pointOnBounds, path);
+            _agent.CalculatePath(Destination, path);
             _agent.SetPath(path);
         }
 

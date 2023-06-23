@@ -27,7 +27,7 @@ namespace Services.SuperPowersService
             var levelsMiddle = new MiddleScreenWorldPoint();
             Vector3 nukeSpawnPoint = levelsMiddle.Normal * NukeSpawnHeight;
             InitializeNuke(nukeSpawnPoint);
-            
+            Time.timeScale = 1;   
             _nuke.transform.DOMoveY(levelsMiddle.Point.y, FallTime)
                 .Then(() => CreateNukeExplosion(levelsMiddle.Point));
         }

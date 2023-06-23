@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Helpers;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace ActiveCharacters.Shared.Components
@@ -10,7 +11,6 @@ namespace ActiveCharacters.Shared.Components
         [SerializeField] private bool _log;
 
         private Transform _movingTarget;
-        public Transform MovingTarget => _movingTarget;
         
         private void Update()
         {
@@ -23,7 +23,8 @@ namespace ActiveCharacters.Shared.Components
             
             if(_log)
                 Debug.Log(_agent.pathStatus);
-            CalculatePath();
+            _agent.isStopped = false;
+            _agent.Move((_movingTarget.position - _agent.transform.position).normalized * Time.deltaTime);
         }
         
         public override void Follow(Transform target)
@@ -31,14 +32,16 @@ namespace ActiveCharacters.Shared.Components
             if(_log)
                 Debug.Log("Following target");
             _movingTarget = target;
-            CalculatePath();
+            //CalculatePath();
         }
 
         private void CalculatePath()
         {
             _agent.isStopped = false;
             var path = new NavMeshPath();
-            _agent.CalculatePath(_movingTarget.position, path);
+            var point = (_movingTarget.position - _agent.transform.position).normalized;
+            var pointBehind = _agent.transform.position + point * 3;
+            _agent.CalculatePath(pointBehind.ProjectOnDrawPlane(), path);
             _agent.SetPath(path);
         }
 

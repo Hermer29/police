@@ -38,10 +38,6 @@ namespace Infrastructure.States
         private AdBlockWindow _adBlockWindow;
         private EndGameLogic _endGameLogic;
         private IAdvertisingService _advertising;
-
-        private bool _goingToMenu;
-        private bool _warpToNextTown;
-        private bool _justCompletedLastTownLevel;
         private SelectedUnits _selection;
         private AdPlane _adPlane;
         private BulletFactory _bulletsFactory;
@@ -49,6 +45,11 @@ namespace Infrastructure.States
         private UsedUnitsService _service;
         private GlobalAudio _audio;
         private PropertyService _consumables;
+        private AlmostLostDetector _almostLostDetector;
+
+        private bool _goingToMenu;
+        private bool _warpToNextTown;
+        private bool _justCompletedLastTownLevel;
 
         private void ResolveDependencies()
         {
@@ -71,6 +72,7 @@ namespace Infrastructure.States
             _service = _container.Resolve<UsedUnitsService>();
             _audio = _container.Resolve<GlobalAudio>();
             _consumables = _container.Resolve<PropertyService>();
+            _almostLostDetector = _container.Resolve<AlmostLostDetector>();
         }
 
         protected override void OnEnter()
@@ -83,6 +85,8 @@ namespace Infrastructure.States
 
         private void ExecuteAction()
         {
+            AllServices.Bind(_levelEngine.CurrentTrigger(_levelService.LocalLevel));
+            _almostLostDetector.StartWaitingForMoment();
             _selection.SelectUnit(UnitType.Barrier);
             _advertising.ShowInterstitial();
             _adBlockWindow.Reposition();
@@ -93,18 +97,12 @@ namespace Infrastructure.States
             {
                 _superPowersUi.ShowButtons();
             }
-
-            if (SuperPowersTutorialRequired())
-            {
-                _consumables.Own(Property.Nuke);
-                _consumables.Own(Property.SuperUnit);
-                ShowSuperPowersTutorial();
-            }
             else
             {
-                _adPlane.StartWaitingForMoment();
+                _superPowersUi.gameObject.SetActive(false);
             }
-            _inputService.Enable();
+
+            ProcessTutorial();
 
             if (TutorialRequired())
             {
@@ -117,10 +115,28 @@ namespace Infrastructure.States
             PollGamesEnd();
         }
 
+        private void ProcessTutorial()
+        {
+            if (SuperPowersTutorialRequired())
+            {
+                _consumables.Own(Property.Nuke);
+                _consumables.Own(Property.SuperUnit);
+                ShowSuperPowersTutorial();
+                _levelEngine.ModifyDifficulty(10);
+            }
+            else
+            {
+                _adPlane.StartProcessing();
+            }
+
+            _inputService.Enable();
+        }
+
         private void ShowSuperPowersTutorial()
         {
             _superPowersUi.ShowSuperUnitTutorial();
-            _adPlane.NearlyLost += () => _superPowersUi.ShowNukeTutorial();
+            
+            _almostLostDetector.NearlyLost += _superPowersUi.ShowNukeTutorial;
         }
 
         private bool SuperPowersTutorialRequired() => _levelService.Level == 8;
@@ -231,8 +247,13 @@ namespace Infrastructure.States
             _levelEngine.Won -= HandleWon;
             _levelEngine.Canceled -= HandleCancel;
             _enemiesFactory.FlushEnemies();
-            _adPlane.Uninitialize();
+            _adPlane.StopProcessing();
+            _almostLostDetector.Uninitialize();
             AllServices.Get<ILevelMediator>().DestroyOldPeople();
+            if (SuperPowersTutorialRequired())
+            {
+                _almostLostDetector.NearlyLost -= _superPowersUi.ShowNukeTutorial;
+            }
         }
 
         [Transition(typeof(MenuState))]

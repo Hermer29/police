@@ -59,6 +59,7 @@ namespace Gameplay.UI
 
         public void ShowNukeTutorial()
         {
+            Time.timeScale = 0;
             _tutorial.ShowNukeTutorial();
         }
     }

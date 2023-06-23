@@ -303,8 +303,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.9402199, y: 1.3957263, z: 0.36411357}
-  m_Center: {x: -0.013196945, y: 0.60004157, z: 0.0049793124}
+  m_Size: {x: 2.9402199, y: 4.945296, z: 0.36411357}
+  m_Center: {x: -0.013196945, y: 0.6132571, z: 0.0049793124}
 --- !u!114 &2979810601753598365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attackable: {fileID: 2979810601753598365}
   RunToWin: {fileID: 0}
+  Attacker: {fileID: 0}
+  RangeChanger: {fileID: 0}
 --- !u!1001 &3204306336688892463
 PrefabInstance:
   m_ObjectHideFlags: 0
