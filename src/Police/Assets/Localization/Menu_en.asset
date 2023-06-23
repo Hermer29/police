@@ -86,6 +86,10 @@ MonoBehaviour:
     m_Localized: Failed!
     m_Metadata:
       m_Items: []
+  - m_Id: 1722292912816128
+    m_Localized: Reward
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

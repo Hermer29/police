@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: Failed
     m_Metadata:
       m_Items: []
+  - m_Id: 1722292912816128
+    m_Key: Reward
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
