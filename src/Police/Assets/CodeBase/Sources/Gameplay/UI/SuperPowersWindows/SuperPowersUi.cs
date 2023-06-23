@@ -62,5 +62,13 @@ namespace Gameplay.UI
             Time.timeScale = 0;
             _tutorial.ShowNukeTutorial();
         }
+
+        public void CloseIfOpened()
+        {
+            if(_windowsRoot.activeInHierarchy)
+            {
+                Close();
+            }
+        }
     }
 }

@@ -87,6 +87,14 @@ MonoBehaviour:
     m_Key: Reward
     m_Metadata:
       m_Items: []
+  - m_Id: 1815215167799296
+    m_Key: Starter Pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1815494768492544
+    m_Key: FirePack
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

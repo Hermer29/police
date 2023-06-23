@@ -46,17 +46,19 @@ namespace ActiveCharacters.Shared.Components
                 var vectorToDestination = (_runToWin.Destination.SetY(height) - _agent.transform.position.SetY(height))
                     .normalized;
                 var source = _agent.transform.position.SetY(height) - vectorToDestination;
-                DelayedGizmo.Line(source, source + vectorToDestination, Color.white);
-                var count = Physics.RaycastNonAlloc(source, 
+                //DelayedGizmo.Line(source, source + vectorToDestination, Color.white);
+                var count = Physics.BoxCastNonAlloc(source, 
+                    new Vector3(.2f, .2f, .2f),
                     direction: vectorToDestination, 
                     results: _buffer, 
+                    transform.rotation,
                     maxDistance: 20, 
                     layerMask: player);
                 if (count != 0)
                 {
                     var nearest = _buffer[0];
                     TriggerEntered(nearest.collider);
-                    DelayedGizmo.Sphere(nearest.point, .5f, Color.white);
+                    //DelayedGizmo.Sphere(nearest.point, .5f, Color.white);
                 }
                 yield return new WaitForSeconds(2f);
             }
@@ -128,7 +130,7 @@ namespace ActiveCharacters.Shared.Components
         {
             _target = marker;
             _runToWin.enabled = false;
-            _movingToTargetAttack.Follow(marker.Root);
+            _movingToTargetAttack.Follow(marker.GetComponent<BoxCollider>());
             _rangeByAgentDistanceChecker.CheckFor(marker);
         }
 

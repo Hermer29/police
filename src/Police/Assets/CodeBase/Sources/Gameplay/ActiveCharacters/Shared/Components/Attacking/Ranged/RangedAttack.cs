@@ -60,7 +60,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         private void StartAttack()
         {
             StartCoroutine(ProcessAttack());
-            transform.LookAt(_target.Root);
+                //transform.LookAt(_target.Root);
             OnEndAttack();
         }
 

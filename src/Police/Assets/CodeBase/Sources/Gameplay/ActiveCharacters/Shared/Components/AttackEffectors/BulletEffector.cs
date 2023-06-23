@@ -10,6 +10,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
     {
         [SerializeField] private Transform _muzzle;
         [SerializeField] private Attacker _attacker;
+        [SerializeField] private bool _bulletInvisible;
         
         private BulletFactory _bulletFactory;
         private Attackable _target;
@@ -26,6 +27,8 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             _target = target;
             Bullet bullet = _bulletFactory.CreateBullet(_muzzle.position);
             bullet.ShotTowards(target, OnStartAttack);
+            bullet.Invisible = _bulletInvisible;
+            
             yield return new WaitUntil(() => _endDetected);
         }
 

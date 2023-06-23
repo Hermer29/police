@@ -6,16 +6,18 @@ namespace Gameplay.ActiveCharacters.Shared.Components
 {
     public class LookAtTarget : DetectionReaction
     {
-        private Transform _target;
+        private BoxCollider _target;
 
-        public override void Follow(Transform target)
+        public override void Follow(BoxCollider target)
         {
             _target = target;
         }
 
         private void Update()
         {
-            transform.LookAt(_target);
+            if(_target == null)
+            return;
+            transform.LookAt(_target.ClosestPoint(transform.position));
         }
 
         public override void Forget()

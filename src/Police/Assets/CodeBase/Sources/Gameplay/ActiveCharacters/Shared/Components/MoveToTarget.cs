@@ -10,7 +10,7 @@ namespace ActiveCharacters.Shared.Components
         [SerializeField] private bool _stopIfNoTarget;
         [SerializeField] private bool _log;
 
-        private Transform _movingTarget;
+        private BoxCollider _movingTarget;
         
         private void Update()
         {
@@ -24,10 +24,11 @@ namespace ActiveCharacters.Shared.Components
             if(_log)
                 Debug.Log(_agent.pathStatus);
             _agent.isStopped = false;
-            _agent.Move((_movingTarget.position - _agent.transform.position).normalized * Time.deltaTime);
+            _agent.Move((_movingTarget.ClosestPoint(_agent.transform.position
+            ) - _agent.transform.position).normalized * (Time.deltaTime * _agent.speed));
         }
         
-        public override void Follow(Transform target)
+        public override void Follow(BoxCollider target)
         {
             if(_log)
                 Debug.Log("Following target");
@@ -37,12 +38,12 @@ namespace ActiveCharacters.Shared.Components
 
         private void CalculatePath()
         {
-            _agent.isStopped = false;
-            var path = new NavMeshPath();
-            var point = (_movingTarget.position - _agent.transform.position).normalized;
-            var pointBehind = _agent.transform.position + point * 3;
-            _agent.CalculatePath(pointBehind.ProjectOnDrawPlane(), path);
-            _agent.SetPath(path);
+            // _agent.isStopped = false;
+            // var path = new NavMeshPath();
+            // var point = (_movingTarget - _agent.transform.position).normalized;
+            // var pointBehind = _agent.transform.position + point * 3;
+            // _agent.CalculatePath(pointBehind.ProjectOnDrawPlane(), path);
+            // _agent.SetPath(path);
         }
 
         public override void Forget()

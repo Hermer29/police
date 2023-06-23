@@ -10,6 +10,7 @@ namespace ActiveCharacters.Shared.Components.Attacking
         [SerializeField] private float _range;
         
         private Attackable _target;
+        private BoxCollider _targetCollider;
 
         private void Start()
         {
@@ -34,11 +35,12 @@ namespace ActiveCharacters.Shared.Components.Attacking
             }
         }
 
-        private bool TargetIsNear() => (transform.position - _target.Root.position).sqrMagnitude <= _range * _range;
+        private bool TargetIsNear() => (transform.position - _targetCollider.ClosestPoint(transform.position)).sqrMagnitude <= _range * _range;
 
         public void CheckFor(Attackable target)
         {
             _target = target;
+            _targetCollider = _target.GetComponent<BoxCollider>();
         }
         
         public void StopChecking()

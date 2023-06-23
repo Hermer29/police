@@ -17,6 +17,11 @@ namespace Monetization.AdvertisingPlane
         private Action _onAccept;
         private Action _onDecline;
 
+        private void Start()
+        {
+            OnEnd();
+        }
+
         public void Show(Action onAccept, Action onDecline, AdvertisingType advertisingType)
         {
             _bg.SetActive(true);

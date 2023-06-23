@@ -14,6 +14,9 @@ namespace Gameplay.ActiveCharacters.Allies.Components
         private Attackable _target;
         private bool _stopped;
 
+        public float TargetDistance => (transform.position - _target.transform.position).magnitude;
+        public bool TargetDefined => _target != null;
+        
         private void Start()
         {
             _reader.ClosestObjectApproached += TriggerEntered;
@@ -64,7 +67,7 @@ namespace Gameplay.ActiveCharacters.Allies.Components
 
         private void DefineTarget(Attackable target)
         {
-            _detectionReaction.Follow(target.Root);
+            _detectionReaction.Follow(target.GetComponent<BoxCollider>());
             _attack.EnableAttack(target);
             _target = target;
         }

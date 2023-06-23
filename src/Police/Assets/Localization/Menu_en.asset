@@ -90,6 +90,14 @@ MonoBehaviour:
     m_Localized: Reward
     m_Metadata:
       m_Items: []
+  - m_Id: 1815215167799296
+    m_Localized: Starter pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1815494768492544
+    m_Localized: Fire pack
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

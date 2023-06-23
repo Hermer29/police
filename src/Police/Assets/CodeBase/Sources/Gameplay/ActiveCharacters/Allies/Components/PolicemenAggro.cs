@@ -64,7 +64,7 @@ namespace ActiveCharacters.Allies.Components
 
         private void DefineTarget(Attackable target)
         {
-            _detectionReaction.Follow(target.Root);
+            _detectionReaction.Follow(target.GetComponent<BoxCollider>());
             _rangeByAgentDistanceChecker.CheckFor(target);
             _target = target;
         }

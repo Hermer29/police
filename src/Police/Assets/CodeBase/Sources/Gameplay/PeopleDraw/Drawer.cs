@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ActiveCharacters.Shared.Components;
 using DefaultNamespace.Audio;
 using Gameplay.PeopleDraw.Factory;
@@ -27,6 +28,10 @@ namespace PeopleDraw
 
         private PoolUnit _currentDrawingUnplacableUnit;
         private float _cooldown;
+        private Line? _line;
+        private Vector3? _prevpoint;
+
+        private const float SpawnDistanceStep = 1;
 
         public Drawer(IInputService inputService, SelectedUnits unitSelectedUnits, IAlliedUnitsFactory factory, IUnitsFxFactory fxFactory,
             UsedUnitsService service, UnitsAssetCache unitsAssetCache, GlobalAudio audio)
@@ -40,48 +45,86 @@ namespace PeopleDraw
             _audio = audio;
 
             _inputService.DrawnAtPoint += InputServiceOnDrawnAtPoint;
+            _inputService.DragInProgress += InputServiceDragInProgress;
+            _inputService.DragStarted += OnDragStarted;
+            _inputService.DragEnded += OnDragEnded;
             Debug.Log($"{nameof(Drawer)} constructed");
             Observable.EveryUpdate().Subscribe(_ => _cooldown -= Time.deltaTime);
         }
 
+        private void OnDragEnded()
+        {
+            _line = null;
+        }
+
+        private void OnDragStarted(Vector3 startPoint)
+        {
+            _prevpoint = startPoint;
+            //_line = new Line(SpawnDistanceStep, startPoint);
+        }
+
         private PoolUnit CurrentUnit => _unitsAssetCache.SelectedUnits[_unitSelectedUnits.SelectedType.Value];
 
-        private void InputServiceOnDrawnAtPoint(RaycastHit drawPoint, RaycastHit previous)
+        private void InputServiceOnDrawnAtPoint(RaycastHit drawPoint)
         {
-            if(_cooldown > 0)
-                return;
+            // if(_cooldown > 0)
+            //     return;
             
             if (CantDrawUnit(drawPoint))
                 return;
 
-            if (CurrentUnit.PlacingBlock.OverlapsOtherUnit(drawPoint.point))
+            // if (CurrentUnit.PlacingBlock.OverlapsOtherUnit(drawPoint.point))
+            //     return;
+            
+            SpawnSingle(drawPoint);
+        }
+        
+        private void InputServiceDragInProgress(RaycastHit drawPoint)
+        {
+            
+            // if(_cooldown > 0)
+            //     return;
+            
+            if (CantDrawUnit(drawPoint))
                 return;
 
-            _cooldown = .1f;
+            // if (CurrentUnit.PlacingBlock.OverlapsOtherUnit(drawPoint.point))
+            //     return;
+            
+            Vector3 fromToVector = drawPoint.point - _prevpoint.Value;
+            if (fromToVector.magnitude < 1)
+                return;
+            int relativeAngle = -90;
+            if (Vector3.Dot(fromToVector, Vector3.right) > 0)
+            {
+                relativeAngle = 90;
+            }
+            Quaternion rotation = Quaternion.LookRotation(fromToVector) 
+                                  * Quaternion.Euler(0, relativeAngle, 0);
+            SpawnSerial(drawPoint.point, rotation);
+            _prevpoint = drawPoint.point;
+            // foreach ((Vector3 appendAndGetNewPoint, Quaternion rotation) in _line.Value.AppendAndGetNewPoints(drawPoint.point))
+            // {
+            //     
+            // }
+        }
+
+        private void SpawnSerial(Vector3 drawPoint, Quaternion rotation)
+        {
             PoolUnit unit = CreateUnit(drawPoint);
-            Rotate(drawPoint, previous, unit);
+            unit.transform.rotation = rotation;
             ShowSpawnFx(drawPoint);
             _audio.PlayUnitPlacement();
             SpendEnergy();
         }
 
-        private static void Rotate(RaycastHit drawPoint, RaycastHit previous, PoolUnit unit)
+        private void SpawnSingle(RaycastHit drawPoint)
         {
-            Vector3 lookDirection = drawPoint.point - previous.point;
-            if (lookDirection.sqrMagnitude > 40)
-            {
-                unit.transform.rotation = Quaternion.Euler(0, -180, 0);
-                return;
-            }
-
-            var relativeAngle = -90;
-            if (Vector3.Dot(lookDirection, Vector3.right) > 0)
-            {
-                relativeAngle = 90;
-            }
-            
-            unit.transform.rotation = Quaternion.LookRotation(lookDirection) 
-                                      * Quaternion.Euler(0, relativeAngle, 0);
+            PoolUnit unit = CreateUnit(drawPoint.point);
+            unit.transform.rotation = Quaternion.Euler(0, -180, 0);
+            ShowSpawnFx(drawPoint.point);
+            _audio.PlayUnitPlacement();
+            SpendEnergy();
         }
 
         private bool CantDrawUnit(RaycastHit drawPoint)
@@ -100,19 +143,19 @@ namespace PeopleDraw
         private void SpendEnergy() => 
             _unitSelectedUnits.NotifyUnitDrawn();
 
-        private void ShowSpawnFx(RaycastHit drawPoint) => 
-            _fxFactory.CreateSpawnFx(drawPoint.point);
+        private void ShowSpawnFx(Vector3 drawPoint) => 
+            _fxFactory.CreateSpawnFx(drawPoint);
 
-        private PoolUnit CreateUnit(RaycastHit drawPoint)
+        private PoolUnit CreateUnit(Vector3 drawPoint)
         {
             PoolUnit unit = _factory.InstantiateDrawnUnit(
                 unitType: _unitSelectedUnits.SelectedType.Value,
-                position: drawPoint.point);
+                position: drawPoint);
             var balance = _service.UsedUnits[_unitSelectedUnits.SelectedType.Value].CalculateBalance();
             unit.GetComponent<CharactersNavigationLinks>().SetBalance(balance);
 
             if (unit.TryGetComponent(out NavMeshAgent agent)) 
-                agent.Warp(drawPoint.point);
+                agent.Warp(drawPoint);
 
             return unit;
         }

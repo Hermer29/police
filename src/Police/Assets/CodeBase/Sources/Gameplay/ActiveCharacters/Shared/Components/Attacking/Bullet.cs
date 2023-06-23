@@ -15,6 +15,16 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         private Attackable _target;
         private Action _onHit;
 
+        public bool Invisible
+        {
+            set {
+                if (value == false)
+                {
+                    GetComponentInChildren<MeshRenderer>().enabled = false;
+                }
+            }
+        }
+
         public void Construct(PoolHandle handle)
         {
             _poolHandle = handle;

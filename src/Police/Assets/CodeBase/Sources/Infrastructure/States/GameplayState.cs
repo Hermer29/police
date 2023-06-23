@@ -152,6 +152,7 @@ namespace Infrastructure.States
 
         private void HandleCancel()
         {
+            PreGameEnd();
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected cancel");
             RegisterGamesEnd();
             _goingToMenu = true;
@@ -159,6 +160,7 @@ namespace Infrastructure.States
 
         private void HandleLoss()
         {
+            PreGameEnd();
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected loose");
             _endGameLogic.NotifyLost(_levelService.Level);
             _endGameLogic.Closed += CloseLost;
@@ -167,8 +169,15 @@ namespace Infrastructure.States
             RegisterGamesEnd();
         }
 
+        private void PreGameEnd()
+        {
+            _superPowersUi.CloseIfOpened();
+            _superPowersUi.HideButtons();
+        }
+        
         private void HandleWon()
         {
+            PreGameEnd();
             Debug.Log($"{nameof(GameplayState)}.{nameof(PollGamesEnd)} Detected win");
             var mediator = AllServices.Get<ILevelMediator>();
             mediator.AlliedUnitsToVictory();

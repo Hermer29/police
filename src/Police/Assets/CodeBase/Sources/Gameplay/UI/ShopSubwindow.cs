@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services;
+﻿using Gameplay.Levels.Services.LevelsTracking;
+using Infrastructure.Services;
 using Interface;
 using Services.MoneyService;
 using Services.PrefsService;
@@ -15,14 +16,17 @@ namespace Gameplay.UI
         private IPrefsService _prefs;
         private IMoneyService _moneyService;
         private PropertyService _propertyService;
+        private ILevelService _levelService;
         
         [SerializeField] private ButtonWithTint _buyStarterPack;
         [SerializeField] private ButtonWithTint _buyFirePack;
+        [SerializeField] private GameObject _nukeSubwindow;
 
         [Inject]
         public void Construct(IProductsService productsService, IPrefsService prefsService, IMoneyService moneyService, 
-            PropertyService propertyService)
+            PropertyService propertyService, ILevelService levelService)
         {
+            _levelService = levelService;
             _propertyService = propertyService;
             _moneyService = moneyService;
             _prefs = prefsService;
@@ -77,7 +81,11 @@ namespace Gameplay.UI
         private static string ConstructBoughtKey(Product product) 
             => $"{product}_IsBought";
 
-        public void Show() => GetComponent<GameObjectActivationBaker>().SetActive(true);
+        public void Show()
+        {
+            _nukeSubwindow.SetActive(_levelService.Level > 7);
+            GetComponent<GameObjectActivationBaker>().SetActive(true);
+        }
 
         public void Hide() => GetComponent<GameObjectActivationBaker>().SetActive(false);
     }
