@@ -54,7 +54,7 @@ namespace ActiveCharacters.Shared.Components
                     results: _buffer, 
                     rotation,
                     mask: player);
-                DelayedGizmo.Cube(source, rotation, checkBoxScale);
+                //DelayedGizmo.Cube(source, rotation, checkBoxScale);
                 if (count != 0)
                 {
                     var nearest = _buffer[0];
@@ -76,7 +76,7 @@ namespace ActiveCharacters.Shared.Components
             
             if (_target)
             {
-                Gizmos.Line(transform.position, _target.Root.position, Color.red);
+                //Gizmos.Line(transform.position, _target.Root.position, Color.red);
                 _runToWin.enabled = false;
             }
             

@@ -128,7 +128,7 @@ namespace Upgrading.UI.CrossLevels
             => _advertising.ShowRewarded(
                 () => Upgrade(unit));
 
-        private void OnUpgradeForMoney(UpgradableUnit relatedUnit)
+        private void OnUpgradeForMoney(PartialUpgradableUnit relatedUnit)
         {
             int upgradeCost = CalculateCost(relatedUnit);
             if (_moneyService.TrySpendMoney(upgradeCost))
@@ -137,10 +137,11 @@ namespace Upgrading.UI.CrossLevels
             }
         }
 
-        private void UpdateInformation(UpgradableUnit unit, CrossLevelUpgradeEntry ui)
+        private void UpdateInformation(PartialUpgradableUnit unit, CrossLevelUpgradeEntry ui)
         {
             RecalculateUpgradeCost(unit);
-            ui.ShowUpgradeLevel(unit.UpgradedLevel.Value);
+            if(unit.IsFullyUpgraded() == false)
+                ui.ShowUpgradeLevel(unit.UpgradedLevel.Value);
         }
 
         private void RecalculateUpgradeCost(UpgradableUnit unit)
@@ -150,7 +151,7 @@ namespace Upgrading.UI.CrossLevels
             ui.ShowUpgradeCost(cost);
         }
 
-        private void Upgrade(UpgradableUnit relatedUnit)
+        private void Upgrade(PartialUpgradableUnit relatedUnit)
         {
             _audio.PlayUpgrade();
             _upgrades.Upgrade(relatedUnit);

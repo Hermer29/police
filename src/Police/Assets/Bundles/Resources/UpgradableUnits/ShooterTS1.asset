@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Guid>k__BackingField: 61a4f093-7df6-4531-897d-d1fd8c16420c
   <OwnedByDefault>k__BackingField: 0
-  <Tier>k__BackingField: 3
+  <Tier>k__BackingField: 4
   <Type>k__BackingField: 2
   <Purchasable>k__BackingField: 1
-  _localizedName:
+  LocalizedName:
     m_TableReference:
       m_TableCollectionName: GUID:4f8de2b49d0c5334ea2a29f131f72f81
     m_TableEntryReference:
