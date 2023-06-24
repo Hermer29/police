@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GUIExtensions;
 using UnityEngine;
+using Upgrading.UnitTypes;
 
 namespace DefaultNamespace.Gameplay.ActiveCharacters.Stats
 {
@@ -16,5 +17,7 @@ namespace DefaultNamespace.Gameplay.ActiveCharacters.Stats
 
         IEnumerator IEnumerable.GetEnumerator() 
             => GetEnumerator();
+        
+        public MeleeTableEntry this[UpgradableUnit unit] => _entries.First(x => x.RelatedUnit == unit);
     }
 }

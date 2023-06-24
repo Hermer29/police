@@ -18,7 +18,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         public bool Invisible
         {
             set {
-                if (value == false)
+                if (value)
                 {
                     GetComponentInChildren<MeshRenderer>().enabled = false;
                 }

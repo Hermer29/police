@@ -23,6 +23,14 @@ namespace Helpers
             }, time);
         }
 
+        public static void Cube(Vector3 position, Quaternion rotation, Vector3 size, float time = 1, Color? color = null, bool dashed = false)
+        {
+            CallInUpdateForTime(() =>
+            {
+                Gizmos.Cube(position, rotation, size, color, dashed);
+            }, time);
+        }
+
         private static void CallInUpdateForTime(Action action, float time)
         {
             var startTime = Time.time;

@@ -23,6 +23,22 @@ MonoBehaviour:
     m_Key: LEVEL {n}
     m_Metadata:
       m_Items: []
+  - m_Id: 8664701181657088
+    m_Key: Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8664758270328832
+    m_Key: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8664801035452416
+    m_Key: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8668558607548416
+    m_Key: No bonuses
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

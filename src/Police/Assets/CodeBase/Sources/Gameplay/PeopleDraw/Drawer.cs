@@ -92,7 +92,7 @@ namespace PeopleDraw
             //     return;
             
             Vector3 fromToVector = drawPoint.point - _prevpoint.Value;
-            if (fromToVector.magnitude < 1)
+            if (fromToVector.magnitude < 2)
                 return;
             int relativeAngle = -90;
             if (Vector3.Dot(fromToVector, Vector3.right) > 0)

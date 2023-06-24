@@ -129,6 +129,7 @@ MonoBehaviour:
   _agent: {fileID: 378455209628248858}
   _stopIfNoTarget: 1
   _log: 0
+  _movingTarget: {fileID: 0}
 --- !u!114 &4967999547547086218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attack: {fileID: 4709640152320038880}
   _agent: {fileID: 378455209628248858}
-  _range: 2.7
+  _range: 2.8
 --- !u!114 &6368879939201018456
 MonoBehaviour:
   m_ObjectHideFlags: 0

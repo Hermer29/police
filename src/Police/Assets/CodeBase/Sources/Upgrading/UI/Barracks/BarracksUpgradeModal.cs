@@ -1,4 +1,7 @@
 ﻿using System;
+using Barracks;
+using DefaultNamespace.Gameplay.ActiveCharacters.Stats;
+using Infrastructure;
 using Infrastructure.Services.UseService;
 using Interface;
 using Services.AdvertisingService;
@@ -35,6 +38,7 @@ namespace Upgrading.UI.Barracks
         [SerializeField] private TMP_Text _cost;
         [SerializeField] private GameObject[] _disableOnMaxUpgrade;
         [SerializeField] private GameObject _maxTierWriting;
+        [SerializeField] private BarracksExtraStats _stats;
         
         private IDisposable _maxUpgradeSubscription;
 
@@ -53,12 +57,30 @@ namespace Upgrading.UI.Barracks
             _close.onClick.AddListener(Hide);
             gameObject.SetActive(false);
         }
+
+        private void SetRelatedStatsExtra(PartialUpgradableUnit partialUpgradableUnit)
+        {
+            switch (partialUpgradableUnit.Type)
+            {
+                case UnitType.Barrier:
+                    _stats.Show(AllServices.Get<BarriersStatsTable>()[partialUpgradableUnit]);
+                    break;
+                case UnitType.Melee:
+                    _stats.Show(AllServices.Get<MeleeStatsTable>()[partialUpgradableUnit]);
+                    break;
+                case UnitType.Ranged:
+                    _stats.Show(AllServices.Get<RangedStatsTable>()[partialUpgradableUnit]);
+                    break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
         
         public void Show(PartialUpgradableUnit unit)
         {
             _name.SetKey(unit.LocalizedName);
             gameObject.SetActive(true);
             ShowCurrentUnitIlluistration(unit);
+            SetRelatedStatsExtra(unit);
             
             if (_service.MaxUpgraded.Contains(unit.Type))
             {

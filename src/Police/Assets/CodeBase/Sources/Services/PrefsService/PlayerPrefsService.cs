@@ -35,8 +35,8 @@ namespace Services.PrefsService
 
         public void SetInt(string key, int value)
         {
-            _version++;
             PlayerPrefs.SetInt(key, value);
+            _version++;
         }
 
         public bool HasKey(string key)
@@ -52,6 +52,7 @@ namespace Services.PrefsService
         public void SetString(string key, string value)
         {
             PlayerPrefs.SetString(key, value);
+            _version++;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace DefaultNamespace.Gameplay.ActiveCharacters
     {
         private readonly ILevelService _levelService;
         private readonly MeleeHostileStatsTable _statsTable;
-        private int _difficultyModification;
+        private int _difficultyModification = 1;
 
         public BalanceProvider(ILevelService levelService)
         {

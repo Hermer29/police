@@ -1,6 +1,7 @@
 ﻿using ActiveCharacters.Shared.Components;
 using ActiveCharacters.Shared.Components.Attacking;
 using Gameplay.ActiveCharacters.Allies.Components;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,9 +13,9 @@ namespace ActiveCharacters.Allies.Components
         [FormerlySerializedAs("_movingToTargetAttack")] [SerializeField] private DetectionReaction _detectionReaction;
         [FormerlySerializedAs("_rangeChecker")] [SerializeField] private CheckAttackRangeByAgentDistance _rangeByAgentDistanceChecker;
         
-        private Attackable _target;
-        private bool _stopped;
-        private float _targetTimeout;
+        [SerializeField, ReadOnly] private Attackable _target;
+        [SerializeField, ReadOnly] private bool _stopped;
+        [SerializeField, ReadOnly] private float _targetTimeout;
 
         private void Start()
         {

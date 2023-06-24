@@ -3,6 +3,7 @@ using System.Collections;
 using ActiveCharacters.Shared.Components.Attacking;
 using Enemies.Components;
 using Helpers;
+using NaughtyAttributes;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,10 +19,10 @@ namespace ActiveCharacters.Shared.Components
         [SerializeField] private RunToWin _runToWin;
         [FormerlySerializedAs("_rangeChecker")] [SerializeField] private CheckAttackRangeByAgentDistance _rangeByAgentDistanceChecker;
         [SerializeField] private NavMeshAgent _agent;
-
-        private RaycastHit[] _buffer = new RaycastHit[20];
-        private Attackable _target;
-        private bool _stopped;
+        
+        private Collider[] _buffer = new Collider[20];
+        [SerializeField,ReadOnly] private Attackable _target;
+        [SerializeField, ReadOnly] private bool _stopped;
 
         private void Start()
         {
@@ -39,26 +40,31 @@ namespace ActiveCharacters.Shared.Components
         private IEnumerator LookingForTargets()
         {
             var player = 1 << LayerMask.NameToLayer("Policemen");
-            var checkBoxScale = new Vector3(.5f, .5f, .5f);
+            var checkBoxScale = new Vector3(1f, 1f, 1f);
             var height = _agent.transform.position.ProjectOnDrawPlane().y + .5f;
             while (true)
             {
                 var vectorToDestination = (_runToWin.Destination.SetY(height) - _agent.transform.position.SetY(height))
                     .normalized;
-                var source = _agent.transform.position.SetY(height) - vectorToDestination;
+                var source = _agent.transform.position.SetY(height) + vectorToDestination;
                 //DelayedGizmo.Line(source, source + vectorToDestination, Color.white);
-                var count = Physics.BoxCastNonAlloc(source, 
-                    new Vector3(.2f, .2f, .2f),
-                    direction: vectorToDestination, 
+                var rotation = transform.rotation;
+                var count = Physics.OverlapBoxNonAlloc(source, 
+                    checkBoxScale,
                     results: _buffer, 
-                    transform.rotation,
-                    maxDistance: 20, 
-                    layerMask: player);
+                    rotation,
+                    mask: player);
+                DelayedGizmo.Cube(source, rotation, checkBoxScale);
                 if (count != 0)
                 {
                     var nearest = _buffer[0];
-                    TriggerEntered(nearest.collider);
+                    
+                    TriggerEntered(nearest);
                     //DelayedGizmo.Sphere(nearest.point, .5f, Color.white);
+                }
+                else
+                {
+                    LostTarget();
                 }
                 yield return new WaitForSeconds(2f);
             }
@@ -67,24 +73,18 @@ namespace ActiveCharacters.Shared.Components
         private void Update()
         {
             if (_stopped) return;
-
-
+            
             if (_target)
             {
                 Gizmos.Line(transform.position, _target.Root.position, Color.red);
+                _runToWin.enabled = false;
             }
             
             if (NeedToForgetDeadTarget())
             {
-                TryChangeTarget();
+                DiscardTarget();
+                _runToWin.enabled = true;
             }
-        }
-
-        private void TryChangeTarget()
-        {
-            DiscardTarget();
-            _runToWin.enabled = true;
-            //_nearest.FindAgain();
         }
 
         public void Stop()
@@ -94,11 +94,13 @@ namespace ActiveCharacters.Shared.Components
             DiscardTarget();
         }
 
-        private void LostTarget(Collider obj)
+        private void LostTarget()
         {
             if (_stopped) return;
-            
-            TryChangeTarget();
+
+            DiscardTarget();
+            _runToWin.enabled = true;
+            //_nearest.FindAgain();
         }
 
         private bool NeedToForgetDeadTarget()

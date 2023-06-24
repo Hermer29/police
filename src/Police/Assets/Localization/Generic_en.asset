@@ -29,6 +29,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4765709616974659753
+  - m_Id: 8664701181657088
+    m_Localized: Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8664758270328832
+    m_Localized: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8664801035452416
+    m_Localized: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8668558607548416
+    m_Localized: No bonuses
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
