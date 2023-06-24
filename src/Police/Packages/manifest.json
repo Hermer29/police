@@ -2,7 +2,8 @@
   "dependencies": {
     "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.hermer29.almasury": "https://github.com/Hermer29/com.hermer29.almasury.git#2.0.0",
-    "com.immortalsgames.builderscripts": "https://github.com/Hermer29/builder-scripts.git",
+    "com.immortalsgames.builderscriptsaddressables": "https://github.com/Hermer29/builder-scripts-addressables.git#1.0.0",
+    "com.popcron.gizmos": "https://github.com/popcron/gizmos.git",
     "com.unity.addressables": "1.19.19",
     "com.unity.cinemachine": "2.8.9",
     "com.unity.collab-proxy": "1.17.7",
@@ -50,7 +51,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.popcron.gizmos": "https://github.com/popcron/gizmos.git"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
