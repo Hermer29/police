@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf4453b52af4de9a92432beb4225c08, type: 3}
   m_Name: MeleeT2
   m_EditorClassIdentifier: 
-  <Guid>k__BackingField: 520fde75-0cf3-49dd-a23e-6a4072781fbf
+  <Guid>k__BackingField: 32fb71b0-ed0d-481a-bad4-f7e6521f90e7
   <OwnedByDefault>k__BackingField: 0
   <Tier>k__BackingField: 2
   <Type>k__BackingField: 1
   <Purchasable>k__BackingField: 0
-  _localizedName:
+  LocalizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7dfe44e3a4a978e4a946b1fedf21e93d
     m_TableEntryReference:

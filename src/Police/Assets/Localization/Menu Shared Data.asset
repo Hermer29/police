@@ -95,6 +95,10 @@ MonoBehaviour:
     m_Key: FirePack
     m_Metadata:
       m_Items: []
+  - m_Id: 2160488243036160
+    m_Key: DrawingUnitsCostsEnergy
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

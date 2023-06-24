@@ -98,6 +98,10 @@ MonoBehaviour:
     m_Localized: Fire pack
     m_Metadata:
       m_Items: []
+  - m_Id: 2160488243036160
+    m_Localized: Drawing units costs energy
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

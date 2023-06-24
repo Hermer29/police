@@ -144,6 +144,9 @@ MonoBehaviour:
   _reader: {fileID: 7051962790841296480}
   _detectionReaction: {fileID: 988699943006883203}
   _rangeByAgentDistanceChecker: {fileID: 7992813769793752125}
+  _target: {fileID: 0}
+  _stopped: 0
+  _targetTimeout: 0
 --- !u!114 &4709640152320038880
 MonoBehaviour:
   m_ObjectHideFlags: 0

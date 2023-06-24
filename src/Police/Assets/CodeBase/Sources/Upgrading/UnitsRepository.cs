@@ -23,8 +23,11 @@ namespace Upgrading
         void IManuallyInitializable.Initialize()
         {
             _upgradableUnits = _loadAllUpgradableUnits.LoadAllUpgradableUnits().ToArray();
-            foreach (ISavableData partialUpgradableUnit in _upgradableUnits.Cast<ISavableData>())
+            foreach (PartialUpgradableUnit partialUpgradableUnit in _upgradableUnits)
+            {
                 _saveService.Bind(partialUpgradableUnit);
+                partialUpgradableUnit.Initialize();
+            }
         }
 
         public IEnumerable<PartialUpgradableUnit> GetAll() => _upgradableUnits;

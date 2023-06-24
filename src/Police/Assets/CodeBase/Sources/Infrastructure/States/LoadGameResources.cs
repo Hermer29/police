@@ -74,7 +74,6 @@ namespace Infrastructure.States
                 _usedUnitsService,
                 _unitsAssetCache,
                 _alliedUnitsFactory
-                //_newUnitWindow
             };
 
             foreach (IManuallyInitializable manuallyInitializable in initializing)

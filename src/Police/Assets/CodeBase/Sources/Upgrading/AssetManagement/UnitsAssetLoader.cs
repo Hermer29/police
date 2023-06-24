@@ -11,10 +11,7 @@ namespace Upgrading.AssetManagement
         public IEnumerable<PartialUpgradableUnit> LoadAllUpgradableUnits()
         {
             var resources = Resources.LoadAll<UpgradableUnit>("UpgradableUnits").Cast<PartialUpgradableUnit>();
-            foreach (PartialUpgradableUnit partialUpgradableUnit in resources)
-            {
-                partialUpgradableUnit.Initialize();
-            }
+            
             return resources;
         }
 

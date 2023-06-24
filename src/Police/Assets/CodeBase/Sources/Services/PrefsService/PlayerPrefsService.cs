@@ -19,12 +19,13 @@ namespace Services.PrefsService
             int currentVersion = _version;
             while (true)
             {
-                yield return new WaitForSeconds(2);
                 if (_version != currentVersion)
                 {
                     PlayerPrefs.Save();
                     currentVersion = _version;
                 }
+
+                yield return null;
             }
         }
         
@@ -52,6 +53,7 @@ namespace Services.PrefsService
         public void SetString(string key, string value)
         {
             PlayerPrefs.SetString(key, value);
+            Debug.Log($"Saved {key}: {value}");
             _version++;
         }
     }

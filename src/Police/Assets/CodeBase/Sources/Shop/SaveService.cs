@@ -4,12 +4,13 @@ using Infrastructure;
 using Services.PrefsService;
 using SpecialPlatforms;
 using UnityEngine;
+using Upgrading.UnitTypes;
 
 namespace Shop
 {
     public class SaveService
     {
-        private const float SaveFrequency = .5f;
+        private const float SaveFrequency = 2f;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IPrefsService _prefsService;
 
@@ -27,7 +28,7 @@ namespace Shop
         {
             if (RecordExists(savableData))
                 PopulateData(savableData);
-            
+            Debug.Log($"{(PartialUpgradableUnit) savableData}");
             _data.Add(savableData);
         }
 

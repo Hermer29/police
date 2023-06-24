@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using Newtonsoft.Json;
 using Services.UseService;
 using SpecialPlatforms;
@@ -21,7 +22,7 @@ namespace Upgrading.UnitTypes
         [field: SerializeField] public bool Purchasable { get; private set; }
         [FormerlySerializedAs("_localizedName")] [field: SerializeField] public LocalizedString LocalizedName = new LocalizedString();
 
-        [field: NonSerialized] public ReactiveProperty<int> UpgradedLevel { get; private set; } = new(initialValue: 1);
+        [field: NonSerialized, ReadOnly, SerializeField] public ReactiveProperty<int> UpgradedLevel { get; private set; } = new(initialValue: 1);
         int IEstimated.UpgradedLevel => UpgradedLevel.Value;
 
         private void OnValidate()
@@ -50,7 +51,7 @@ namespace Upgrading.UnitTypes
         {
             var data = new Dictionary<string, string>()
             {
-                {"upgradeLevel", UpgradedLevel.ToString()}
+                {"upgradeLevel", UpgradedLevel.Value.ToString()}
             };
             return JsonConvert.SerializeObject(data);
         }
