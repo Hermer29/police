@@ -41,6 +41,7 @@ namespace Upgrading.UI.Barracks
         [SerializeField] private BarracksExtraStats _stats;
         
         private IDisposable _maxUpgradeSubscription;
+        private IDisposable _appearanceChangeSubscription;
 
         [Inject]
         public void Construct(UsedUnitsService service, IUpgradeCostService costService, 
@@ -89,6 +90,7 @@ namespace Upgrading.UI.Barracks
                 return; 
             }
             SetActiveMaxUpgrade(false);
+            _appearanceChangeSubscription = unit.CurrentAppearance.Subscribe(_ => AppearanceChanged(unit));
             _maxUpgradeSubscription = _service.MaxUpgraded.ObserveAdd().Subscribe(update 
                 => OnUnitMaxUpgraded(update, unit));
             _yans.onClick.AddListener(() =>  OnUpgradeForCurrency(unit));
@@ -97,8 +99,14 @@ namespace Upgrading.UI.Barracks
             UpdateInformation(unit);
         }
 
+        private void AppearanceChanged(PartialUpgradableUnit unit)
+        {
+            _currentUnit.sprite = unit.CurrentAppearance.Value.Illustration;
+        }
+
         private void ShowAppearance(PartialUpgradableUnit unit)
         {
+            
             if (unit.IsFullyUpgraded() == false)
             {
                 foreach (GameObject objToDisable in _disableOnMaxUpgrade)
@@ -142,6 +150,7 @@ namespace Upgrading.UI.Barracks
 
         public void Hide()
         {
+            _appearanceChangeSubscription?.Dispose();
             gameObject.SetActive(false);
             _yans.onClick.RemoveAllListeners();
             _ads.onClick.RemoveAllListeners();

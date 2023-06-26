@@ -42,7 +42,6 @@ namespace Upgrading.UnitTypes
                 return;
             
             UpgradedLevel.Value++;
-            OnLevelIncremented();
         }
 
         protected abstract bool IsCanUpgrade(); // ¯\_(ツ)_/¯
@@ -64,7 +63,5 @@ namespace Upgrading.UnitTypes
                 new { upgradeLevel = 1 });
             UpgradedLevel = new ReactiveProperty<int>(result.upgradeLevel);
         }
-
-        protected virtual void OnLevelIncremented() { }
     }
 }

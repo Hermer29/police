@@ -259,7 +259,7 @@ namespace Infrastructure.States
             _adPlane.StopProcessing();
             _almostLostDetector.Uninitialize();
             AllServices.Get<ILevelMediator>().DestroyOldPeople();
-            if (SuperPowersTutorialRequired())
+            if (_levelService.Level == 9)
             {
                 _almostLostDetector.NearlyLost -= _superPowersUi.ShowNukeTutorial;
             }

@@ -39,7 +39,8 @@ namespace Upgrading.UnitTypes
 
         public void Initialize()
         {
-            _currentAppearance = new ReactiveProperty<LevelPartUnits>(GetCurrentAppearance());
+            _currentAppearance = new ReactiveProperty<LevelPartUnits>();
+            UpgradedLevel.Subscribe(_ => _currentAppearance.Value = GetCurrentAppearance());
             _currentIcon = new ReactiveProperty<Sprite>(_currentAppearance.Value.Illustration);
             _currentReference = new ReactiveProperty<AssetReference>(_currentAppearance.Value.Asset);
             _currentAppearance.Skip(1).Subscribe(newValue =>
@@ -65,12 +66,6 @@ namespace Upgrading.UnitTypes
             => UpgradePartsReachedSerial >= MaxSuperLevel;
 
         protected override bool IsCanUpgrade() => IsFullyUpgraded() == false;
-
-        protected override void OnLevelIncremented()
-        {
-            Debug.Log($"{name} upgraded! Current level: {UpgradedLevel.Value}, IsFullyUpgraded: {IsFullyUpgraded()}, SuperLevels: {UpgradePartsReachedSerial}");
-            _currentAppearance.Value = GetCurrentAppearance();
-        }
 
         public bool TryGetNextAppearance(out LevelPartUnits next)
         {

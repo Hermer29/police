@@ -22,6 +22,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         private bool _attackEnabled;
         private bool _attackInProgress;
         private Attackable _target;
+        private Coroutine _attack;
 
         private void Update()
         {
@@ -43,6 +44,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
             yield return _effector.Select(effector => effector.Execute(_target).ToObservable())
                     .WhenAll().ToYieldInstruction();
 
+            _attack = null;
             _attackInProgress = false;
             OnEndAttack();
         }
@@ -51,6 +53,8 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         {
             _animator?.StopAiming();
             _attackEnabled = false;
+            if(_attack != null)
+                StopCoroutine(_attack);
         }
 
         private bool CanAttack() => CooldownIsUp() && _attackEnabled && _attackInProgress == false;
@@ -59,7 +63,7 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
 
         private void StartAttack()
         {
-            StartCoroutine(ProcessAttack());
+            _attack = StartCoroutine(ProcessAttack());
                 //transform.LookAt(_target.Root);
             OnEndAttack();
         }

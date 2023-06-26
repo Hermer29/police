@@ -40,7 +40,10 @@ namespace Gameplay.ActiveCharacters.Shared.Components.Attacking
         private void Update()
         {
             if (_target == null)
+            {
+                Invisible = true;
                 return;
+            }
             
             if(_target.Died)
             {
