@@ -22,11 +22,12 @@ namespace DefaultNamespace.Gameplay.ActiveCharacters
 
         public UnitBalanceDto GetFor(HostileUnit unit)
         {
+            var level = _levelService.Level / 5;
             MeleeHostileStatsEntry relatedEntry = _statsTable.First(x => x.RelatedUnit == unit);
             float health = relatedEntry.InitialHealth + relatedEntry.HealthEvaluation.CalculateFor( 
-                relatedEntry.HealthStrengthGrow, _levelService.Level * _difficultyModification);
+                relatedEntry.HealthStrengthGrow, level * _difficultyModification);
             float damage = relatedEntry.InitialDamage + relatedEntry.DamageEvaluation.CalculateFor(
-                relatedEntry.DamageStrengthGrow, _levelService.Level * _difficultyModification);
+                relatedEntry.DamageStrengthGrow, level * _difficultyModification);
             return new UnitBalanceDto
             {
                 Damage = damage,
